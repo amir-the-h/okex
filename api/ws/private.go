@@ -33,6 +33,10 @@ func (c *Private) Account(req requests.Account, ch ...chan *private.Account) err
 		c.aCh = ch[0]
 	}
 
+	if err := c.Login(); err != nil {
+		return err
+	}
+
 	return c.Subscribe([]okex.ChannelName{"account"}, m)
 }
 
@@ -58,6 +62,9 @@ func (c *Private) Position(req requests.Position, ch ...chan *private.Position) 
 		c.pCh = ch[0]
 	}
 
+	if err := c.Login(); err != nil {
+		return err
+	}
 	return c.Subscribe([]okex.ChannelName{"positions"}, m)
 }
 
@@ -70,6 +77,9 @@ func (c *Private) UPosition(req requests.Position, rCh ...bool) error {
 		c.pCh = nil
 	}
 
+	if err := c.Login(); err != nil {
+		return err
+	}
 	return c.Subscribe([]okex.ChannelName{"positions"}, m)
 }
 
@@ -83,6 +93,9 @@ func (c *Private) BalanceAndPosition(ch ...chan *private.BalanceAndPosition) err
 		c.bnpCh = ch[0]
 	}
 
+	if err := c.Login(); err != nil {
+		return err
+	}
 	return c.Subscribe([]okex.ChannelName{"balance_and_position"}, m)
 }
 
@@ -108,6 +121,9 @@ func (c *Private) Order(req requests.Order, ch ...chan *private.Order) error {
 		c.oCh = ch[0]
 	}
 
+	if err := c.Login(); err != nil {
+		return err
+	}
 	return c.Subscribe([]okex.ChannelName{"positions"}, m)
 }
 
@@ -120,6 +136,9 @@ func (c *Private) UOrder(req requests.Order, rCh ...bool) error {
 		c.oCh = nil
 	}
 
+	if err := c.Login(); err != nil {
+		return err
+	}
 	return c.Subscribe([]okex.ChannelName{"positions"}, m)
 }
 
