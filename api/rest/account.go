@@ -3,7 +3,7 @@ package rest
 import (
 	"encoding/json"
 	"github.com/amir-the-h/okex"
-	requests "github.com/amir-the-h/okex/requests/account"
+	requests "github.com/amir-the-h/okex/requests/rest/account"
 	responses "github.com/amir-the-h/okex/responses/account"
 	"net/http"
 )

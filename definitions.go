@@ -56,16 +56,16 @@ type (
 
 const (
 	RestUrl      = BaseUrl("https://www.okex.com")
-	PublicWsUrl  = BaseUrl("wss://ws.okex.com:8443/ws/public")
-	PrivateWsUrl = BaseUrl("wss://ws.okex.com:8443/ws/private")
+	PublicWsUrl  = BaseUrl("wss://ws.okex.com:8443/ws/v5/public")
+	PrivateWsUrl = BaseUrl("wss://ws.okex.com:8443/ws/v5/private")
 
 	AwsRestUrl      = BaseUrl("https://aws.okex.com")
-	AwsPublicWsUrl  = BaseUrl("wss://wsaws.okex.com:8443/ws/public")
-	AwsPrivateWsUrl = BaseUrl("wss://wsaws.okex.com:8443/ws/private")
+	AwsPublicWsUrl  = BaseUrl("wss://wsaws.okex.com:8443/ws/v5/public")
+	AwsPrivateWsUrl = BaseUrl("wss://wsaws.okex.com:8443/ws/v5/private")
 
 	DemoRestUrl      = BaseUrl("https://www.okex.com")
-	DemoPublicWsUrl  = BaseUrl("wss://wspap.okex.com:8443/ws/public?brokerId=9999")
-	DemoPrivateWsUrl = BaseUrl("wss://wspap.okex.com:8443/ws/private?brokerId=9999")
+	DemoPublicWsUrl  = BaseUrl("wss://wspap.okex.com:8443/ws/v5/public?brokerId=9999")
+	DemoPrivateWsUrl = BaseUrl("wss://wspap.okex.com:8443/ws/v5/private?brokerId=9999")
 
 	NormalServer = Destination(iota + 1)
 	AwsServer    = NormalServer + 1

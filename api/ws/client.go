@@ -8,36 +8,40 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/amir-the-h/okex"
-	"github.com/amir-the-h/okex/responses"
+	"github.com/amir-the-h/okex/events"
 	"github.com/gorilla/websocket"
+	"log"
+	"net/http"
 	"sync"
 	"time"
 )
 
-type (
-	// ClientWs is the websocket api client
-	ClientWs struct {
-		AuthorizedUntil *time.Time
-		Cancel          context.CancelFunc
-		DoneChan        chan interface{}
-		EventChan       chan *responses.WsBasicEvent
-		apiKey          string
-		secretKey       []byte
-		passphrase      string
-		destination     okex.Destination
-		url             okex.BaseUrl
-		sendChan        chan []byte
-		lastTransmit    *time.Time
-		conn            *websocket.Conn
-		mu              *sync.Mutex
-		rmu             *sync.Mutex
-		ctx             context.Context
-		subChan         chan *responses.WsSubscribe
-		uSubChan        chan *responses.WsUnsubscribe
-		errChan         chan *responses.WsError
-		processor       func(data []byte, e *responses.WsBasicEvent) bool
-	}
-)
+// ClientWs is the websocket api client
+//
+// https://www.okex.com/docs-v5/en/#websocket-api
+type ClientWs struct {
+	AuthorizedUntil     *time.Time
+	Cancel              context.CancelFunc
+	DoneChan            chan interface{}
+	RawEventChan        chan *events.Basic
+	ErrChan             chan *events.Error
+	StructuredEventChan chan interface{}
+	Private             *Private
+	lCh                 chan *events.Login
+	SubscribeChan       chan *events.Subscribe
+	UnsubscribeCh       chan *events.Unsubscribe
+	sendChan            chan []byte
+	apiKey              string
+	secretKey           []byte
+	passphrase          string
+	destination         okex.Destination
+	url                 okex.BaseUrl
+	lastTransmit        *time.Time
+	conn                *websocket.Conn
+	mu                  *sync.Mutex
+	rmu                 *sync.Mutex
+	ctx                 context.Context
+}
 
 const (
 	redialTick = 2 * time.Second
@@ -46,68 +50,26 @@ const (
 	pingPeriod = (pongWait * 8) / 10
 )
 
-// NewClientWs returns a pointer to a fresh ClientWs
-func NewClientWs(ctx context.Context, apiKey, secretKey, passphrase string, url okex.BaseUrl) *ClientWs {
+// NewClient returns a pointer to a fresh ClientWs
+func NewClient(ctx context.Context, apiKey, secretKey, passphrase string, url okex.BaseUrl) *ClientWs {
 	ctx, cancel := context.WithCancel(ctx)
 	c := &ClientWs{
-		apiKey:     apiKey,
-		secretKey:  []byte(secretKey),
-		passphrase: passphrase,
-		ctx:        ctx,
-		Cancel:     cancel,
-		url:        url,
-		sendChan:   make(chan []byte, 5),
-		DoneChan:   make(chan interface{}),
-		EventChan:  make(chan *responses.WsBasicEvent),
-		mu:         &sync.Mutex{},
-		rmu:        &sync.Mutex{},
+		apiKey:              apiKey,
+		secretKey:           []byte(secretKey),
+		passphrase:          passphrase,
+		ctx:                 ctx,
+		Cancel:              cancel,
+		url:                 url,
+		sendChan:            make(chan []byte, 5),
+		DoneChan:            make(chan interface{}),
+		RawEventChan:        make(chan *events.Basic),
+		StructuredEventChan: make(chan interface{}),
+		mu:                  &sync.Mutex{},
+		rmu:                 &sync.Mutex{},
 	}
+	c.Private = NewPrivate(c)
 
 	return c
-}
-
-func (c *ClientWs) Process(data []byte, e *responses.WsBasicEvent) bool {
-	if c.errChan != nil && e.Event == "error" {
-		e := responses.WsError{}
-		_ = json.Unmarshal(data, &e)
-		go func() { c.errChan <- &e }()
-		return true
-	}
-	if c.subChan != nil && e.Event == "subscribe" {
-		e := responses.WsSubscribe{}
-		_ = json.Unmarshal(data, &e)
-		go func() { c.subChan <- &e }()
-		return true
-	}
-	if c.uSubChan != nil && e.Event == "unsubscribe" {
-		e := responses.WsUnsubscribe{}
-		_ = json.Unmarshal(data, &e)
-		go func() { c.uSubChan <- &e }()
-		return true
-	}
-
-	return false
-}
-
-// Send message through either connections
-func (c *ClientWs) Send(op okex.Operation, args []map[string]interface{}) error {
-	err := c.Connect()
-	if err != nil {
-		return err
-	}
-
-	data := map[string]interface{}{
-		"op":   op,
-		"args": args,
-	}
-	j, err := json.Marshal(data)
-	if err != nil {
-		return err
-	}
-
-	c.sendChan <- j
-
-	return nil
 }
 
 // Connect into the server
@@ -130,23 +92,47 @@ func (c *ClientWs) Connect() error {
 			if err == nil {
 				return nil
 			}
+			log.Println(err)
 		case <-c.ctx.Done():
 			return c.handleCancel("connect")
 		}
 	}
 }
 
-// Subscribe into channel(s)
+// Login
+//
+// https://www.okex.com/docs-v5/en/#websocket-api-login
+func (c *ClientWs) Login(ch ...chan *events.Login) error {
+	if c.AuthorizedUntil != nil && time.Since(*c.AuthorizedUntil) < pingPeriod {
+		return nil
+	}
+	method := http.MethodGet
+	path := "/users/self/verify"
+	ts, sign := c.sign(method, path)
+	args := []map[string]string{
+		{
+			"apiKey":     c.apiKey,
+			"passphrase": c.passphrase,
+			"timestamp":  ts,
+			"sign":       sign,
+		},
+	}
+	if len(ch) > 0 {
+		c.lCh = ch[0]
+	}
+
+	return c.Send(okex.LoginOperation, args)
+}
+
+// Subscribe
+// Users can choose to subscribe to one or more channels, and the total length of multiple channels cannot exceed 4096 bytes.
 //
 // https://www.okex.com/docs-v5/en/#websocket-api-subscribe
-func (c *ClientWs) Subscribe(ch []okex.ChannelName, args map[string]interface{}) error {
-	if len(ch) == 0 {
-		return fmt.Errorf("not enough channels")
-	}
-	tmpArgs := make([]map[string]interface{}, len(ch))
+func (c *ClientWs) Subscribe(ch []okex.ChannelName, args map[string]string) error {
+	tmpArgs := make([]map[string]string, len(ch))
 	for i, name := range ch {
-		tmpArgs[i] = make(map[string]interface{})
-		tmpArgs[i]["channel"] = name
+		tmpArgs[i] = map[string]string{}
+		tmpArgs[i]["channel"] = string(name)
 		for k, v := range args {
 			tmpArgs[i][k] = v
 		}
@@ -158,14 +144,11 @@ func (c *ClientWs) Subscribe(ch []okex.ChannelName, args map[string]interface{})
 // Unsubscribe into channel(s)
 //
 // https://www.okex.com/docs-v5/en/#websocket-api-unsubscribe
-func (c *ClientWs) Unsubscribe(ch []okex.ChannelName, args map[string]interface{}) error {
-	if len(ch) == 0 {
-		return fmt.Errorf("not enough channels")
-	}
-	tmpArgs := make([]map[string]interface{}, len(ch))
+func (c *ClientWs) Unsubscribe(ch []okex.ChannelName, args map[string]string) error {
+	tmpArgs := make([]map[string]string, len(ch))
 	for i, name := range ch {
-		tmpArgs[i] = make(map[string]interface{})
-		tmpArgs[i]["channel"] = name
+		tmpArgs[i] = make(map[string]string)
+		tmpArgs[i]["channel"] = string(name)
 		for k, v := range args {
 			tmpArgs[i][k] = v
 		}
@@ -174,32 +157,87 @@ func (c *ClientWs) Unsubscribe(ch []okex.ChannelName, args map[string]interface{
 	return c.Send(okex.UnsubscribeOperation, tmpArgs)
 }
 
-// SetErrorHandler will set the error event handler
-func (c *ClientWs) SetErrorHandler(ch chan *responses.WsError) {
-	c.errChan = ch
+// Send message through either connections
+func (c *ClientWs) Send(op okex.Operation, args []map[string]string) error {
+	err := c.Connect()
+	if err != nil {
+		return err
+	}
+
+	data := map[string]interface{}{
+		"op":   op,
+		"args": args,
+	}
+	j, err := json.Marshal(data)
+	if err != nil {
+		return err
+	}
+
+	c.sendChan <- j
+
+	return nil
 }
 
-// SetSubscribeHandler will set the error event handler
-func (c *ClientWs) SetSubscribeHandler(ch chan *responses.WsSubscribe) {
-	c.subChan = ch
+// process the incoming event
+func (c *ClientWs) process(data []byte, e *events.Basic) bool {
+	switch e.Event {
+	case "error":
+		e := events.Error{}
+		_ = json.Unmarshal(data, &e)
+		go func() {
+			c.ErrChan <- &e
+		}()
+		return true
+	case "subscribe":
+		e := events.Subscribe{}
+		_ = json.Unmarshal(data, &e)
+		go func() {
+			if c.SubscribeChan != nil {
+				c.SubscribeChan <- &e
+			}
+			c.StructuredEventChan <- e
+		}()
+		return true
+	case "unsubscribe":
+		e := events.Unsubscribe{}
+		_ = json.Unmarshal(data, &e)
+		go func() {
+			if c.UnsubscribeCh != nil {
+				c.UnsubscribeCh <- &e
+			}
+			c.StructuredEventChan <- e
+		}()
+		return true
+	case "login":
+		au := time.Now().Add(time.Second * 30)
+		c.AuthorizedUntil = &au
+		e := events.Login{}
+		_ = json.Unmarshal(data, &e)
+		go func() {
+			if c.lCh != nil {
+				c.lCh <- &e
+			}
+			c.StructuredEventChan <- e
+		}()
+		return true
+	default:
+		if c.Private.Process(data, e) {
+			return true
+		}
+	}
+
+	go func() { c.RawEventChan <- e }()
+
+	return false
 }
 
-// SetUnsubscribeHandler will set the error event handler
-func (c *ClientWs) SetUnsubscribeHandler(ch chan *responses.WsUnsubscribe) {
-	c.uSubChan = ch
+// SetChannels to receive certain events on separate channel
+func (c *ClientWs) SetChannels(errCh chan *events.Error, subCh chan *events.Subscribe, unSub chan *events.Unsubscribe) {
+	c.ErrChan = errCh
+	c.SubscribeChan = subCh
+	c.UnsubscribeCh = unSub
 }
 
-func (c *ClientWs) Sign(method, path string) (string, string) {
-	t := time.Now().UTC().Unix()
-	ts := fmt.Sprint(t)
-	s := ts + method + path
-	p := []byte(s)
-	h := hmac.New(sha256.New, c.secretKey)
-	h.Write(p)
-
-	// Get result and encode as hexadecimal string
-	return ts, base64.StdEncoding.EncodeToString(h.Sum(nil))
-}
 func (c *ClientWs) dial() error {
 	c.mu.Lock()
 	c.rmu.Lock()
@@ -207,9 +245,9 @@ func (c *ClientWs) dial() error {
 		c.mu.Unlock()
 		c.rmu.Unlock()
 	}()
-	conn, _, err := websocket.DefaultDialer.Dial(string(c.url), nil)
+	conn, res, err := websocket.DefaultDialer.Dial(string(c.url), nil)
 	if err != nil {
-		return err
+		return fmt.Errorf("error %d: %s", res.StatusCode, err)
 	}
 	go func() {
 		err := c.receiver()
@@ -294,19 +332,27 @@ func (c *ClientWs) receiver() error {
 			now := time.Now()
 			c.lastTransmit = &now
 			if mt == websocket.TextMessage && string(data) != "pong" {
-				e := &responses.WsBasicEvent{}
+				e := &events.Basic{}
 				if err := json.Unmarshal(data, &e); err != nil {
 					return err
 				}
-				if c.processor != nil {
-					if c.processor(data, e) {
-						continue
-					}
-				}
-				c.EventChan <- e
+				go func() {
+					c.process(data, e)
+				}()
 			}
 		}
 	}
+}
+func (c *ClientWs) sign(method, path string) (string, string) {
+	t := time.Now().UTC().Unix()
+	ts := fmt.Sprint(t)
+	s := ts + method + path
+	p := []byte(s)
+	h := hmac.New(sha256.New, c.secretKey)
+	h.Write(p)
+
+	// Get result and encode as hexadecimal string
+	return ts, base64.StdEncoding.EncodeToString(h.Sum(nil))
 }
 func (c *ClientWs) handleCancel(msg string) error {
 	go func() {

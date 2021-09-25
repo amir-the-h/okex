@@ -7,39 +7,39 @@ import (
 
 type (
 	Ticker struct {
-		responses.RestBasic
+		responses.Basic
 		Tickers []*market.Ticker `json:"data,omitempty"`
 	}
 	IndexTicker struct {
-		responses.RestBasic
+		responses.Basic
 		IndexTickers []*market.IndexTicker `json:"data,omitempty"`
 	}
 	OrderBook struct {
-		responses.RestBasic
+		responses.Basic
 		OrderBooks []*market.OrderBook `json:"data,omitempty"`
 	}
 	Candle struct {
-		responses.RestBasic
+		responses.Basic
 		Candles []*market.Candle `json:"data,omitempty"`
 	}
 	IndexCandle struct {
-		responses.RestBasic
+		responses.Basic
 		Candles []*market.IndexCandle `json:"data,omitempty"`
 	}
 	CandleMarket struct {
-		responses.RestBasic
+		responses.Basic
 		Candles []*market.IndexCandle `json:"data,omitempty"`
 	}
 	Trade struct {
-		responses.RestBasic
+		responses.Basic
 		Trades []*market.Trade `json:"data,omitempty"`
 	}
 	TotalVolume24H struct {
-		responses.RestBasic
+		responses.Basic
 		TotalVolume24Hs []*market.TotalVolume24H `json:"data,omitempty"`
 	}
 	IndexComponent struct {
-		responses.RestBasic
+		responses.Basic
 		IndexComponents *market.IndexComponent `json:"data,omitempty"`
 	}
 )

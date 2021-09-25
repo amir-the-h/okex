@@ -7,17 +7,17 @@ import (
 type (
 	PlaceOrder struct {
 		InstId     string            `json:"instId"`
-		TdMode     string            `json:"tdMode"`
 		Ccy        string            `json:"ccy,omitempty"`
 		ClOrdId    string            `json:"clOrdId,omitempty"`
 		Tag        string            `json:"tag,omitempty"`
 		ReduceOnly bool              `json:"reduceOnly,omitempty"`
 		Sz         float64           `json:"sz,string"`
 		Px         float64           `json:"px,omitempty,string"`
-		Side       okex.OrderSide    `json:"side,string"`
-		PosSide    okex.PositionSide `json:"posSide,string"`
-		OrdType    okex.OrderType    `json:"ordType,string"`
-		TgtCcy     okex.QuantityType `json:"tgtCcy,omitempty,string"`
+		TdMode     okex.TradeMode    `json:"tdMode"`
+		Side       okex.OrderSide    `json:"side"`
+		PosSide    okex.PositionSide `json:"posSide"`
+		OrdType    okex.OrderType    `json:"ordType"`
+		TgtCcy     okex.QuantityType `json:"tgtCcy,omitempty"`
 	}
 	CancelOrder struct {
 		InstId  string `json:"instId"`

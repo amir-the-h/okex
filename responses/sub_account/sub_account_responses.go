@@ -8,23 +8,23 @@ import (
 
 type (
 	ViewList struct {
-		responses.RestBasic
+		responses.Basic
 		SubAccounts []*models.SubAccount `json:"data,omitempty"`
 	}
 	APIKey struct {
-		responses.RestBasic
+		responses.Basic
 		APIKeys []*models.APIKey `json:"data,omitempty"`
 	}
 	GetBalance struct {
-		responses.RestBasic
+		responses.Basic
 		Balances []*account.Balance `json:"data,omitempty"`
 	}
 	HistoryTransfer struct {
-		responses.RestBasic
+		responses.Basic
 		HistoryTransfers []*models.HistoryTransfer `json:"data,omitempty"`
 	}
 	ManageTransfer struct {
-		responses.RestBasic
+		responses.Basic
 		Transfers []*models.Transfer `json:"data,omitempty"`
 	}
 )

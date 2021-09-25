@@ -7,67 +7,67 @@ import (
 
 type (
 	GetBalance struct {
-		responses.RestBasic
+		responses.Basic
 		Balances []*models.Balance `json:"data,omitempty"`
 	}
 	GetPositions struct {
-		responses.RestBasic
+		responses.Basic
 		Positions []*models.Position `json:"data"`
 	}
 	GetAccountAndPositionRisk struct {
-		responses.RestBasic
+		responses.Basic
 		PositionAndAccountRisks []*models.PositionAndAccountRisk `json:"data"`
 	}
 	GetBills struct {
-		responses.RestBasic
+		responses.Basic
 		Bills []*models.Bill `json:"data"`
 	}
 	GetConfig struct {
-		responses.RestBasic
+		responses.Basic
 		Configs []*models.Config `json:"data"`
 	}
 	SetPositionMode struct {
-		responses.RestBasic
+		responses.Basic
 		PositionModes []*models.PositionMode `json:"data"`
 	}
 	Leverage struct {
-		responses.RestBasic
+		responses.Basic
 		Leverages []*models.Leverage `json:"data"`
 	}
 	GetMaxBuySellAmount struct {
-		responses.RestBasic
+		responses.Basic
 		MaxBuySellAmounts []*models.MaxBuySellAmount `json:"data"`
 	}
 	GetMaxAvailableTradeAmount struct {
-		responses.RestBasic
+		responses.Basic
 		MaxAvailableTradeAmounts []*models.MaxAvailableTradeAmount `json:"data"`
 	}
 	IncreaseDecreaseMargin struct {
-		responses.RestBasic
+		responses.Basic
 		MarginBalanceAmounts []*models.MarginBalanceAmount `json:"data"`
 	}
 	GetMaxLoan struct {
-		responses.RestBasic
+		responses.Basic
 		Loans []*models.Loan `json:"data"`
 	}
 	GetFeeRates struct {
-		responses.RestBasic
+		responses.Basic
 		Fees []*models.Fee `json:"data"`
 	}
 	GetInterestAccrued struct {
-		responses.RestBasic
+		responses.Basic
 		InterestAccrues []*models.InterestAccrued `json:"data"`
 	}
 	GetInterestRates struct {
-		responses.RestBasic
+		responses.Basic
 		Interests []*models.InterestRate `json:"data"`
 	}
 	SetGreeks struct {
-		responses.RestBasic
+		responses.Basic
 		Greeks []*models.Greek `json:"data"`
 	}
 	GetMaxWithdrawals struct {
-		responses.RestBasic
+		responses.Basic
 		MaxWithdrawals []*models.MaxWithdrawal `json:"data"`
 	}
 )

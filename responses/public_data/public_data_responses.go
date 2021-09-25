@@ -7,59 +7,59 @@ import (
 
 type (
 	GetInstruments struct {
-		responses.RestBasic
+		responses.Basic
 		Instruments []*public_data.Instrument `json:"data,omitempty"`
 	}
 	GetDeliveryExerciseHistory struct {
-		responses.RestBasic
+		responses.Basic
 		Histories []*public_data.DeliveryExerciseHistory `json:"data,omitempty"`
 	}
 	GetOpenInterest struct {
-		responses.RestBasic
+		responses.Basic
 		OpenInterests []*public_data.OpenInterest `json:"data,omitempty"`
 	}
 	GetFundingRate struct {
-		responses.RestBasic
+		responses.Basic
 		FundingRates []*public_data.FundingRate `json:"data,omitempty"`
 	}
 	GetLimitPrice struct {
-		responses.RestBasic
+		responses.Basic
 		LimitPrices []*public_data.LimitPrice `json:"data,omitempty"`
 	}
 	GetOptionMarketData struct {
-		responses.RestBasic
+		responses.Basic
 		OptionMarketData []*public_data.OptionMarketData `json:"data,omitempty"`
 	}
 	GetEstimatedDeliveryExcercisePrice struct {
-		responses.RestBasic
+		responses.Basic
 		EstimatedDeliveryExcercisePrices []*public_data.EstimatedDeliveryExcercisePrice `json:"data,omitempty"`
 	}
 	GetDiscountRateAndInterestFreeQuota struct {
-		responses.RestBasic
+		responses.Basic
 		GetDiscountRateAndInterestFreeQuotas []*public_data.GetDiscountRateAndInterestFreeQuota `json:"data,omitempty"`
 	}
 	GetSystemTime struct {
-		responses.RestBasic
+		responses.Basic
 		SystemTimes []*public_data.SystemTime `json:"data,omitempty"`
 	}
 	GetLiquidationOrders struct {
-		responses.RestBasic
+		responses.Basic
 		LiquidationOrders []*public_data.LiquidationOrder `json:"data,omitempty"`
 	}
 	GetMarkPrice struct {
-		responses.RestBasic
+		responses.Basic
 		MarkPrices []*public_data.MarkPrice `json:"data,omitempty"`
 	}
 	GetPositionTiers struct {
-		responses.RestBasic
+		responses.Basic
 		PositionTiers []*public_data.PositionTier `json:"data,omitempty"`
 	}
 	GetInterestRateAndLoanQuota struct {
-		responses.RestBasic
+		responses.Basic
 		InterestRateAndLoanQuotas []*public_data.InterestRateAndLoanQuota `json:"data,omitempty"`
 	}
 	GetUnderlying struct {
-		responses.RestBasic
+		responses.Basic
 		Underlings [][]string `json:"data,omitempty"`
 	}
 )

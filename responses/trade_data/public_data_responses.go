@@ -7,35 +7,35 @@ import (
 
 type (
 	GetSupportCoin struct {
-		responses.RestBasic
+		responses.Basic
 		SupportCoins *trade_data.SupportCoin `json:"data,omitempty"`
 	}
 	GetTakerVolume struct {
-		responses.RestBasic
+		responses.Basic
 		TakerVolumes []*trade_data.TakerVolume `json:"data,omitempty"`
 	}
 	GetRatio struct {
-		responses.RestBasic
+		responses.Basic
 		Ratios []*trade_data.Ratio `json:"data,omitempty"`
 	}
 	GetOpenInterestAndVolume struct {
-		responses.RestBasic
+		responses.Basic
 		InterestAndVolumeRatios []*trade_data.InterestAndVolumeRatio `json:"data,omitempty"`
 	}
 	GetPutCallRatio struct {
-		responses.RestBasic
+		responses.Basic
 		PutCallRatios []*trade_data.PutCallRatio `json:"data,omitempty"`
 	}
 	GetOpenInterestAndVolumeExpiry struct {
-		responses.RestBasic
+		responses.Basic
 		InterestAndVolumeExpires []*trade_data.InterestAndVolumeExpiry `json:"data,omitempty"`
 	}
 	GetOpenInterestAndVolumeStrike struct {
-		responses.RestBasic
+		responses.Basic
 		InterestAndVolumeStrikes []*trade_data.InterestAndVolumeStrike `json:"data,omitempty"`
 	}
 	GetTakerFlow struct {
-		responses.RestBasic
+		responses.Basic
 		TakerFlow *trade_data.TakerFlow `json:"data"`
 	}
 )

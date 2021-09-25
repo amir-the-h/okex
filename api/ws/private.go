@@ -3,175 +3,182 @@ package ws
 import (
 	"encoding/json"
 	"github.com/amir-the-h/okex"
-	"github.com/amir-the-h/okex/api/ws/private"
-	"github.com/amir-the-h/okex/responses"
-	"net/http"
-	"time"
+	"github.com/amir-the-h/okex/events"
+	"github.com/amir-the-h/okex/events/private"
+	requests "github.com/amir-the-h/okex/requests/ws/private"
+	"log"
 )
 
-// PrivateClient is the private websocket api client
-type PrivateClient struct {
+// Private is the private websocket api client
+type Private struct {
 	*ClientWs
-	lChan   chan *private.Login
-	aChan   chan *private.Account
-	pChan   chan *private.Position
-	bnpChan chan *private.BalanceAndPosition
+	aCh   chan *private.Account
+	pCh   chan *private.Position
+	bnpCh chan *private.BalanceAndPosition
+	oCh   chan *private.Order
 }
 
-// NewPrivateClient returns a pointer to a fresh PrivateClient
-func NewPrivateClient(c *ClientWs) *PrivateClient {
-	p := &PrivateClient{ClientWs: c}
-	c.processor = p.process
-
-	return p
+// NewPrivate returns a pointer to a fresh Private
+func NewPrivate(c *ClientWs) *Private {
+	return &Private{ClientWs: c}
 }
 
-// Login into the private server
-//
-// https://www.okex.com/docs-v5/en/#websocket-api-login
-func (c *PrivateClient) Login(loginChan chan *private.Login) error {
-	if c.AuthorizedUntil != nil && time.Since(*c.AuthorizedUntil) < pingPeriod {
-		return nil
-	}
-	method := http.MethodGet
-	path := "/users/self/verify"
-	ts, sign := c.Sign(method, path)
-	args := []map[string]interface{}{
-		{
-			"apiKey":     c.apiKey,
-			"passphrase": c.passphrase,
-			"timestamp":  ts,
-			"sign":       sign,
-		},
-	}
-	c.lChan = loginChan
-
-	return c.Send(okex.LoginOperation, args)
-}
-
-// Account subscribes on an account channel
+// Account
+// Retrieve account information. Data will be pushed when triggered by events such as placing/canceling order, and will also be pushed in regular interval according to subscription granularity.
 //
 // https://www.okex.com/docs-v5/en/#websocket-api-private-channel-account-channel
-func (c *PrivateClient) Account(accountChan chan *private.Account, ccy string) error {
-	args := make(map[string]interface{})
-	if ccy != "" {
-		args["ccy"] = ccy
+func (c *Private) Account(req requests.Account, ch ...chan *private.Account) error {
+	m := okex.S2M(req)
+	if len(ch) > 0 {
+		c.aCh = ch[0]
 	}
-	c.aChan = accountChan
 
-	return c.Subscribe([]okex.ChannelName{"account"}, args)
+	return c.Subscribe([]okex.ChannelName{"account"}, m)
 }
 
-// UAccount unsubscribes an account channel
+// UAccount
 //
 // https://www.okex.com/docs-v5/en/#websocket-api-private-channel-account-channel
-func (c *PrivateClient) UAccount(ccy string) error {
-	args := make(map[string]interface{})
-	if ccy != "" {
-		args["ccy"] = ccy
+func (c *Private) UAccount(req requests.Account, rCh ...bool) error {
+	m := okex.S2M(req)
+	if len(rCh) > 0 && rCh[0] {
+		c.aCh = nil
 	}
-	c.aChan = nil
 
-	return c.Unsubscribe([]okex.ChannelName{"account"}, args)
+	return c.Unsubscribe([]okex.ChannelName{"account"}, m)
 }
 
-// Position subscribes on a position channel
+// Position
+// Retrieve position information. Initial snapshot will be pushed according to subscription granularity. Data will be pushed when triggered by events such as placing/canceling order, and will also be pushed in regular interval according to subscription granularity.
 //
 // https://www.okex.com/docs-v5/en/#websocket-api-private-channel-positions-channel
-func (c *PrivateClient) Position(positionChan chan *private.Position, instType okex.InstrumentType, uly, instId string) error {
-	args := map[string]interface{}{"instType": instType}
-	if uly != "" {
-		args["uly"] = uly
+func (c *Private) Position(req requests.Position, ch ...chan *private.Position) error {
+	m := okex.S2M(req)
+	if len(ch) > 0 {
+		c.pCh = ch[0]
 	}
-	if instId != "" {
-		args["instId"] = instId
-	}
-	c.pChan = positionChan
 
-	return c.Subscribe([]okex.ChannelName{"positions"}, args)
+	return c.Subscribe([]okex.ChannelName{"positions"}, m)
 }
 
-// UPosition unsubscribes a position channel
+// UPosition
 //
 // https://www.okex.com/docs-v5/en/#websocket-api-private-channel-positions-channel
-func (c *PrivateClient) UPosition(instType okex.InstrumentType, uly, instId string) error {
-	args := map[string]interface{}{"instType": instType}
-	if uly != "" {
-		args["uly"] = uly
+func (c *Private) UPosition(req requests.Position, rCh ...bool) error {
+	m := okex.S2M(req)
+	if len(rCh) > 0 && rCh[0] {
+		c.pCh = nil
 	}
-	if instId != "" {
-		args["instId"] = instId
-	}
-	c.pChan = nil
 
-	return c.Subscribe([]okex.ChannelName{"positions"}, args)
+	return c.Subscribe([]okex.ChannelName{"positions"}, m)
 }
 
-// BalanceAndPosition subscribes on a position channel
+// BalanceAndPosition
+// Retrieve account balance and position information. Data will be pushed when triggered by events such as filled order, funding transfer.
 //
 // https://www.okex.com/docs-v5/en/#websocket-api-private-channel-balance-and-position-channel
-func (c *PrivateClient) BalanceAndPosition(bnpChan chan *private.BalanceAndPosition) error {
-	args := map[string]interface{}{}
-	c.bnpChan = bnpChan
+func (c *Private) BalanceAndPosition(ch ...chan *private.BalanceAndPosition) error {
+	m := make(map[string]string)
+	if len(ch) > 0 {
+		c.bnpCh = ch[0]
+	}
 
-	return c.Subscribe([]okex.ChannelName{"balance_and_position"}, args)
+	return c.Subscribe([]okex.ChannelName{"balance_and_position"}, m)
 }
 
 // UBalanceAndPosition unsubscribes a position channel
 //
 // https://www.okex.com/docs-v5/en/#websocket-api-private-channel-balance-and-position-channel
-func (c *PrivateClient) UBalanceAndPosition() error {
-	args := map[string]interface{}{}
-	c.bnpChan = nil
+func (c *Private) UBalanceAndPosition(rCh ...bool) error {
+	m := make(map[string]string)
+	if len(rCh) > 0 && rCh[0] {
+		c.bnpCh = nil
+	}
 
-	return c.Unsubscribe([]okex.ChannelName{"balance_and_position"}, args)
+	return c.Unsubscribe([]okex.ChannelName{"balance_and_position"}, m)
 }
 
-func (c *PrivateClient) process(data []byte, e *responses.WsBasicEvent) bool {
-	if c.Process(data, e) {
-		return true
-	}
-	if e.Event == "subscribe" || e.Event == "unsubscribe" {
-		return false
-	}
-	if e.Event == "login" {
-		au := time.Now().Add(time.Second * 30)
-		c.AuthorizedUntil = &au
-		if c.lChan != nil {
-			r := private.Login{}
-			_ = json.Unmarshal(data, &r)
-			go func() { c.lChan <- &r }()
-			return true
-		}
+// Order
+// Retrieve position information. Initial snapshot will be pushed according to subscription granularity. Data will be pushed when triggered by events such as placing/canceling order, and will also be pushed in regular interval according to subscription granularity.
+//
+// https://www.okex.com/docs-v5/en/#websocket-api-private-channel-positions-channel
+func (c *Private) Order(req requests.Order, ch ...chan *private.Order) error {
+	m := okex.S2M(req)
+	if len(ch) > 0 {
+		c.oCh = ch[0]
 	}
 
-	if c.aChan != nil && e.Arg != nil {
-		ch, ok := e.Arg.Get("channel")
-		if ok && ch == "account" {
-			r := private.Account{}
-			_ = json.Unmarshal(data, &r)
-			go func() { c.aChan <- &r }()
-			return true
-		}
+	return c.Subscribe([]okex.ChannelName{"positions"}, m)
+}
+
+// UOrder
+//
+// https://www.okex.com/docs-v5/en/#websocket-api-private-channel-positions-channel
+func (c *Private) UOrder(req requests.Order, rCh ...bool) error {
+	m := okex.S2M(req)
+	if len(rCh) > 0 && rCh[0] {
+		c.oCh = nil
 	}
 
-	if c.pChan != nil && e.Arg != nil {
-		ch, ok := e.Arg.Get("channel")
-		if ok && ch == "positions" {
-			r := private.Position{}
-			_ = json.Unmarshal(data, &r)
-			go func() { c.pChan <- &r }()
-			return true
-		}
-	}
+	return c.Subscribe([]okex.ChannelName{"positions"}, m)
+}
 
-	if c.bnpChan != nil && e.Arg != nil {
+func (c *Private) Process(data []byte, e *events.Basic) bool {
+	if e.Event == "" && e.Arg != nil && e.Data != nil && len(e.Data) > 0 {
 		ch, ok := e.Arg.Get("channel")
-		if ok && ch == "balance_and_position" {
-			r := private.BalanceAndPosition{}
-			_ = json.Unmarshal(data, &r)
-			go func() { c.bnpChan <- &r }()
-			return true
+		if !ok {
+			return false
+		}
+		log.Printf("p %+v", e.Arg)
+		switch ch {
+		case "account":
+			e := private.Account{}
+			err := json.Unmarshal(data, &e)
+			if err != nil {
+				return false
+			}
+			go func() {
+				if c.aCh != nil {
+					c.aCh <- &e
+				}
+				c.StructuredEventChan <- e
+			}()
+		case "positions":
+			e := private.Position{}
+			err := json.Unmarshal(data, &e)
+			if err != nil {
+				return false
+			}
+			go func() {
+				if c.pCh != nil {
+					c.pCh <- &e
+				}
+				c.StructuredEventChan <- e
+			}()
+		case "balance_and_position":
+			e := private.BalanceAndPosition{}
+			err := json.Unmarshal(data, &e)
+			if err != nil {
+				return false
+			}
+			go func() {
+				if c.bnpCh != nil {
+					c.bnpCh <- &e
+				}
+				c.StructuredEventChan <- e
+			}()
+		case "orders":
+			e := private.Order{}
+			err := json.Unmarshal(data, &e)
+			if err != nil {
+				return false
+			}
+			go func() {
+				if c.oCh != nil {
+					c.oCh <- &e
+				}
+				c.StructuredEventChan <- e
+			}()
 		}
 	}
 

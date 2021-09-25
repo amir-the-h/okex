@@ -7,27 +7,27 @@ import (
 
 type (
 	PlaceOrder struct {
-		responses.RestBasic
+		responses.Basic
 		PlaceOrders []*trade.PlaceOrder `json:"data"`
 	}
 	CancelOrder struct {
-		responses.RestBasic
+		responses.Basic
 		CancelOrders []*trade.CancelOrder `json:"data"`
 	}
 	AmendOrder struct {
-		responses.RestBasic
+		responses.Basic
 		AmendOrders []*trade.AmendOrder `json:"data"`
 	}
 	ClosePosition struct {
-		responses.RestBasic
+		responses.Basic
 		ClosePositions []*trade.ClosePosition `json:"data"`
 	}
 	Order struct {
-		responses.RestBasic
+		responses.Basic
 		Orders []*trade.Order `json:"data"`
 	}
 	TransactionDetail struct {
-		responses.RestBasic
+		responses.Basic
 		TransactionDetails []*trade.TransactionDetail `json:"data"`
 	}
 )

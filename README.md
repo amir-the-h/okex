@@ -16,7 +16,7 @@ Installation
 go get github.com/amir-the-h/okex
 ```
 
-Basic Usage
+Usage
 -----------
 
 ```go
@@ -26,6 +26,9 @@ import (
 	"context"
 	"github.com/amir-the-h/okex"
 	"github.com/amir-the-h/okex/api"
+	"github.com/amir-the-h/okex/events"
+	"github.com/amir-the-h/okex/events/private"
+	ws_requests "github.com/amir-the-h/okex/requests/ws/private"
 	"log"
 )
 
@@ -44,21 +47,72 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	log.Printf("%+v", response)
+	log.Printf("Account Config %+v", response)
+
+	errChan := make(chan *events.Error)
+	subChan := make(chan *events.Subscribe)
+	uSubChan := make(chan *events.Unsubscribe)
+	lCh := make(chan *events.Login)
+	oCh := make(chan *private.Order)
+	log.Print("WS", "Logging in")
+	client.Ws.Private.SetChannels(errChan, subChan, uSubChan)
+	err = client.Ws.Login(lCh)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	for {
+		select {
+		case <-lCh:
+			log.Print("WS", "Logged in")
+		case sub := <-subChan:
+			channel, _ := sub.Arg.Get("channel")
+			log.Printf("WS Subscribed on:\t%s", channel)
+		case uSub := <-uSubChan:
+			channel, _ := uSub.Arg.Get("channel")
+			log.Printf("WS Unsubscribed from:\t%s", channel)
+		case err := <-client.Ws.ErrChan:
+			log.Printf("WS Error:\t%+v", err)
+		case o := <-oCh:
+			log.Printf("WS Event [Order]:\t %+v", o)
+			for _, p := range o.Orders {
+				log.Printf("\tOrder: \t%+v", p)
+			}
+			// Cancel the context
+			// to stop all ops
+			client.Ws.Cancel()
+
+		case e := <-client.Ws.StructuredEventChan:
+			log.Printf("WS Event [STRUCTED]:\t%+v", e)
+		case e := <-client.Ws.RawEventChan:
+			log.Printf("WS Event [RAW]:\t%+v", e)
+		case b := <-client.Ws.DoneChan:
+			log.Printf("WS End:\t%v", b)
+			return
+		}
+	}
 }
 ```
-
-see [examples](/examples)
 
 Supporting APIs
 ---------------
 
-- [x] [Trade](https://www.okex.com/docs-v5/en/#rest-api-trade) (except demo special trading endpoints)
-- [x] [Funding](https://www.okex.com/docs-v5/en/#rest-api-funding)
-- [x] [Account](https://www.okex.com/docs-v5/en/#rest-api-account)
-- [x] [SubAccount](https://www.okex.com/docs-v5/en/#rest-api-subaccount)
-- [x] [Market Data](https://www.okex.com/docs-v5/en/#rest-api-market-data)
-- [x] [Public Data](https://www.okex.com/docs-v5/en/#rest-api-public-data)
-- [x] [Trading Data](https://www.okex.com/docs-v5/en/#rest-api-trading-data)
-- [ ] [Status](https://www.okex.com/docs-v5/en/#rest-api-statusl)
+* [Rest](https://www.okex.com/docs-v5/en/#rest-api)
+    * [Trade](https://www.okex.com/docs-v5/en/#rest-api-trade) (except demo special trading endpoints)
+    * [Funding](https://www.okex.com/docs-v5/en/#rest-api-funding)
+    * [Account](https://www.okex.com/docs-v5/en/#rest-api-account)
+    * [SubAccount](https://www.okex.com/docs-v5/en/#rest-api-subaccount)
+    * [Market Data](https://www.okex.com/docs-v5/en/#rest-api-market-data)
+    * [Public Data](https://www.okex.com/docs-v5/en/#rest-api-public-data)
+    * [Trading Data](https://www.okex.com/docs-v5/en/#rest-api-trading-data)
+
+[comment]: <> (    * [Status]&#40;https://www.okex.com/docs-v5/en/#rest-api-status&#41;)
+
+* [Ws](https://www.okex.com/docs-v5/en/#websocket-api)
+    * [Private Channel](https://www.okex.com/docs-v5/en/#websocket-api-private-channel) (except demo special trading
+      endpoints)
+
+[comment]: <> (    * [Public Channel]&#40;https://www.okex.com/docs-v5/en/#websocket-api-public-channels&#41;)
+
+[comment]: <> (    * [Trade]&#40;https://www.okex.com/docs-v5/en/#websocket-api-trade&#41;)
 

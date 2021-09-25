@@ -9,8 +9,10 @@ import (
 
 // Client is the main api wrapper of okex
 type Client struct {
-	Rest      *rest.ClientRest
-	PrivateWs *ws.PrivateClient
+	Rest *rest.ClientRest
+	Ws   struct {
+		*ws.Private
+	}
 	//PublicWs  *ws.PublicClient
 	ctx context.Context
 }
@@ -32,10 +34,12 @@ func NewClient(ctx context.Context, apiKey, secretKey, passphrase string, destin
 	}
 
 	r := rest.NewClient(apiKey, secretKey, passphrase, restUrl, *destination)
-	c1 := ws.NewClientWs(ctx, apiKey, secretKey, passphrase, wsPriUrl)
-	//c2 := ws.NewClientWs(ctx, apiKey, secretKey, passphrase, wsPubUrl)
-	priWs := ws.NewPrivateClient(c1)
-	//pubWs := ws.NewPublicClient(c2)
+	priC := ws.NewClient(ctx, apiKey, secretKey, passphrase, wsPriUrl)
+	//pubC := ws.NewClient(ctx, apiKey, secretKey, passphrase, wsPubUrl)
+	priWs := ws.NewPrivate(priC)
+	w := struct {
+		*ws.Private
+	}{priWs}
 
-	return &Client{r, priWs, ctx}, nil
+	return &Client{r, w, ctx}, nil
 }

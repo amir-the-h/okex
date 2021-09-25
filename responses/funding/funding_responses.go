@@ -7,43 +7,43 @@ import (
 
 type (
 	GetCurrencies struct {
-		responses.RestBasic
+		responses.Basic
 		Currencies []*models.Currency `json:"data"`
 	}
 	GetBalance struct {
-		responses.RestBasic
+		responses.Basic
 		Balances []*models.Balance `json:"data"`
 	}
 	FundsTransfer struct {
-		responses.RestBasic
+		responses.Basic
 		Transfers []*models.Transfer `json:"data"`
 	}
 	AssetBillsDetails struct {
-		responses.RestBasic
+		responses.Basic
 		Bills []*models.Bill `json:"data"`
 	}
 	GetDepositAddress struct {
-		responses.RestBasic
+		responses.Basic
 		DepositAddresses []*models.DepositAddress `json:"data"`
 	}
 	GetDepositHistory struct {
-		responses.RestBasic
+		responses.Basic
 		DepositHistories []*models.DepositHistory `json:"data"`
 	}
 	Withdrawal struct {
-		responses.RestBasic
+		responses.Basic
 		Withdrawals []*models.Withdrawal `json:"data"`
 	}
 	GetWithdrawalHistory struct {
-		responses.RestBasic
+		responses.Basic
 		WithdrawalHistories []*models.WithdrawalHistory `json:"data"`
 	}
 	PiggyBankPurchaseRedemption struct {
-		responses.RestBasic
+		responses.Basic
 		PiggyBanks []*models.PiggyBank `json:"data"`
 	}
 	GetPiggyBankBalance struct {
-		responses.RestBasic
+		responses.Basic
 		Balances []*models.PiggyBankBalance `json:"data"`
 	}
 )
