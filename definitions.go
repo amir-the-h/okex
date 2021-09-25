@@ -31,6 +31,7 @@ type (
 	OrderFlowType  string
 	OrderState     string
 	ActionType     string
+	APIKeyAccess   string
 
 	Destination           int
 	BillType              uint8
@@ -232,6 +233,9 @@ const (
 
 	ActionPurchase = ActionType("purchase")
 	ActionRedempt  = ActionType("redempt")
+
+	APIKeyReadOnly = APIKeyAccess("read_only")
+	APIKeyTrade    = APIKeyAccess("trade")
 )
 
 func (t JsonTime) MarshalJSON() ([]byte, error) {

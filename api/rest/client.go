@@ -15,6 +15,7 @@ import (
 // ClientRest is the rest api client
 type ClientRest struct {
 	Account     *Account
+	SubAccount  *SubAccount
 	Trade       *Trade
 	Funding     *Funding
 	Market      *Market
@@ -37,6 +38,7 @@ func NewClient(apiKey, secretKey, passphrase string, baseUrl okex.BaseUrl, desti
 		client:      http.DefaultClient,
 	}
 	c.Account = NewAccount(c)
+	c.SubAccount = NewSubAccount(c)
 	c.Trade = NewTrade(c)
 	c.Funding = NewFunding(c)
 	c.Market = NewMarket(c)
