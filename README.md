@@ -59,6 +59,6 @@ Supporting APIs
 - [x] [SubAccount](https://www.okex.com/docs-v5/en/#rest-api-subaccount)
 - [x] [Market Data](https://www.okex.com/docs-v5/en/#rest-api-market-data)
 - [x] [Public Data](https://www.okex.com/docs-v5/en/#rest-api-public-data)
-- [ ] [Trading Data](https://www.okex.com/docs-v5/en/#rest-api-trading-data)
+- [x] [Trading Data](https://www.okex.com/docs-v5/en/#rest-api-trading-data)
 - [ ] [Status](https://www.okex.com/docs-v5/en/#rest-api-statusl)
 
