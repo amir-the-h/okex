@@ -10,32 +10,32 @@ import (
 
 type (
 	Ticker struct {
-		Last      float64             `json:"last,string"`
-		LastSz    float64             `json:"lastSz,string"`
-		AskPx     float64             `json:"askPx,string"`
-		AskSz     float64             `json:"askSz,string"`
-		BidPx     float64             `json:"bidPx,string"`
-		BidSz     float64             `json:"bidSz,string"`
-		Open24h   float64             `json:"open24h,string"`
-		High24h   float64             `json:"high24h,string"`
-		Low24h    float64             `json:"low24h,string"`
-		VolCcy24h float64             `json:"volCcy24h,string"`
-		Vol24h    float64             `json:"vol24h,string"`
-		SodUtc0   float64             `json:"sodUtc0,string"`
-		SodUtc8   float64             `json:"sodUtc8,string"`
-		InstId    float64             `json:"instId,string"`
+		InstId    string              `json:"instId"`
+		Last      okex.JsonFloat64    `json:"last"`
+		LastSz    okex.JsonFloat64    `json:"lastSz"`
+		AskPx     okex.JsonFloat64    `json:"askPx"`
+		AskSz     okex.JsonFloat64    `json:"askSz"`
+		BidPx     okex.JsonFloat64    `json:"bidPx"`
+		BidSz     okex.JsonFloat64    `json:"bidSz"`
+		Open24h   okex.JsonFloat64    `json:"open24h"`
+		High24h   okex.JsonFloat64    `json:"high24h"`
+		Low24h    okex.JsonFloat64    `json:"low24h"`
+		VolCcy24h okex.JsonFloat64    `json:"volCcy24h"`
+		Vol24h    okex.JsonFloat64    `json:"vol24h"`
+		SodUtc0   okex.JsonFloat64    `json:"sodUtc0"`
+		SodUtc8   okex.JsonFloat64    `json:"sodUtc8"`
 		InstType  okex.InstrumentType `json:"instType"`
 		Ts        okex.JsonTime       `json:"ts"`
 	}
 	IndexTicker struct {
-		InstId  float64       `json:"instId,string"`
-		IdxPx   float64       `json:"idxPx,string"`
-		High24h float64       `json:"high24h,string"`
-		Low24h  float64       `json:"low24h,string"`
-		Open24h float64       `json:"open24h,string"`
-		SodUtc0 float64       `json:"sodUtc0,string"`
-		SodUtc8 float64       `json:"sodUtc8,string"`
-		Ts      okex.JsonTime `json:"ts"`
+		InstId  string           `json:"instId"`
+		IdxPx   okex.JsonFloat64 `json:"idxPx"`
+		High24h okex.JsonFloat64 `json:"high24h"`
+		Low24h  okex.JsonFloat64 `json:"low24h"`
+		Open24h okex.JsonFloat64 `json:"open24h"`
+		SodUtc0 okex.JsonFloat64 `json:"sodUtc0"`
+		SodUtc8 okex.JsonFloat64 `json:"sodUtc8"`
+		Ts      okex.JsonTime    `json:"ts"`
 	}
 	OrderBook struct {
 		Asks []*OrderBookEntity `json:"asks"`
@@ -65,30 +65,30 @@ type (
 		Ts okex.JsonTime
 	}
 	Trade struct {
-		InstId  string         `json:"instId"`
-		TradeId float64        `json:"tradeId,string"`
-		Px      float64        `json:"px,string"`
-		Sz      float64        `json:"sz,string"`
-		Side    okex.TradeSide `json:"side"`
-		Ts      okex.JsonTime  `json:"ts"`
+		InstId  string           `json:"instId"`
+		TradeId okex.JsonFloat64 `json:"tradeId"`
+		Px      okex.JsonFloat64 `json:"px"`
+		Sz      okex.JsonFloat64 `json:"sz"`
+		Side    okex.TradeSide   `json:"side"`
+		Ts      okex.JsonTime    `json:"ts"`
 	}
 	TotalVolume24H struct {
-		VolUsd float64       `json:"volUsd,string"`
-		VolCny float64       `json:"volCny,string"`
-		Ts     okex.JsonTime `json:"ts"`
+		VolUsd okex.JsonFloat64 `json:"volUsd"`
+		VolCny okex.JsonFloat64 `json:"volCny"`
+		Ts     okex.JsonTime    `json:"ts"`
 	}
 	IndexComponent struct {
-		Index      string        `json:"index"`
-		Last       float64       `json:"last,string"`
-		Components []*Component  `json:"components"`
-		Ts         okex.JsonTime `json:"ts"`
+		Index      string           `json:"index"`
+		Last       okex.JsonFloat64 `json:"last"`
+		Components []*Component     `json:"components"`
+		Ts         okex.JsonTime    `json:"ts"`
 	}
 	Component struct {
-		Exch   string  `json:"exch"`
-		Symbol string  `json:"symbol"`
-		SymPx  float64 `json:"symPx,string"`
-		Wgt    float64 `json:"wgt,string"`
-		CnvPx  float64 `json:"cnvPx,string"`
+		Exch   string           `json:"exch"`
+		Symbol string           `json:"symbol"`
+		SymPx  okex.JsonFloat64 `json:"symPx"`
+		Wgt    okex.JsonFloat64 `json:"wgt"`
+		CnvPx  okex.JsonFloat64 `json:"cnvPx"`
 	}
 )
 

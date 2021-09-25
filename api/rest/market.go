@@ -20,7 +20,7 @@ func NewMarket(c *ClientRest) *Market {
 	return &Market{c}
 }
 
-// GetTickers of the market
+// GetTickers
 // Retrieve the latest price snapshot, best bid/ask price, and trading volume in the last 24 hours.
 //
 // https://www.okex.com/docs-v5/en/#rest-api-market-data-get-tickers

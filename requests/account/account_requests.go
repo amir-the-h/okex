@@ -66,7 +66,7 @@ type (
 		InstId   string              `json:"instId,omitempty"`
 		Uly      string              `json:"uly,omitempty"`
 		Category okex.FeeCategory    `json:"category,omitempty,string"`
-		InstType okex.InstrumentType `json:"instType,string"`
+		InstType okex.InstrumentType `json:"instType"`
 	}
 	GetInterestAccrued struct {
 		InstId  string          `json:"instId,omitempty"`

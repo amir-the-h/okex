@@ -1,11 +1,11 @@
-package trade
+package market
 
 import "github.com/amir-the-h/okex"
 
 type (
 	GetTickers struct {
 		Uly      string              `json:"uly,omitempty"`
-		InstType okex.InstrumentType `json:"instType,string"`
+		InstType okex.InstrumentType `json:"instType"`
 	}
 	GetIndexTickers struct {
 		InstId   string `json:"instId,omitempty"`

@@ -24,13 +24,13 @@ type (
 		Ts         okex.JsonTime `json:"ts,omitempty"`
 	}
 	HistoryTransfer struct {
-		SubAcct string        `json:"subAcct,omitempty"`
-		Ccy     string        `json:"ccy,omitempty"`
-		BillId  int64         `json:"billId,omitempty,string"`
-		Type    okex.BillType `json:"type,omitempty"`
-		Ts      okex.JsonTime `json:"ts,omitempty"`
+		SubAcct string         `json:"subAcct,omitempty"`
+		Ccy     string         `json:"ccy,omitempty"`
+		BillId  okex.JsonInt64 `json:"billId,omitempty"`
+		Type    okex.BillType  `json:"type,omitempty"`
+		Ts      okex.JsonTime  `json:"ts,omitempty"`
 	}
 	Transfer struct {
-		TransId int64 `json:"transId,string"`
+		TransId okex.JsonInt64 `json:"transId"`
 	}
 )

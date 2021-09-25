@@ -11,27 +11,31 @@ import (
 )
 
 type (
-	BaseUrl        string
-	InstrumentType string
-	MarginMode     string
-	ContractType   string
-	PositionType   string
-	PositionSide   string
-	TradeMode      string
-	CountAction    string
-	OrderSide      string
-	GreekType      string
-	BarSize        string
-	TradeSide      string
-	ChannelName    string
-	Operation      string
-	EventType      string
-	OrderType      string
-	QuantityType   string
-	OrderFlowType  string
-	OrderState     string
-	ActionType     string
-	APIKeyAccess   string
+	BaseUrl               string
+	InstrumentType        string
+	MarginMode            string
+	ContractType          string
+	PositionType          string
+	PositionSide          string
+	TradeMode             string
+	CountAction           string
+	OrderSide             string
+	GreekType             string
+	BarSize               string
+	TradeSide             string
+	ChannelName           string
+	Operation             string
+	EventType             string
+	OrderType             string
+	QuantityType          string
+	OrderFlowType         string
+	OrderState            string
+	ActionType            string
+	APIKeyAccess          string
+	OptionType            string
+	AliasType             string
+	InstrumentState       string
+	DeliveryExcerciseType string
 
 	Destination           int
 	BillType              uint8
@@ -43,7 +47,9 @@ type (
 	WithdrawalDestination uint8
 	WithdrawalState       int8
 
-	JsonTime time.Time
+	JsonFloat64 float64
+	JsonInt64   int64
+	JsonTime    time.Time
 
 	ClientError error
 )
@@ -120,12 +126,12 @@ const (
 	BillADLCloseShortSubType                    = BillSubType(126)
 	BillADLBuySubType                           = BillSubType(127)
 	BillADLSellSubType                          = BillSubType(128)
-	BillExercisedSubType                        = BillSubType(170)
-	BillCounterpartyExercisedSubType            = BillSubType(171)
+	BillExcercisedSubType                       = BillSubType(170)
+	BillCounterpartyExcercisedSubType           = BillSubType(171)
 	BillExpiredOTMSubType                       = BillSubType(172)
 	BillDeliveryLongSubType                     = BillSubType(112)
 	BillDeliveryShortSubType                    = BillSubType(113)
-	BillDeliveryExerciseClawbackSubType         = BillSubType(117)
+	BillDeliveryExcerciseClawbackSubType        = BillSubType(117)
 	BillFundingFeeExpenseSubType                = BillSubType(173)
 	BillFundingFeeIncomeSubType                 = BillSubType(174)
 	BillSystemTransferInSubType                 = BillSubType(200)
@@ -200,6 +206,7 @@ const (
 	OrderLive            = OrderState("live")
 	OrderPartiallyFilled = OrderState("partially_filled")
 	OrderFilled          = OrderState("filled")
+	OrderUnfilled        = OrderState("unfilled")
 
 	TransferWithinAccount     = TransferType(0)
 	MasterAccountToSubAccount = TransferType(1)
@@ -236,6 +243,22 @@ const (
 
 	APIKeyReadOnly = APIKeyAccess("read_only")
 	APIKeyTrade    = APIKeyAccess("trade")
+
+	OptionCall = OptionType("C")
+	OptionPut  = OptionType("P")
+
+	AliasThisWeek    = AliasType("this_week")
+	AliasNextWeek    = AliasType("next_week")
+	AliasQuarter     = AliasType("quarter")
+	AliasNextQuarter = AliasType("next_quarter")
+
+	InstrumentLive    = InstrumentState("live")
+	InstrumentSuspend = InstrumentState("suspend")
+	InstrumentPreOpen = InstrumentState("preopen")
+
+	Delivery   = DeliveryExcerciseType("delivery")
+	Excercise  = DeliveryExcerciseType("exercised")
+	ExpiredOtm = DeliveryExcerciseType("expired_otm")
 )
 
 func (t JsonTime) MarshalJSON() ([]byte, error) {
@@ -244,6 +267,9 @@ func (t JsonTime) MarshalJSON() ([]byte, error) {
 
 func (t *JsonTime) UnmarshalJSON(s []byte) (err error) {
 	r := strings.Replace(string(s), `"`, ``, -1)
+	if r == "" {
+		return
+	}
 
 	q, err := strconv.ParseInt(r, 10, 64)
 	if err != nil {
@@ -254,6 +280,118 @@ func (t *JsonTime) UnmarshalJSON(s []byte) (err error) {
 }
 
 func (t JsonTime) String() string { return time.Time(t).String() }
+
+func (t *JsonFloat64) UnmarshalJSON(s []byte) (err error) {
+	r := strings.Replace(string(s), `"`, ``, -1)
+	if r == "" {
+		return
+	}
+
+	q, err := strconv.ParseFloat(r, 64)
+	if err != nil {
+		return err
+	}
+	*(*float64)(t) = q
+	return
+}
+
+func (t *JsonInt64) UnmarshalJSON(s []byte) (err error) {
+	r := strings.Replace(string(s), `"`, ``, -1)
+	if r == "" {
+		return
+	}
+
+	q, err := strconv.ParseInt(r, 10, 64)
+	if err != nil {
+		return err
+	}
+	*(*int64)(t) = q
+	return
+}
+
+func (t *WithdrawalState) UnmarshalJSON(s []byte) (err error) {
+	r := strings.Replace(string(s), `"`, ``, -1)
+	if r == "" {
+		return
+	}
+
+	q, err := strconv.ParseInt(r, 10, 8)
+	if err != nil {
+		return err
+	}
+	*(*int8)(t) = int8(q)
+	return
+}
+
+func (t *BillType) UnmarshalJSON(s []byte) (err error) {
+	r := strings.Replace(string(s), `"`, ``, -1)
+	if r == "" {
+		return
+	}
+
+	q, err := strconv.ParseUint(r, 10, 8)
+	if err != nil {
+		return err
+	}
+	*(*uint8)(t) = uint8(q)
+	return
+}
+
+func (t *BillSubType) UnmarshalJSON(s []byte) (err error) {
+	r := strings.Replace(string(s), `"`, ``, -1)
+	if r == "" {
+		return
+	}
+
+	q, err := strconv.ParseUint(r, 10, 8)
+	if err != nil {
+		return err
+	}
+	*(*uint8)(t) = uint8(q)
+	return
+}
+
+func (t *FeeCategory) UnmarshalJSON(s []byte) (err error) {
+	r := strings.Replace(string(s), `"`, ``, -1)
+	if r == "" {
+		return
+	}
+
+	q, err := strconv.ParseUint(r, 10, 8)
+	if err != nil {
+		return err
+	}
+	*(*uint8)(t) = uint8(q)
+	return
+}
+
+func (t *AccountType) UnmarshalJSON(s []byte) (err error) {
+	r := strings.Replace(string(s), `"`, ``, -1)
+	if r == "" {
+		return
+	}
+
+	q, err := strconv.ParseUint(r, 10, 8)
+	if err != nil {
+		return err
+	}
+	*(*uint8)(t) = uint8(q)
+	return
+}
+
+func (t *DepositState) UnmarshalJSON(s []byte) (err error) {
+	r := strings.Replace(string(s), `"`, ``, -1)
+	if r == "" {
+		return
+	}
+
+	q, err := strconv.ParseUint(r, 10, 8)
+	if err != nil {
+		return err
+	}
+	*(*uint8)(t) = uint8(q)
+	return
+}
 
 func (s BarSize) Duration() time.Duration {
 	switch s {
