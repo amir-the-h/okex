@@ -1,4 +1,4 @@
-package public
+package public_data
 
 import "github.com/amir-the-h/okex"
 
