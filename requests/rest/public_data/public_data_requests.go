@@ -30,7 +30,7 @@ type (
 		Uly     string `json:"uly"`
 		ExpTime string `json:"expTime,omitempty"`
 	}
-	GetEstimatedDeliveryExcercisePrice struct {
+	GetEstimatedDeliveryExercisePrice struct {
 		Uly     string `json:"uly"`
 		ExpTime string `json:"expTime,omitempty"`
 	}

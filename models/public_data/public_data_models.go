@@ -33,9 +33,9 @@ type (
 		Ts      okex.JsonTime                     `json:"ts"`
 	}
 	DeliveryExerciseHistoryDetails struct {
-		InstId string                     `json:"instId"`
-		Px     okex.JsonFloat64           `json:"px"`
-		Type   okex.DeliveryExcerciseType `json:"type"`
+		InstId string                    `json:"instId"`
+		Px     okex.JsonFloat64          `json:"px"`
+		Type   okex.DeliveryExerciseType `json:"type"`
 	}
 	OpenInterest struct {
 		InstId   string              `json:"instId"`
@@ -59,7 +59,7 @@ type (
 		SellLmt  okex.JsonFloat64    `json:"sellLmt"`
 		Ts       okex.JsonTime       `json:"ts"`
 	}
-	EstimatedDeliveryExcercisePrice struct {
+	EstimatedDeliveryExercisePrice struct {
 		InstId   string              `json:"instId"`
 		InstType okex.InstrumentType `json:"instType"`
 		SettlePx okex.JsonFloat64    `json:"settlePx"`

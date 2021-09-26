@@ -30,9 +30,9 @@ type (
 		responses.Basic
 		OptionMarketData []*public_data.OptionMarketData `json:"data,omitempty"`
 	}
-	GetEstimatedDeliveryExcercisePrice struct {
+	GetEstimatedDeliveryExercisePrice struct {
 		responses.Basic
-		EstimatedDeliveryExcercisePrices []*public_data.EstimatedDeliveryExcercisePrice `json:"data,omitempty"`
+		EstimatedDeliveryExercisePrices []*public_data.EstimatedDeliveryExercisePrice `json:"data,omitempty"`
 	}
 	GetDiscountRateAndInterestFreeQuota struct {
 		responses.Basic

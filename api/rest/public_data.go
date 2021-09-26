@@ -110,11 +110,11 @@ func (c *PublicData) GetOptionMarketData(req requests.GetOptionMarketData) (resp
 	return
 }
 
-// GetEstimatedDeliveryExcercisePrice
+// GetEstimatedDeliveryExercisePrice
 // Retrieve the estimated delivery price which will only have a return value one hour before the delivery/exercise.
 //
-// https://www.okex.com/docs-v5/en/#rest-api-public-data-get-estimated-delivery-excercise-price
-func (c *PublicData) GetEstimatedDeliveryExcercisePrice(req requests.GetEstimatedDeliveryExcercisePrice) (response responses.GetEstimatedDeliveryExcercisePrice, err error) {
+// https://www.okex.com/docs-v5/en/#rest-api-public-data-get-estimated-delivery-Exercise-price
+func (c *PublicData) GetEstimatedDeliveryExercisePrice(req requests.GetEstimatedDeliveryExercisePrice) (response responses.GetEstimatedDeliveryExercisePrice, err error) {
 	p := "/api/v5/public/estimated-price"
 	m := okex.S2M(req)
 	res, err := c.client.Do(http.MethodGet, p, false, m)

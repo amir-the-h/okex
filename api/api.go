@@ -10,9 +10,7 @@ import (
 // Client is the main api wrapper of okex
 type Client struct {
 	Rest *rest.ClientRest
-	Ws   struct {
-		*ws.Private
-	}
+	Ws   *ws.ClientWs
 	//PublicWs  *ws.PublicClient
 	ctx context.Context
 }
@@ -20,26 +18,21 @@ type Client struct {
 // NewClient returns a pointer to a fresh Client
 func NewClient(ctx context.Context, apiKey, secretKey, passphrase string, destination *okex.Destination) (*Client, error) {
 	restUrl := okex.RestUrl
-	//wsPubUrl := okex.PublicWsUrl
+	wsPubUrl := okex.PublicWsUrl
 	wsPriUrl := okex.PrivateWsUrl
 	switch *destination {
 	case okex.AwsServer:
 		restUrl = okex.AwsRestUrl
-		//wsPubUrl = okex.AwsPublicWsUrl
+		wsPubUrl = okex.AwsPublicWsUrl
 		wsPriUrl = okex.AwsPrivateWsUrl
 	case okex.DemoServer:
 		restUrl = okex.DemoRestUrl
-		//wsPubUrl = okex.DemoPublicWsUrl
+		wsPubUrl = okex.DemoPublicWsUrl
 		wsPriUrl = okex.DemoPrivateWsUrl
 	}
 
 	r := rest.NewClient(apiKey, secretKey, passphrase, restUrl, *destination)
-	priC := ws.NewClient(ctx, apiKey, secretKey, passphrase, wsPriUrl)
-	//pubC := ws.NewClient(ctx, apiKey, secretKey, passphrase, wsPubUrl)
-	priWs := ws.NewPrivate(priC)
-	w := struct {
-		*ws.Private
-	}{priWs}
+	c := ws.NewClient(ctx, apiKey, secretKey, passphrase, map[bool]okex.BaseUrl{true: wsPriUrl, false: wsPubUrl})
 
-	return &Client{r, w, ctx}, nil
+	return &Client{r, c, ctx}, nil
 }

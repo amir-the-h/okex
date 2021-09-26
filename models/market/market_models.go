@@ -42,6 +42,12 @@ type (
 		Bids []*OrderBookEntity `json:"bids"`
 		Ts   okex.JsonTime      `json:"ts"`
 	}
+	OrderBookWs struct {
+		Asks     []*OrderBookEntity `json:"asks"`
+		Bids     []*OrderBookEntity `json:"bids"`
+		Checksum int                `json:"checksum"`
+		Ts       okex.JsonTime      `json:"ts"`
+	}
 	OrderBookEntity struct {
 		DepthPrice      float64
 		Size            float64

@@ -6,10 +6,12 @@ import (
 	"github.com/amir-the-h/okex/events"
 	"github.com/amir-the-h/okex/events/private"
 	requests "github.com/amir-the-h/okex/requests/ws/private"
-	"log"
+	"time"
 )
 
-// Private is the private websocket api client
+// Private
+//
+// https://www.okex.com/docs-v5/en/#websocket-api-private-channel
 type Private struct {
 	*ClientWs
 	aCh   chan *private.Account
@@ -36,8 +38,9 @@ func (c *Private) Account(req requests.Account, ch ...chan *private.Account) err
 	if err := c.Login(); err != nil {
 		return err
 	}
+	c.waitForAuthorization()
 
-	return c.Subscribe([]okex.ChannelName{"account"}, m)
+	return c.Subscribe(true, []okex.ChannelName{"account"}, m)
 }
 
 // UAccount
@@ -49,7 +52,7 @@ func (c *Private) UAccount(req requests.Account, rCh ...bool) error {
 		c.aCh = nil
 	}
 
-	return c.Unsubscribe([]okex.ChannelName{"account"}, m)
+	return c.Unsubscribe(true, []okex.ChannelName{"account"}, m)
 }
 
 // Position
@@ -65,7 +68,8 @@ func (c *Private) Position(req requests.Position, ch ...chan *private.Position) 
 	if err := c.Login(); err != nil {
 		return err
 	}
-	return c.Subscribe([]okex.ChannelName{"positions"}, m)
+	c.waitForAuthorization()
+	return c.Subscribe(true, []okex.ChannelName{"positions"}, m)
 }
 
 // UPosition
@@ -80,7 +84,8 @@ func (c *Private) UPosition(req requests.Position, rCh ...bool) error {
 	if err := c.Login(); err != nil {
 		return err
 	}
-	return c.Subscribe([]okex.ChannelName{"positions"}, m)
+	c.waitForAuthorization()
+	return c.Unsubscribe(true, []okex.ChannelName{"positions"}, m)
 }
 
 // BalanceAndPosition
@@ -96,7 +101,8 @@ func (c *Private) BalanceAndPosition(ch ...chan *private.BalanceAndPosition) err
 	if err := c.Login(); err != nil {
 		return err
 	}
-	return c.Subscribe([]okex.ChannelName{"balance_and_position"}, m)
+	c.waitForAuthorization()
+	return c.Subscribe(true, []okex.ChannelName{"balance_and_position"}, m)
 }
 
 // UBalanceAndPosition unsubscribes a position channel
@@ -108,7 +114,7 @@ func (c *Private) UBalanceAndPosition(rCh ...bool) error {
 		c.bnpCh = nil
 	}
 
-	return c.Unsubscribe([]okex.ChannelName{"balance_and_position"}, m)
+	return c.Unsubscribe(true, []okex.ChannelName{"balance_and_position"}, m)
 }
 
 // Order
@@ -124,7 +130,8 @@ func (c *Private) Order(req requests.Order, ch ...chan *private.Order) error {
 	if err := c.Login(); err != nil {
 		return err
 	}
-	return c.Subscribe([]okex.ChannelName{"positions"}, m)
+	c.waitForAuthorization()
+	return c.Subscribe(true, []okex.ChannelName{"positions"}, m)
 }
 
 // UOrder
@@ -139,7 +146,8 @@ func (c *Private) UOrder(req requests.Order, rCh ...bool) error {
 	if err := c.Login(); err != nil {
 		return err
 	}
-	return c.Subscribe([]okex.ChannelName{"positions"}, m)
+	c.waitForAuthorization()
+	return c.Unsubscribe(true, []okex.ChannelName{"positions"}, m)
 }
 
 func (c *Private) Process(data []byte, e *events.Basic) bool {
@@ -148,7 +156,6 @@ func (c *Private) Process(data []byte, e *events.Basic) bool {
 		if !ok {
 			return false
 		}
-		log.Printf("p %+v", e.Arg)
 		switch ch {
 		case "account":
 			e := private.Account{}
@@ -162,6 +169,7 @@ func (c *Private) Process(data []byte, e *events.Basic) bool {
 				}
 				c.StructuredEventChan <- e
 			}()
+			return true
 		case "positions":
 			e := private.Position{}
 			err := json.Unmarshal(data, &e)
@@ -174,6 +182,7 @@ func (c *Private) Process(data []byte, e *events.Basic) bool {
 				}
 				c.StructuredEventChan <- e
 			}()
+			return true
 		case "balance_and_position":
 			e := private.BalanceAndPosition{}
 			err := json.Unmarshal(data, &e)
@@ -186,6 +195,7 @@ func (c *Private) Process(data []byte, e *events.Basic) bool {
 				}
 				c.StructuredEventChan <- e
 			}()
+			return true
 		case "orders":
 			e := private.Order{}
 			err := json.Unmarshal(data, &e)
@@ -198,8 +208,19 @@ func (c *Private) Process(data []byte, e *events.Basic) bool {
 				}
 				c.StructuredEventChan <- e
 			}()
+			return true
 		}
 	}
 
 	return false
+}
+
+func (c *Private) waitForAuthorization() {
+	ticker := time.NewTicker(time.Millisecond * 300)
+	defer ticker.Stop()
+	for range ticker.C {
+		if c.AuthorizedUntil != nil && time.Since(*c.AuthorizedUntil) < PingPeriod {
+			return
+		}
+	}
 }

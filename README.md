@@ -28,7 +28,7 @@ import (
 	"github.com/amir-the-h/okex/api"
 	"github.com/amir-the-h/okex/events"
 	"github.com/amir-the-h/okex/events/private"
-	ws_requests "github.com/amir-the-h/okex/requests/ws/private"
+	ws_private_requests "github.com/amir-the-h/okex/requests/ws/private"
 	"log"
 )
 
@@ -36,7 +36,7 @@ func main() {
 	apiKey := "YOUR-API-KEY"
 	secretKey := "YOUR-SECRET-KEY"
 	passphrase := "YOUR-PASS-PHRASE"
-	dest := okex.NormalServer
+	dest := okex.NormalServer // The main API server
 	ctx := context.Background()
 	client, err := api.NewClient(ctx, apiKey, secretKey, passphrase, &dest)
 	if err != nil {
@@ -54,40 +54,67 @@ func main() {
 	uSubChan := make(chan *events.Unsubscribe)
 	lCh := make(chan *events.Login)
 	oCh := make(chan *private.Order)
-	log.Print("WS", "Logging in")
-	client.Ws.Private.SetChannels(errChan, subChan, uSubChan)
-	err = client.Ws.Login(lCh)
+	iCh := make(chan *public.Instruments)
+
+	// to receive unique events individually in separated channels
+	client.Ws.SetChannels(errChan, subChan, uSubChan, lCh)
+
+	// subscribe into orders private channel
+	// it will do the login process and wait until authorization confirmed
+	err = client.Ws.Private.Order(ws_private_requests.Order{
+		InstType: okex.SwapInstrument,
+	}, oCh)
 	if err != nil {
 		log.Fatalln(err)
 	}
 
+	// subscribe into instruments public channel
+	// it doesn't need any authorization
+	err = client.Ws.Public.Instruments(ws_public_requests.Instruments{
+		InstType: okex.SwapInstrument,
+	}, iCh)
+	if err != nil {
+		log.Fatalln("Instruments", err)
+	}
+
+	// starting on listening 
 	for {
 		select {
 		case <-lCh:
-			log.Print("WS", "Logged in")
+			log.Print("[Authorized]")
 		case sub := <-subChan:
 			channel, _ := sub.Arg.Get("channel")
-			log.Printf("WS Subscribed on:\t%s", channel)
+			log.Printf("[Subscribed]\t%s", channel)
 		case uSub := <-uSubChan:
 			channel, _ := uSub.Arg.Get("channel")
-			log.Printf("WS Unsubscribed from:\t%s", channel)
+			log.Printf("[Unsubscribed]\t%s", channel)
 		case err := <-client.Ws.ErrChan:
-			log.Printf("WS Error:\t%+v", err)
+			log.Printf("[Error]\t%+v", err)
 		case o := <-oCh:
-			log.Printf("WS Event [Order]:\t %+v", o)
+			log.Print("[Event]\tOrder")
 			for _, p := range o.Orders {
-				log.Printf("\tOrder: \t%+v", p)
+				log.Printf("\t%+v", p)
 			}
-			// Cancel the context
-			// to stop all ops
-			client.Ws.Cancel()
-
+		case i := <-iCh:
+			log.Print("[Event]\tInstrument")
+			for _, p := range i.Instruments {
+				log.Printf("\t%+v", p)
+			}
 		case e := <-client.Ws.StructuredEventChan:
-			log.Printf("WS Event [STRUCTED]:\t%+v", e)
+			log.Printf("[Event] STRUCTED:\t%+v", e)
+			v := reflect.TypeOf(e)
+			switch v {
+			case reflect.TypeOf(events.Error{}):
+				log.Printf("[Error] STRUCTED:\t%+v", e)
+			case reflect.TypeOf(events.Subscribe{}):
+				log.Printf("[Subscribed] STRUCTED:\t%+v", e)
+			case reflect.TypeOf(events.Unsubscribe{}):
+				log.Printf("[Unsubscribed] STRUCTED:\t%+v", e)
+			}
 		case e := <-client.Ws.RawEventChan:
-			log.Printf("WS Event [RAW]:\t%+v", e)
+			log.Printf("[Event] RAW:\t%+v", e)
 		case b := <-client.Ws.DoneChan:
-			log.Printf("WS End:\t%v", b)
+			log.Printf("[End]:\t%v", b)
 			return
 		}
 	}
@@ -111,8 +138,17 @@ Supporting APIs
 * [Ws](https://www.okex.com/docs-v5/en/#websocket-api)
     * [Private Channel](https://www.okex.com/docs-v5/en/#websocket-api-private-channel) (except demo special trading
       endpoints)
-
-[comment]: <> (    * [Public Channel]&#40;https://www.okex.com/docs-v5/en/#websocket-api-public-channels&#41;)
+    * [Public Channel](https://www.okex.com/docs-v5/en/#websocket-api-public-channels)
 
 [comment]: <> (    * [Trade]&#40;https://www.okex.com/docs-v5/en/#websocket-api-trade&#41;)
 
+
+Features
+--------
+
+* All [requests](/requests), [responses](/responses), and [events](events) are well types and will convert into the
+  system types instead of using API's strings. *Note that zero values will be replaced with non-existing data.*
+* Fully automated authorization steps for both [REST](/api/rest) and [WS](/api/ws)
+* To receive websocket events you can choose [RawEventChan](/api/ws/client.go#L25)
+  , [StructuredEventChan](/api/ws/client.go#L28), or provide your own
+  channels. [More info](https://github.com/amir-the-h/okex/wiki/Handling-WS-events) 

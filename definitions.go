@@ -11,31 +11,32 @@ import (
 )
 
 type (
-	BaseUrl               string
-	InstrumentType        string
-	MarginMode            string
-	ContractType          string
-	PositionType          string
-	PositionSide          string
-	TradeMode             string
-	CountAction           string
-	OrderSide             string
-	GreekType             string
-	BarSize               string
-	TradeSide             string
-	ChannelName           string
-	Operation             string
-	EventType             string
-	OrderType             string
-	QuantityType          string
-	OrderFlowType         string
-	OrderState            string
-	ActionType            string
-	APIKeyAccess          string
-	OptionType            string
-	AliasType             string
-	InstrumentState       string
-	DeliveryExcerciseType string
+	BaseUrl              string
+	InstrumentType       string
+	MarginMode           string
+	ContractType         string
+	PositionType         string
+	PositionSide         string
+	TradeMode            string
+	CountAction          string
+	OrderSide            string
+	GreekType            string
+	BarSize              string
+	TradeSide            string
+	ChannelName          string
+	Operation            string
+	EventType            string
+	OrderType            string
+	QuantityType         string
+	OrderFlowType        string
+	OrderState           string
+	ActionType           string
+	APIKeyAccess         string
+	OptionType           string
+	AliasType            string
+	InstrumentState      string
+	DeliveryExerciseType string
+	CandleStickWsBarSize string
 
 	Destination           int
 	BillType              uint8
@@ -126,12 +127,12 @@ const (
 	BillADLCloseShortSubType                    = BillSubType(126)
 	BillADLBuySubType                           = BillSubType(127)
 	BillADLSellSubType                          = BillSubType(128)
-	BillExcercisedSubType                       = BillSubType(170)
-	BillCounterpartyExcercisedSubType           = BillSubType(171)
+	BillExercisedSubType                        = BillSubType(170)
+	BillCounterpartyExercisedSubType            = BillSubType(171)
 	BillExpiredOTMSubType                       = BillSubType(172)
 	BillDeliveryLongSubType                     = BillSubType(112)
 	BillDeliveryShortSubType                    = BillSubType(113)
-	BillDeliveryExcerciseClawbackSubType        = BillSubType(117)
+	BillDeliveryExerciseClawbackSubType         = BillSubType(117)
 	BillFundingFeeExpenseSubType                = BillSubType(173)
 	BillFundingFeeIncomeSubType                 = BillSubType(174)
 	BillSystemTransferInSubType                 = BillSubType(200)
@@ -256,14 +257,31 @@ const (
 	InstrumentSuspend = InstrumentState("suspend")
 	InstrumentPreOpen = InstrumentState("preopen")
 
-	Delivery   = DeliveryExcerciseType("delivery")
-	Excercise  = DeliveryExcerciseType("exercised")
-	ExpiredOtm = DeliveryExcerciseType("expired_otm")
+	Delivery   = DeliveryExerciseType("delivery")
+	Exercise   = DeliveryExerciseType("exercised")
+	ExpiredOtm = DeliveryExerciseType("expired_otm")
+
+	CandleStick1Y  = CandleStickWsBarSize("candle1Y")
+	CandleStick6M  = CandleStickWsBarSize("candle6M")
+	CandleStick3M  = CandleStickWsBarSize("candle3M")
+	CandleStick1M  = CandleStickWsBarSize("candle1M")
+	CandleStick5D  = CandleStickWsBarSize("candle5D")
+	CandleStick3D  = CandleStickWsBarSize("candle3D")
+	CandleStick2D  = CandleStickWsBarSize("candle2D")
+	CandleStick1D  = CandleStickWsBarSize("candle1D")
+	CandleStick12H = CandleStickWsBarSize("candle12H")
+	CandleStick6H  = CandleStickWsBarSize("candle6H")
+	CandleStick4H  = CandleStickWsBarSize("candle4H")
+	CandleStick2H  = CandleStickWsBarSize("candle2H")
+	CandleStick1H  = CandleStickWsBarSize("candle1H")
+	CandleStick30m = CandleStickWsBarSize("candle30m")
+	CandleStick15m = CandleStickWsBarSize("candle15m")
+	CandleStick5m  = CandleStickWsBarSize("candle5m")
+	CandleStick3m  = CandleStickWsBarSize("candle3m")
+	CandleStick1m  = CandleStickWsBarSize("candle1m")
 )
 
-func (t JsonTime) MarshalJSON() ([]byte, error) {
-	return []byte(strconv.FormatInt(time.Time(t).Unix(), 10)), nil
-}
+func (t JsonTime) String() string { return time.Time(t).String() }
 
 func (t *JsonTime) UnmarshalJSON(s []byte) (err error) {
 	r := strings.Replace(string(s), `"`, ``, -1)
@@ -278,9 +296,6 @@ func (t *JsonTime) UnmarshalJSON(s []byte) (err error) {
 	*(*time.Time)(t) = time.UnixMilli(q)
 	return
 }
-
-func (t JsonTime) String() string { return time.Time(t).String() }
-
 func (t *JsonFloat64) UnmarshalJSON(s []byte) (err error) {
 	r := strings.Replace(string(s), `"`, ``, -1)
 	if r == "" {
@@ -294,7 +309,6 @@ func (t *JsonFloat64) UnmarshalJSON(s []byte) (err error) {
 	*(*float64)(t) = q
 	return
 }
-
 func (t *JsonInt64) UnmarshalJSON(s []byte) (err error) {
 	r := strings.Replace(string(s), `"`, ``, -1)
 	if r == "" {
@@ -308,7 +322,6 @@ func (t *JsonInt64) UnmarshalJSON(s []byte) (err error) {
 	*(*int64)(t) = q
 	return
 }
-
 func (t *WithdrawalState) UnmarshalJSON(s []byte) (err error) {
 	r := strings.Replace(string(s), `"`, ``, -1)
 	if r == "" {
@@ -322,7 +335,6 @@ func (t *WithdrawalState) UnmarshalJSON(s []byte) (err error) {
 	*(*int8)(t) = int8(q)
 	return
 }
-
 func (t *BillType) UnmarshalJSON(s []byte) (err error) {
 	r := strings.Replace(string(s), `"`, ``, -1)
 	if r == "" {
@@ -336,7 +348,6 @@ func (t *BillType) UnmarshalJSON(s []byte) (err error) {
 	*(*uint8)(t) = uint8(q)
 	return
 }
-
 func (t *BillSubType) UnmarshalJSON(s []byte) (err error) {
 	r := strings.Replace(string(s), `"`, ``, -1)
 	if r == "" {
@@ -350,7 +361,6 @@ func (t *BillSubType) UnmarshalJSON(s []byte) (err error) {
 	*(*uint8)(t) = uint8(q)
 	return
 }
-
 func (t *FeeCategory) UnmarshalJSON(s []byte) (err error) {
 	r := strings.Replace(string(s), `"`, ``, -1)
 	if r == "" {
@@ -364,7 +374,6 @@ func (t *FeeCategory) UnmarshalJSON(s []byte) (err error) {
 	*(*uint8)(t) = uint8(q)
 	return
 }
-
 func (t *AccountType) UnmarshalJSON(s []byte) (err error) {
 	r := strings.Replace(string(s), `"`, ``, -1)
 	if r == "" {
@@ -378,7 +387,6 @@ func (t *AccountType) UnmarshalJSON(s []byte) (err error) {
 	*(*uint8)(t) = uint8(q)
 	return
 }
-
 func (t *DepositState) UnmarshalJSON(s []byte) (err error) {
 	r := strings.Replace(string(s), `"`, ``, -1)
 	if r == "" {
@@ -393,8 +401,8 @@ func (t *DepositState) UnmarshalJSON(s []byte) (err error) {
 	return
 }
 
-func (s BarSize) Duration() time.Duration {
-	switch s {
+func (t BarSize) Duration() time.Duration {
+	switch t {
 	case Bar3m:
 		return time.Minute * 3
 	case Bar5m:

@@ -10,7 +10,6 @@ import (
 	"github.com/amir-the-h/okex"
 	"github.com/amir-the-h/okex/events"
 	"github.com/gorilla/websocket"
-	"log"
 	"net/http"
 	"sync"
 	"time"
@@ -25,21 +24,22 @@ type ClientWs struct {
 	DoneChan            chan interface{}
 	RawEventChan        chan *events.Basic
 	ErrChan             chan *events.Error
+	LoginChan           chan *events.Login
 	StructuredEventChan chan interface{}
 	Private             *Private
-	lCh                 chan *events.Login
+	Public              *Public
 	SubscribeChan       chan *events.Subscribe
 	UnsubscribeCh       chan *events.Unsubscribe
-	sendChan            chan []byte
+	sendChan            map[bool]chan []byte
+	url                 map[bool]okex.BaseUrl
+	conn                map[bool]*websocket.Conn
 	apiKey              string
 	secretKey           []byte
 	passphrase          string
 	destination         okex.Destination
-	url                 okex.BaseUrl
-	lastTransmit        *time.Time
-	conn                *websocket.Conn
-	mu                  *sync.Mutex
-	rmu                 *sync.Mutex
+	lastTransmit        map[bool]*time.Time
+	mu                  map[bool]*sync.Mutex
+	rmu                 map[bool]*sync.Mutex
 	ctx                 context.Context
 }
 
@@ -47,11 +47,11 @@ const (
 	redialTick = 2 * time.Second
 	writeWait  = 3 * time.Second
 	pongWait   = 30 * time.Second
-	pingPeriod = (pongWait * 8) / 10
+	PingPeriod = (pongWait * 8) / 10
 )
 
 // NewClient returns a pointer to a fresh ClientWs
-func NewClient(ctx context.Context, apiKey, secretKey, passphrase string, url okex.BaseUrl) *ClientWs {
+func NewClient(ctx context.Context, apiKey, secretKey, passphrase string, url map[bool]okex.BaseUrl) *ClientWs {
 	ctx, cancel := context.WithCancel(ctx)
 	c := &ClientWs{
 		apiKey:              apiKey,
@@ -60,14 +60,17 @@ func NewClient(ctx context.Context, apiKey, secretKey, passphrase string, url ok
 		ctx:                 ctx,
 		Cancel:              cancel,
 		url:                 url,
-		sendChan:            make(chan []byte, 5),
+		sendChan:            map[bool]chan []byte{true: make(chan []byte), false: make(chan []byte)},
 		DoneChan:            make(chan interface{}),
-		RawEventChan:        make(chan *events.Basic),
 		StructuredEventChan: make(chan interface{}),
-		mu:                  &sync.Mutex{},
-		rmu:                 &sync.Mutex{},
+		RawEventChan:        make(chan *events.Basic),
+		conn:                make(map[bool]*websocket.Conn),
+		lastTransmit:        make(map[bool]*time.Time),
+		mu:                  map[bool]*sync.Mutex{true: {}, false: {}},
+		rmu:                 map[bool]*sync.Mutex{true: {}, false: {}},
 	}
 	c.Private = NewPrivate(c)
+	c.Public = NewPublic(c)
 
 	return c
 }
@@ -75,11 +78,11 @@ func NewClient(ctx context.Context, apiKey, secretKey, passphrase string, url ok
 // Connect into the server
 //
 // https://www.okex.com/docs-v5/en/#websocket-api-connect
-func (c *ClientWs) Connect() error {
-	if c.conn != nil {
+func (c *ClientWs) Connect(p bool) error {
+	if c.conn[p] != nil {
 		return nil
 	}
-	err := c.dial()
+	err := c.dial(p)
 	if err == nil {
 		return nil
 	}
@@ -88,11 +91,10 @@ func (c *ClientWs) Connect() error {
 	for {
 		select {
 		case <-ticker.C:
-			err = c.dial()
+			err = c.dial(p)
 			if err == nil {
 				return nil
 			}
-			log.Println(err)
 		case <-c.ctx.Done():
 			return c.handleCancel("connect")
 		}
@@ -102,8 +104,8 @@ func (c *ClientWs) Connect() error {
 // Login
 //
 // https://www.okex.com/docs-v5/en/#websocket-api-login
-func (c *ClientWs) Login(ch ...chan *events.Login) error {
-	if c.AuthorizedUntil != nil && time.Since(*c.AuthorizedUntil) < pingPeriod {
+func (c *ClientWs) Login() error {
+	if c.AuthorizedUntil != nil && time.Since(*c.AuthorizedUntil) < PingPeriod {
 		return nil
 	}
 	method := http.MethodGet
@@ -117,19 +119,21 @@ func (c *ClientWs) Login(ch ...chan *events.Login) error {
 			"sign":       sign,
 		},
 	}
-	if len(ch) > 0 {
-		c.lCh = ch[0]
-	}
 
-	return c.Send(okex.LoginOperation, args)
+	return c.Send(true, okex.LoginOperation, args)
 }
 
 // Subscribe
 // Users can choose to subscribe to one or more channels, and the total length of multiple channels cannot exceed 4096 bytes.
 //
 // https://www.okex.com/docs-v5/en/#websocket-api-subscribe
-func (c *ClientWs) Subscribe(ch []okex.ChannelName, args map[string]string) error {
-	tmpArgs := make([]map[string]string, len(ch))
+func (c *ClientWs) Subscribe(p bool, ch []okex.ChannelName, args map[string]string) error {
+	count := 1
+	if len(ch) != 0 {
+		count = len(ch)
+	}
+	tmpArgs := make([]map[string]string, count)
+	tmpArgs[0] = args
 	for i, name := range ch {
 		tmpArgs[i] = map[string]string{}
 		tmpArgs[i]["channel"] = string(name)
@@ -138,13 +142,13 @@ func (c *ClientWs) Subscribe(ch []okex.ChannelName, args map[string]string) erro
 		}
 	}
 
-	return c.Send(okex.SubscribeOperation, tmpArgs)
+	return c.Send(p, okex.SubscribeOperation, tmpArgs)
 }
 
 // Unsubscribe into channel(s)
 //
 // https://www.okex.com/docs-v5/en/#websocket-api-unsubscribe
-func (c *ClientWs) Unsubscribe(ch []okex.ChannelName, args map[string]string) error {
+func (c *ClientWs) Unsubscribe(p bool, ch []okex.ChannelName, args map[string]string) error {
 	tmpArgs := make([]map[string]string, len(ch))
 	for i, name := range ch {
 		tmpArgs[i] = make(map[string]string)
@@ -154,12 +158,12 @@ func (c *ClientWs) Unsubscribe(ch []okex.ChannelName, args map[string]string) er
 		}
 	}
 
-	return c.Send(okex.UnsubscribeOperation, tmpArgs)
+	return c.Send(p, okex.UnsubscribeOperation, tmpArgs)
 }
 
 // Send message through either connections
-func (c *ClientWs) Send(op okex.Operation, args []map[string]string) error {
-	err := c.Connect()
+func (c *ClientWs) Send(p bool, op okex.Operation, args []map[string]string) error {
+	err := c.Connect(p)
 	if err != nil {
 		return err
 	}
@@ -173,7 +177,7 @@ func (c *ClientWs) Send(op okex.Operation, args []map[string]string) error {
 		return err
 	}
 
-	c.sendChan <- j
+	c.sendChan[p] <- j
 
 	return nil
 }
@@ -214,14 +218,17 @@ func (c *ClientWs) process(data []byte, e *events.Basic) bool {
 		e := events.Login{}
 		_ = json.Unmarshal(data, &e)
 		go func() {
-			if c.lCh != nil {
-				c.lCh <- &e
+			if c.LoginChan != nil {
+				c.LoginChan <- &e
 			}
 			c.StructuredEventChan <- e
 		}()
 		return true
 	default:
 		if c.Private.Process(data, e) {
+			return true
+		}
+		if c.Public.Process(data, e) {
 			return true
 		}
 	}
@@ -232,105 +239,110 @@ func (c *ClientWs) process(data []byte, e *events.Basic) bool {
 }
 
 // SetChannels to receive certain events on separate channel
-func (c *ClientWs) SetChannels(errCh chan *events.Error, subCh chan *events.Subscribe, unSub chan *events.Unsubscribe) {
+func (c *ClientWs) SetChannels(errCh chan *events.Error, subCh chan *events.Subscribe, unSub chan *events.Unsubscribe, lCh chan *events.Login) {
 	c.ErrChan = errCh
 	c.SubscribeChan = subCh
 	c.UnsubscribeCh = unSub
+	c.LoginChan = lCh
 }
 
-func (c *ClientWs) dial() error {
-	c.mu.Lock()
-	c.rmu.Lock()
+func (c *ClientWs) dial(p bool) error {
+	c.mu[p].Lock()
+	c.rmu[p].Lock()
 	defer func() {
-		c.mu.Unlock()
-		c.rmu.Unlock()
+		c.mu[p].Unlock()
+		c.rmu[p].Unlock()
 	}()
-	conn, res, err := websocket.DefaultDialer.Dial(string(c.url), nil)
+	conn, res, err := websocket.DefaultDialer.Dial(string(c.url[p]), nil)
 	if err != nil {
 		return fmt.Errorf("error %d: %s", res.StatusCode, err)
 	}
 	go func() {
-		err := c.receiver()
+		err := c.receiver(p)
 		if err != nil {
 			fmt.Printf("receiver error: %v\n", err)
 			c.Cancel()
 		}
 	}()
 	go func() {
-		err := c.sender()
+		err := c.sender(p)
 		if err != nil {
 			fmt.Printf("sender error: %v\n", err)
 			c.Cancel()
 		}
 	}()
-	c.conn = conn
+	c.conn[p] = conn
 
 	return nil
 }
-func (c *ClientWs) sender() error {
+func (c *ClientWs) sender(p bool) error {
 	ticker := time.NewTicker(time.Millisecond * 300)
 	defer ticker.Stop()
 	for {
 		select {
-		case data := <-c.sendChan:
-			c.mu.Lock()
-			err := c.conn.SetWriteDeadline(time.Now().Add(writeWait))
+		case data := <-c.sendChan[p]:
+			c.mu[p].Lock()
+			err := c.conn[p].SetWriteDeadline(time.Now().Add(writeWait))
 			if err != nil {
-				c.mu.Unlock()
+				c.mu[p].Unlock()
 				return err
 			}
 
-			w, err := c.conn.NextWriter(websocket.TextMessage)
+			w, err := c.conn[p].NextWriter(websocket.TextMessage)
 			if err != nil {
-				c.mu.Unlock()
+				c.mu[p].Unlock()
 				return err
 			}
 
 			if _, err = w.Write(data); err != nil {
-				c.mu.Unlock()
+				c.mu[p].Unlock()
 				return err
 			}
 
-			c.mu.Unlock()
 			now := time.Now()
-			c.lastTransmit = &now
+			c.lastTransmit[p] = &now
+			c.mu[p].Unlock()
 			if err := w.Close(); err != nil {
 				return err
 			}
 		case <-ticker.C:
-			if c.conn != nil && (c.lastTransmit == nil || (c.lastTransmit != nil && time.Since(*c.lastTransmit) > pingPeriod)) {
-				c.sendChan <- []byte("ping")
+			if c.conn[p] != nil && (c.lastTransmit[p] == nil || (c.lastTransmit[p] != nil && time.Since(*c.lastTransmit[p]) > PingPeriod)) {
+				go func() {
+					c.sendChan[p] <- []byte("ping")
+				}()
 			}
 		case <-c.ctx.Done():
 			return c.handleCancel("sender")
 		}
 	}
 }
-func (c *ClientWs) receiver() error {
+func (c *ClientWs) receiver(p bool) error {
 	for {
 		select {
 		case <-c.ctx.Done():
 			return c.handleCancel("receiver")
 		default:
-			c.rmu.Lock()
-			err := c.conn.SetReadDeadline(time.Now().Add(pongWait))
+			c.rmu[p].Lock()
+			err := c.conn[p].SetReadDeadline(time.Now().Add(pongWait))
 			if err != nil {
-				c.rmu.Unlock()
+				c.rmu[p].Unlock()
 				return err
 			}
 
-			mt, data, err := c.conn.ReadMessage()
+			mt, data, err := c.conn[p].ReadMessage()
 			if err != nil {
-				c.rmu.Unlock()
+				c.rmu[p].Unlock()
 				if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
-					return c.conn.Close()
+					return c.conn[p].Close()
 				}
 				return err
 			}
 
-			c.rmu.Unlock()
+			c.rmu[p].Unlock()
 			now := time.Now()
-			c.lastTransmit = &now
+			c.mu[p].Lock()
+			c.lastTransmit[p] = &now
+			c.mu[p].Unlock()
 			if mt == websocket.TextMessage && string(data) != "pong" {
 				e := &events.Basic{}
 				if err := json.Unmarshal(data, &e); err != nil {
