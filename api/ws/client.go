@@ -37,7 +37,6 @@ type ClientWs struct {
 	apiKey              string
 	secretKey           []byte
 	passphrase          string
-	destination         okex.Destination
 	lastTransmit        map[bool]*time.Time
 	mu                  map[bool]*sync.Mutex
 	rmu                 map[bool]*sync.Mutex
