@@ -1,5 +1,6 @@
 okex
 ====
+[![Go Reference](https://pkg.go.dev/badge/github.com/amir-the-h/okex.svg)](https://pkg.go.dev/github.com/amir-the-h/okex)
 
 *NOTICE:*
 > PACKAGE IS CURRENTLY UNDER HEAVY DEVELOPMENT AND THERE IS NO GUARANTY FOR STABILITY UNTIL V1 RELEASE.
