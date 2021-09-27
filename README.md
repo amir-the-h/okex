@@ -13,7 +13,7 @@ Installation
 -----------------
 
 ```bash
-go get github.com/amir-the-h/okex
+go get github.com/amir-the-h/okex@v1.0.0-alpha
 ```
 
 Usage
