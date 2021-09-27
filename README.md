@@ -29,6 +29,7 @@ import (
 	"github.com/amir-the-h/okex/events"
 	"github.com/amir-the-h/okex/events/private"
 	ws_private_requests "github.com/amir-the-h/okex/requests/ws/private"
+	ws_public_requests "github.com/amir-the-h/okex/requests/ws/public"
 	"log"
 )
 
