@@ -6,6 +6,7 @@ okex
 [![GitHub license](https://img.shields.io/github/license/amir-the-h/okex.svg)](https://github.com/amir-the-h/okex/blob/main/LICENSE)
 [![GitHub release](https://img.shields.io/github/release/amir-the-h/okex.svg)](https://GitHub.com/amir-the-h/okex/releases/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![CodeQL](https://github.com/amir-the-h/okex/workflows/CodeQL/badge.svg)](https://github.com/amir-the-h/okex/actions?query=workflow%3ACodeQL)
 
 *NOTICE:*
 > PACKAGE IS CURRENTLY UNDER HEAVY DEVELOPMENT AND THERE IS NO GUARANTY FOR STABILITY UNTIL V1 RELEASE.
