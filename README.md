@@ -1,12 +1,10 @@
 okex
 ====
-[![made-with-Go](https://img.shields.io/badge/Made%20with-Go-1f425f.svg)](http://golang.org)
 [![Go Reference](https://pkg.go.dev/badge/github.com/amir-the-h/okex.svg)](https://pkg.go.dev/github.com/amir-the-h/okex)
 [![GitHub go.mod Go version of a Go module](https://img.shields.io/github/go-mod/go-version/amir-the-h/okex.svg)](https://github.com/amir-the-h/okex)
 [![GoReportCard example](https://goreportcard.com/badge/github.com/amir-the-h/okex)](https://goreportcard.com/report/github.com/amir-the-h/okex)
 [![GitHub license](https://img.shields.io/github/license/amir-the-h/okex.svg)](https://github.com/amir-the-h/okex/blob/main/LICENSE)
 [![GitHub release](https://img.shields.io/github/release/amir-the-h/okex.svg)](https://GitHub.com/amir-the-h/okex/releases/)
-[![GitHub latest commit](https://badgen.net/github/last-commit/Naereen/Strapdown.js)](https://GitHub.com/Naereen/StrapDown.js/commit/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 *NOTICE:*
