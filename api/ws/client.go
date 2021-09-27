@@ -28,6 +28,7 @@ type ClientWs struct {
 	StructuredEventChan chan interface{}
 	Private             *Private
 	Public              *Public
+	Trade               *Trade
 	SubscribeChan       chan *events.Subscribe
 	UnsubscribeCh       chan *events.Unsubscribe
 	sendChan            map[bool]chan []byte
@@ -182,62 +183,6 @@ func (c *ClientWs) Send(p bool, op okex.Operation, args []map[string]string) err
 	return nil
 }
 
-// process the incoming event
-func (c *ClientWs) process(data []byte, e *events.Basic) bool {
-	switch e.Event {
-	case "error":
-		e := events.Error{}
-		_ = json.Unmarshal(data, &e)
-		go func() {
-			c.ErrChan <- &e
-		}()
-		return true
-	case "subscribe":
-		e := events.Subscribe{}
-		_ = json.Unmarshal(data, &e)
-		go func() {
-			if c.SubscribeChan != nil {
-				c.SubscribeChan <- &e
-			}
-			c.StructuredEventChan <- e
-		}()
-		return true
-	case "unsubscribe":
-		e := events.Unsubscribe{}
-		_ = json.Unmarshal(data, &e)
-		go func() {
-			if c.UnsubscribeCh != nil {
-				c.UnsubscribeCh <- &e
-			}
-			c.StructuredEventChan <- e
-		}()
-		return true
-	case "login":
-		au := time.Now().Add(time.Second * 30)
-		c.AuthorizedUntil = &au
-		e := events.Login{}
-		_ = json.Unmarshal(data, &e)
-		go func() {
-			if c.LoginChan != nil {
-				c.LoginChan <- &e
-			}
-			c.StructuredEventChan <- e
-		}()
-		return true
-	default:
-		if c.Private.Process(data, e) {
-			return true
-		}
-		if c.Public.Process(data, e) {
-			return true
-		}
-	}
-
-	go func() { c.RawEventChan <- e }()
-
-	return false
-}
-
 // SetChannels to receive certain events on separate channel
 func (c *ClientWs) SetChannels(errCh chan *events.Error, subCh chan *events.Subscribe, unSub chan *events.Unsubscribe, lCh chan *events.Login) {
 	c.ErrChan = errCh
@@ -371,4 +316,56 @@ func (c *ClientWs) handleCancel(msg string) error {
 		c.DoneChan <- msg
 	}()
 	return fmt.Errorf("operation cancelled: %s", msg)
+}
+func (c *ClientWs) process(data []byte, e *events.Basic) bool {
+	switch e.Event {
+	case "error":
+		e := events.Error{}
+		_ = json.Unmarshal(data, &e)
+		go func() {
+			c.ErrChan <- &e
+		}()
+		return true
+	case "subscribe":
+		e := events.Subscribe{}
+		_ = json.Unmarshal(data, &e)
+		go func() {
+			if c.SubscribeChan != nil {
+				c.SubscribeChan <- &e
+			}
+			c.StructuredEventChan <- e
+		}()
+		return true
+	case "unsubscribe":
+		e := events.Unsubscribe{}
+		_ = json.Unmarshal(data, &e)
+		go func() {
+			if c.UnsubscribeCh != nil {
+				c.UnsubscribeCh <- &e
+			}
+			c.StructuredEventChan <- e
+		}()
+		return true
+	case "login":
+		au := time.Now().Add(time.Second * 30)
+		c.AuthorizedUntil = &au
+		e := events.Login{}
+		_ = json.Unmarshal(data, &e)
+		go func() {
+			if c.LoginChan != nil {
+				c.LoginChan <- &e
+			}
+			c.StructuredEventChan <- e
+		}()
+		return true
+	}
+	if c.Private.Process(data, e) {
+		return true
+	}
+	if c.Public.Process(data, e) {
+		return true
+	}
+	go func() { c.RawEventChan <- e }()
+
+	return false
 }

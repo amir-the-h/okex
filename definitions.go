@@ -181,9 +181,15 @@ const (
 	TradeBuySide  = TradeSide("buy")
 	TradeSellSide = TradeSide("sell")
 
-	LoginOperation       = Operation("login")
-	SubscribeOperation   = Operation("subscribe")
-	UnsubscribeOperation = Operation("unsubscribe")
+	LoginOperation            = Operation("login")
+	SubscribeOperation        = Operation("subscribe")
+	UnsubscribeOperation      = Operation("unsubscribe")
+	OrderOperation            = Operation("order")
+	BatchOrderOperation       = Operation("batch-orders")
+	CancelOrderOperation      = Operation("cancel-order")
+	BatchCancelOrderOperation = Operation("batch-cancel-orders")
+	AmendOrderOperation       = Operation("amend-order")
+	BatchAmendOrderOperation  = Operation("batch-amend-orders")
 
 	OrderMarket          = OrderType("market")
 	OrderLimit           = OrderType("limit")

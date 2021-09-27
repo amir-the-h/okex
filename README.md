@@ -139,15 +139,14 @@ Supporting APIs
     * [Private Channel](https://www.okex.com/docs-v5/en/#websocket-api-private-channel) (except demo special trading
       endpoints)
     * [Public Channel](https://www.okex.com/docs-v5/en/#websocket-api-public-channels)
-
-[comment]: <> (    * [Trade]&#40;https://www.okex.com/docs-v5/en/#websocket-api-trade&#41;)
-
+    * [Trade](https://www.okex.com/docs-v5/en/#websocket-api-trade)
 
 Features
 --------
 
-* All [requests](/requests), [responses](/responses), and [events](events) are well types and will convert into the
-  system types instead of using API's strings. *Note that zero values will be replaced with non-existing data.*
+* All [requests](/requests), [responses](/responses), and [events](events) are well typed and will convert into the
+  language built-in types instead of using API's strings. *Note that zero values will be replaced with non-existing
+  data.*
 * Fully automated authorization steps for both [REST](/api/rest) and [WS](/api/ws)
 * To receive websocket events you can choose [RawEventChan](/api/ws/client.go#L25)
   , [StructuredEventChan](/api/ws/client.go#L28), or provide your own
