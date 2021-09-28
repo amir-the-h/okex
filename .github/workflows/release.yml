@@ -18,8 +18,8 @@ jobs:
       - uses: actions/checkout@v2
       - uses: CupOfTea696/gh-action-auto-release@v1.0.0
         with:
-          tag: "v$semver"
-          prefix: "v"
+          title: "Release: $version"
+          tag: "$version"
           draft: false
           regex: "/^Release: #{semver}$/i"
         env:
