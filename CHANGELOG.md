@@ -2,6 +2,13 @@ Changelog
 =========
 All notable changes to this project will be documented in this file.
 
+v1.0.6-alpha
+------------
+
+### Changed
+
+- Fixed GET method requests issue
+
 v1.0.5-alpha
 ------------
 

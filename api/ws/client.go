@@ -32,7 +32,7 @@ type ClientWs struct {
 	SubscribeChan       chan *events.Subscribe
 	UnsubscribeCh       chan *events.Unsubscribe
 	sendChan            map[bool]chan []byte
-	url                 map[bool]okex.BaseUrl
+	url                 map[bool]okex.BaseURL
 	conn                map[bool]*websocket.Conn
 	apiKey              string
 	secretKey           []byte
@@ -51,7 +51,7 @@ const (
 )
 
 // NewClient returns a pointer to a fresh ClientWs
-func NewClient(ctx context.Context, apiKey, secretKey, passphrase string, url map[bool]okex.BaseUrl) *ClientWs {
+func NewClient(ctx context.Context, apiKey, secretKey, passphrase string, url map[bool]okex.BaseURL) *ClientWs {
 	ctx, cancel := context.WithCancel(ctx)
 	c := &ClientWs{
 		apiKey:              apiKey,

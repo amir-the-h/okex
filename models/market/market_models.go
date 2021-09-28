@@ -10,43 +10,43 @@ import (
 
 type (
 	Ticker struct {
-		InstId    string              `json:"instId"`
-		Last      okex.JsonFloat64    `json:"last"`
-		LastSz    okex.JsonFloat64    `json:"lastSz"`
-		AskPx     okex.JsonFloat64    `json:"askPx"`
-		AskSz     okex.JsonFloat64    `json:"askSz"`
-		BidPx     okex.JsonFloat64    `json:"bidPx"`
-		BidSz     okex.JsonFloat64    `json:"bidSz"`
-		Open24h   okex.JsonFloat64    `json:"open24h"`
-		High24h   okex.JsonFloat64    `json:"high24h"`
-		Low24h    okex.JsonFloat64    `json:"low24h"`
-		VolCcy24h okex.JsonFloat64    `json:"volCcy24h"`
-		Vol24h    okex.JsonFloat64    `json:"vol24h"`
-		SodUtc0   okex.JsonFloat64    `json:"sodUtc0"`
-		SodUtc8   okex.JsonFloat64    `json:"sodUtc8"`
+		InstID    string              `json:"instId"`
+		Last      okex.JSONFloat64    `json:"last"`
+		LastSz    okex.JSONFloat64    `json:"lastSz"`
+		AskPx     okex.JSONFloat64    `json:"askPx"`
+		AskSz     okex.JSONFloat64    `json:"askSz"`
+		BidPx     okex.JSONFloat64    `json:"bidPx"`
+		BidSz     okex.JSONFloat64    `json:"bidSz"`
+		Open24h   okex.JSONFloat64    `json:"open24h"`
+		High24h   okex.JSONFloat64    `json:"high24h"`
+		Low24h    okex.JSONFloat64    `json:"low24h"`
+		VolCcy24h okex.JSONFloat64    `json:"volCcy24h"`
+		Vol24h    okex.JSONFloat64    `json:"vol24h"`
+		SodUtc0   okex.JSONFloat64    `json:"sodUtc0"`
+		SodUtc8   okex.JSONFloat64    `json:"sodUtc8"`
 		InstType  okex.InstrumentType `json:"instType"`
-		Ts        okex.JsonTime       `json:"ts"`
+		Ts        okex.JSONTime       `json:"ts"`
 	}
 	IndexTicker struct {
-		InstId  string           `json:"instId"`
-		IdxPx   okex.JsonFloat64 `json:"idxPx"`
-		High24h okex.JsonFloat64 `json:"high24h"`
-		Low24h  okex.JsonFloat64 `json:"low24h"`
-		Open24h okex.JsonFloat64 `json:"open24h"`
-		SodUtc0 okex.JsonFloat64 `json:"sodUtc0"`
-		SodUtc8 okex.JsonFloat64 `json:"sodUtc8"`
-		Ts      okex.JsonTime    `json:"ts"`
+		InstID  string           `json:"instId"`
+		IdxPx   okex.JSONFloat64 `json:"idxPx"`
+		High24h okex.JSONFloat64 `json:"high24h"`
+		Low24h  okex.JSONFloat64 `json:"low24h"`
+		Open24h okex.JSONFloat64 `json:"open24h"`
+		SodUtc0 okex.JSONFloat64 `json:"sodUtc0"`
+		SodUtc8 okex.JSONFloat64 `json:"sodUtc8"`
+		Ts      okex.JSONTime    `json:"ts"`
 	}
 	OrderBook struct {
 		Asks []*OrderBookEntity `json:"asks"`
 		Bids []*OrderBookEntity `json:"bids"`
-		Ts   okex.JsonTime      `json:"ts"`
+		Ts   okex.JSONTime      `json:"ts"`
 	}
 	OrderBookWs struct {
 		Asks     []*OrderBookEntity `json:"asks"`
 		Bids     []*OrderBookEntity `json:"bids"`
 		Checksum int                `json:"checksum"`
-		Ts       okex.JsonTime      `json:"ts"`
+		Ts       okex.JSONTime      `json:"ts"`
 	}
 	OrderBookEntity struct {
 		DepthPrice      float64
@@ -61,40 +61,40 @@ type (
 		C      float64
 		Vol    float64
 		VolCcy float64
-		Ts     okex.JsonTime
+		Ts     okex.JSONTime
 	}
 	IndexCandle struct {
 		O  float64
 		H  float64
 		L  float64
 		C  float64
-		Ts okex.JsonTime
+		Ts okex.JSONTime
 	}
 	Trade struct {
-		InstId  string           `json:"instId"`
-		TradeId okex.JsonFloat64 `json:"tradeId"`
-		Px      okex.JsonFloat64 `json:"px"`
-		Sz      okex.JsonFloat64 `json:"sz"`
+		InstID  string           `json:"instId"`
+		TradeId okex.JSONFloat64 `json:"tradeId"`
+		Px      okex.JSONFloat64 `json:"px"`
+		Sz      okex.JSONFloat64 `json:"sz"`
 		Side    okex.TradeSide   `json:"side"`
-		Ts      okex.JsonTime    `json:"ts"`
+		Ts      okex.JSONTime    `json:"ts"`
 	}
 	TotalVolume24H struct {
-		VolUsd okex.JsonFloat64 `json:"volUsd"`
-		VolCny okex.JsonFloat64 `json:"volCny"`
-		Ts     okex.JsonTime    `json:"ts"`
+		VolUsd okex.JSONFloat64 `json:"volUsd"`
+		VolCny okex.JSONFloat64 `json:"volCny"`
+		Ts     okex.JSONTime    `json:"ts"`
 	}
 	IndexComponent struct {
 		Index      string           `json:"index"`
-		Last       okex.JsonFloat64 `json:"last"`
+		Last       okex.JSONFloat64 `json:"last"`
 		Components []*Component     `json:"components"`
-		Ts         okex.JsonTime    `json:"ts"`
+		Ts         okex.JSONTime    `json:"ts"`
 	}
 	Component struct {
 		Exch   string           `json:"exch"`
 		Symbol string           `json:"symbol"`
-		SymPx  okex.JsonFloat64 `json:"symPx"`
-		Wgt    okex.JsonFloat64 `json:"wgt"`
-		CnvPx  okex.JsonFloat64 `json:"cnvPx"`
+		SymPx  okex.JSONFloat64 `json:"symPx"`
+		Wgt    okex.JSONFloat64 `json:"wgt"`
+		CnvPx  okex.JSONFloat64 `json:"cnvPx"`
 	}
 )
 

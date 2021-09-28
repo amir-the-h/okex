@@ -8,17 +8,17 @@ type (
 	}
 	Position struct {
 		Uly      string              `json:"uly,omitempty"`
-		InstId   string              `json:"instId,omitempty"`
+		InstID   string              `json:"instId,omitempty"`
 		InstType okex.InstrumentType `json:"instType"`
 	}
 	Order struct {
 		Uly      string              `json:"uly,omitempty"`
-		InstId   string              `json:"instId,omitempty"`
+		InstID   string              `json:"instId,omitempty"`
 		InstType okex.InstrumentType `json:"instType"`
 	}
 	AlgoOrder struct {
 		Uly      string              `json:"uly,omitempty"`
-		InstId   string              `json:"instId,omitempty"`
+		InstID   string              `json:"instId,omitempty"`
 		InstType okex.InstrumentType `json:"instType"`
 	}
 )

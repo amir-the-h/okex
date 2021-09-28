@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"github.com/amir-the-h/okex"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -25,17 +26,17 @@ type ClientRest struct {
 	secretKey   []byte
 	passphrase  string
 	destination okex.Destination
-	baseUrl     okex.BaseUrl
+	baseURL     okex.BaseURL
 	client      *http.Client
 }
 
 // NewClient returns a pointer to a fresh ClientRest
-func NewClient(apiKey, secretKey, passphrase string, baseUrl okex.BaseUrl, destination okex.Destination) *ClientRest {
+func NewClient(apiKey, secretKey, passphrase string, baseURL okex.BaseURL, destination okex.Destination) *ClientRest {
 	c := &ClientRest{
 		apiKey:      apiKey,
 		secretKey:   []byte(secretKey),
 		passphrase:  passphrase,
-		baseUrl:     baseUrl,
+		baseURL:     baseURL,
 		destination: destination,
 		client:      http.DefaultClient,
 	}
@@ -52,7 +53,7 @@ func NewClient(apiKey, secretKey, passphrase string, baseUrl okex.BaseUrl, desti
 
 // Do the http request to the server
 func (c *ClientRest) Do(method, path string, private bool, params ...map[string]string) (*http.Response, error) {
-	u := fmt.Sprintf("%s%s", c.baseUrl, path)
+	u := fmt.Sprintf("%s%s", c.baseURL, path)
 	var (
 		r    *http.Request
 		err  error
@@ -68,7 +69,7 @@ func (c *ClientRest) Do(method, path string, private bool, params ...map[string]
 		if len(params) > 0 {
 			q := r.URL.Query()
 			for k, v := range params[0] {
-				q.Add(fmt.Sprint(k), fmt.Sprint(v))
+				q.Add(k, strings.ReplaceAll(v, "\"", ""))
 			}
 			r.URL.RawQuery = q.Encode()
 			if len(params[0]) > 0 {

@@ -11,7 +11,7 @@ type (
 		Mobile  string        `json:"mobile,omitempty"`
 		GAuth   bool          `json:"gAuth"`
 		Enable  bool          `json:"enable"`
-		Ts      okex.JsonTime `json:"ts"`
+		Ts      okex.JSONTime `json:"ts"`
 	}
 	APIKey struct {
 		SubAcct    string        `json:"subAcct,omitempty"`
@@ -21,16 +21,16 @@ type (
 		Passphrase string        `json:"Passphrase,omitempty"`
 		Perm       string        `json:"perm,omitempty"`
 		Ip         string        `json:"ip,omitempty"`
-		Ts         okex.JsonTime `json:"ts,omitempty"`
+		Ts         okex.JSONTime `json:"ts,omitempty"`
 	}
 	HistoryTransfer struct {
 		SubAcct string         `json:"subAcct,omitempty"`
 		Ccy     string         `json:"ccy,omitempty"`
-		BillId  okex.JsonInt64 `json:"billId,omitempty"`
+		BillId  okex.JSONInt64 `json:"billId,omitempty"`
 		Type    okex.BillType  `json:"type,omitempty"`
-		Ts      okex.JsonTime  `json:"ts,omitempty"`
+		Ts      okex.JSONTime  `json:"ts,omitempty"`
 	}
 	Transfer struct {
-		TransId okex.JsonInt64 `json:"transId"`
+		TransId okex.JSONInt64 `json:"transId"`
 	}
 )

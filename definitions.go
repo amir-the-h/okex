@@ -1,4 +1,4 @@
-// Package okex_v5_go_sdk is generally a golang Api wrapper of Okex V5 API
+// Package okex is generally a golang Api wrapper of Okex V5 API
 //
 // https://www.okex.com/docs-v5/en
 package okex
@@ -11,7 +11,7 @@ import (
 )
 
 type (
-	BaseUrl              string
+	BaseURL              string
 	InstrumentType       string
 	MarginMode           string
 	ContractType         string
@@ -48,25 +48,25 @@ type (
 	WithdrawalDestination uint8
 	WithdrawalState       int8
 
-	JsonFloat64 float64
-	JsonInt64   int64
-	JsonTime    time.Time
+	JSONFloat64 float64
+	JSONInt64   int64
+	JSONTime    time.Time
 
 	ClientError error
 )
 
 const (
-	RestUrl      = BaseUrl("https://www.okex.com")
-	PublicWsUrl  = BaseUrl("wss://ws.okex.com:8443/ws/v5/public")
-	PrivateWsUrl = BaseUrl("wss://ws.okex.com:8443/ws/v5/private")
+	RestURL      = BaseURL("https://www.okex.com")
+	PublicWsURL  = BaseURL("wss://ws.okex.com:8443/ws/v5/public")
+	PrivateWsURL = BaseURL("wss://ws.okex.com:8443/ws/v5/private")
 
-	AwsRestUrl      = BaseUrl("https://aws.okex.com")
-	AwsPublicWsUrl  = BaseUrl("wss://wsaws.okex.com:8443/ws/v5/public")
-	AwsPrivateWsUrl = BaseUrl("wss://wsaws.okex.com:8443/ws/v5/private")
+	AwsRestURL      = BaseURL("https://aws.okex.com")
+	AwsPublicWsURL  = BaseURL("wss://wsaws.okex.com:8443/ws/v5/public")
+	AwsPrivateWsURL = BaseURL("wss://wsaws.okex.com:8443/ws/v5/private")
 
-	DemoRestUrl      = BaseUrl("https://www.okex.com")
-	DemoPublicWsUrl  = BaseUrl("wss://wspap.okex.com:8443/ws/v5/public?brokerId=9999")
-	DemoPrivateWsUrl = BaseUrl("wss://wspap.okex.com:8443/ws/v5/private?brokerId=9999")
+	DemoRestURL      = BaseURL("https://www.okex.com")
+	DemoPublicWsURL  = BaseURL("wss://wspap.okex.com:8443/ws/v5/public?brokerId=9999")
+	DemoPrivateWsURL = BaseURL("wss://wspap.okex.com:8443/ws/v5/private?brokerId=9999")
 
 	NormalServer = Destination(iota + 1)
 	AwsServer    = NormalServer + 1
@@ -287,9 +287,9 @@ const (
 	CandleStick1m  = CandleStickWsBarSize("candle1m")
 )
 
-func (t JsonTime) String() string { return time.Time(t).String() }
+func (t JSONTime) String() string { return time.Time(t).String() }
 
-func (t *JsonTime) UnmarshalJSON(s []byte) (err error) {
+func (t *JSONTime) UnmarshalJSON(s []byte) (err error) {
 	r := strings.Replace(string(s), `"`, ``, -1)
 	if r == "" {
 		return
@@ -302,7 +302,7 @@ func (t *JsonTime) UnmarshalJSON(s []byte) (err error) {
 	*(*time.Time)(t) = time.UnixMilli(q)
 	return
 }
-func (t *JsonFloat64) UnmarshalJSON(s []byte) (err error) {
+func (t *JSONFloat64) UnmarshalJSON(s []byte) (err error) {
 	r := strings.Replace(string(s), `"`, ``, -1)
 	if r == "" {
 		return
@@ -315,7 +315,7 @@ func (t *JsonFloat64) UnmarshalJSON(s []byte) (err error) {
 	*(*float64)(t) = q
 	return
 }
-func (t *JsonInt64) UnmarshalJSON(s []byte) (err error) {
+func (t *JSONInt64) UnmarshalJSON(s []byte) (err error) {
 	r := strings.Replace(string(s), `"`, ``, -1)
 	if r == "" {
 		return

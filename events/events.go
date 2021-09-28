@@ -23,8 +23,8 @@ type (
 		Event string         `json:"event,omitempty"`
 		Msg   string         `json:"msg,omitempty"`
 		Op    string         `json:"op,omitempty"`
-		Code  okex.JsonInt64 `json:"code"`
-		Id    okex.JsonInt64 `json:"id,omitempty"`
+		Code  okex.JSONInt64 `json:"code"`
+		Id    okex.JSONInt64 `json:"id,omitempty"`
 	}
 	Login struct {
 		Event string `json:"event"`

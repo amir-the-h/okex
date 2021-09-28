@@ -17,29 +17,29 @@ type (
 	TakerVolume struct {
 		SellVol float64
 		BuyVol  float64
-		Ts      okex.JsonTime
+		Ts      okex.JSONTime
 	}
 	Ratio struct {
 		Ratio float64
-		Ts    okex.JsonTime
+		Ts    okex.JSONTime
 	}
 	InterestAndVolumeRatio struct {
 		Oi  float64
 		Vol float64
-		Ts  okex.JsonTime
+		Ts  okex.JSONTime
 	}
 	PutCallRatio struct {
 		OiRatio  float64
 		VolRatio float64
-		Ts       okex.JsonTime
+		Ts       okex.JSONTime
 	}
 	InterestAndVolumeExpiry struct {
 		CallOI  float64
 		PutOI   float64
 		CallVol float64
 		PutVol  float64
-		ExpTime okex.JsonTime
-		Ts      okex.JsonTime
+		ExpTime okex.JSONTime
+		Ts      okex.JSONTime
 	}
 	InterestAndVolumeStrike struct {
 		Strike  float64
@@ -47,7 +47,7 @@ type (
 		PutOI   float64
 		CallVol float64
 		PutVol  float64
-		Ts      okex.JsonTime
+		Ts      okex.JSONTime
 	}
 	TakerFlow struct {
 		CallBuyVol   float64
@@ -56,7 +56,7 @@ type (
 		PutSellVol   float64
 		CallBlockVol float64
 		PutBlockVol  float64
-		Ts           okex.JsonTime
+		Ts           okex.JSONTime
 	}
 )
 
