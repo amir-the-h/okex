@@ -19,6 +19,7 @@ jobs:
       - uses: CupOfTea696/gh-action-auto-release@v1.0.0
         with:
           tag: "v$semver"
+          prefix: "v"
           draft: false
           regex: "/^Release: #{semver}$/i"
         env:
