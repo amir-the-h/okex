@@ -41,7 +41,7 @@ func (c *Trade) PlaceOrder(req ...requests.PlaceOrder) error {
 	}
 	c.waitForAuthorization()
 
-	return c.Send(true, op, tmpArgs)
+	return c.Send(true, op, tmpArgs, map[string]string{"id": req[0].ID})
 }
 
 // CancelOrder
@@ -67,7 +67,7 @@ func (c *Trade) CancelOrder(req ...requests.CancelOrder) error {
 	}
 	c.waitForAuthorization()
 
-	return c.Send(true, op, tmpArgs)
+	return c.Send(true, op, tmpArgs, map[string]string{"id": req[0].ID})
 }
 
 // AmendOrder
@@ -93,7 +93,7 @@ func (c *Trade) AmendOrder(req ...requests.AmendOrder) error {
 	}
 	c.waitForAuthorization()
 
-	return c.Send(true, op, tmpArgs)
+	return c.Send(true, op, tmpArgs, map[string]string{"id": req[0].ID})
 }
 
 func (c *Trade) waitForAuthorization() {

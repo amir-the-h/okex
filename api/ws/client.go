@@ -19,18 +19,15 @@ import (
 //
 // https://www.okex.com/docs-v5/en/#websocket-api
 type ClientWs struct {
-	AuthorizedUntil     *time.Time
 	Cancel              context.CancelFunc
 	DoneChan            chan interface{}
+	StructuredEventChan chan interface{}
 	RawEventChan        chan *events.Basic
 	ErrChan             chan *events.Error
-	LoginChan           chan *events.Login
-	StructuredEventChan chan interface{}
-	Private             *Private
-	Public              *Public
-	Trade               *Trade
 	SubscribeChan       chan *events.Subscribe
 	UnsubscribeCh       chan *events.Unsubscribe
+	LoginChan           chan *events.Login
+	SuccessChan         chan *events.Success
 	sendChan            map[bool]chan []byte
 	url                 map[bool]okex.BaseURL
 	conn                map[bool]*websocket.Conn
@@ -40,6 +37,10 @@ type ClientWs struct {
 	lastTransmit        map[bool]*time.Time
 	mu                  map[bool]*sync.Mutex
 	rmu                 map[bool]*sync.Mutex
+	AuthorizedUntil     *time.Time
+	Private             *Private
+	Public              *Public
+	Trade               *Trade
 	ctx                 context.Context
 }
 
@@ -71,6 +72,7 @@ func NewClient(ctx context.Context, apiKey, secretKey, passphrase string, url ma
 	}
 	c.Private = NewPrivate(c)
 	c.Public = NewPublic(c)
+	c.Trade = NewTrade(c)
 
 	return c
 }
@@ -162,7 +164,7 @@ func (c *ClientWs) Unsubscribe(p bool, ch []okex.ChannelName, args map[string]st
 }
 
 // Send message through either connections
-func (c *ClientWs) Send(p bool, op okex.Operation, args []map[string]string) error {
+func (c *ClientWs) Send(p bool, op okex.Operation, args []map[string]string, extras ...map[string]string) error {
 	err := c.Connect(p)
 	if err != nil {
 		return err
@@ -171,6 +173,11 @@ func (c *ClientWs) Send(p bool, op okex.Operation, args []map[string]string) err
 	data := map[string]interface{}{
 		"op":   op,
 		"args": args,
+	}
+	for _, extra := range extras {
+		for k, v := range extra {
+			data[k] = v
+		}
 	}
 	j, err := json.Marshal(data)
 	if err != nil {
@@ -183,11 +190,12 @@ func (c *ClientWs) Send(p bool, op okex.Operation, args []map[string]string) err
 }
 
 // SetChannels to receive certain events on separate channel
-func (c *ClientWs) SetChannels(errCh chan *events.Error, subCh chan *events.Subscribe, unSub chan *events.Unsubscribe, lCh chan *events.Login) {
+func (c *ClientWs) SetChannels(errCh chan *events.Error, subCh chan *events.Subscribe, unSub chan *events.Unsubscribe, lCh chan *events.Login, sCh chan *events.Success) {
 	c.ErrChan = errCh
 	c.SubscribeChan = subCh
 	c.UnsubscribeCh = unSub
 	c.LoginChan = lCh
+	c.SuccessChan = sCh
 }
 
 func (c *ClientWs) dial(p bool) error {
@@ -353,6 +361,17 @@ func (c *ClientWs) process(data []byte, e *events.Basic) bool {
 		go func() {
 			if c.LoginChan != nil {
 				c.LoginChan <- &e
+			}
+			c.StructuredEventChan <- e
+		}()
+		return true
+	}
+	if e.ID != "" {
+		e := events.Success{}
+		_ = json.Unmarshal(data, &e)
+		go func() {
+			if c.SuccessChan != nil {
+				c.SuccessChan <- &e
 			}
 			c.StructuredEventChan <- e
 		}()

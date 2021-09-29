@@ -2,6 +2,15 @@ Changelog
 =========
 All notable changes to this project will be documented in this file.
 
+v1.0.10-alpha
+------------
+
+### Changed
+
+- Fixed nil assignment on Ws client of Trade
+- Added request `ID` to trade requests
+- Added new event `Success` to handle trade success response
+
 v1.0.9-alpha
 ------------
 

@@ -6,6 +6,7 @@ import (
 
 type (
 	PlaceOrder struct {
+		ID         string            `json:"-"`
 		InstID     string            `json:"instId"`
 		Ccy        string            `json:"ccy,omitempty"`
 		ClOrdID    string            `json:"clOrdId,omitempty"`
@@ -13,18 +14,20 @@ type (
 		ReduceOnly bool              `json:"reduceOnly,omitempty"`
 		Sz         float64           `json:"sz,string"`
 		Px         float64           `json:"px,omitempty,string"`
-		TdMode     okex.TradeMode    `json:"tdMode,string"`
-		Side       okex.OrderSide    `json:"side,string"`
-		PosSide    okex.PositionSide `json:"posSide,string"`
-		OrdType    okex.OrderType    `json:"ordType,string"`
-		TgtCcy     okex.QuantityType `json:"tgtCcy,string,omitempty"`
+		TdMode     okex.TradeMode    `json:"tdMode"`
+		Side       okex.OrderSide    `json:"side"`
+		PosSide    okex.PositionSide `json:"posSide,omitempty"`
+		OrdType    okex.OrderType    `json:"ordType"`
+		TgtCcy     okex.QuantityType `json:"tgtCcy,omitempty"`
 	}
 	CancelOrder struct {
+		ID      string `json:"-"`
 		InstID  string `json:"instId"`
 		OrdID   string `json:"ordId,omitempty"`
 		ClOrdID string `json:"clOrdId,omitempty"`
 	}
 	AmendOrder struct {
+		ID        string  `json:"-"`
 		InstID    string  `json:"instId"`
 		OrdID     string  `json:"ordId,omitempty"`
 		ClOrdID   string  `json:"clOrdId,omitempty"`
@@ -36,8 +39,8 @@ type (
 	ClosePosition struct {
 		InstID  string            `json:"instId"`
 		Ccy     string            `json:"ccy,omitempty"`
-		PosSide okex.PositionSide `json:"posSide,omitempty,string"`
-		MgnMode okex.MarginMode   `json:"mgnMode,string"`
+		PosSide okex.PositionSide `json:"posSide,omitempty"`
+		MgnMode okex.MarginMode   `json:"mgnMode"`
 	}
 	OrderDetails struct {
 		InstID  string `json:"instId"`
@@ -50,9 +53,9 @@ type (
 		After    float64             `json:"after,omitempty,string"`
 		Before   float64             `json:"before,omitempty,string"`
 		Limit    float64             `json:"limit,omitempty,string"`
-		InstType okex.InstrumentType `json:"instType,omitempty,string"`
-		OrdType  okex.OrderType      `json:"ordType,omitempty,string"`
-		State    okex.OrderState     `json:"state,omitempty,string"`
+		InstType okex.InstrumentType `json:"instType,omitempty"`
+		OrdType  okex.OrderType      `json:"ordType,omitempty"`
+		State    okex.OrderState     `json:"state,omitempty"`
 	}
 	TransactionDetails struct {
 		Uly      string              `json:"uly,omitempty"`
@@ -61,6 +64,6 @@ type (
 		After    float64             `json:"after,omitempty,string"`
 		Before   float64             `json:"before,omitempty,string"`
 		Limit    float64             `json:"limit,omitempty,string"`
-		InstType okex.InstrumentType `json:"instType,omitempty,string"`
+		InstType okex.InstrumentType `json:"instType,omitempty"`
 	}
 )

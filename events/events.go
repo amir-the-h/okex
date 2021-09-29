@@ -7,6 +7,7 @@ import (
 
 type (
 	Basic struct {
+		ID    string         `json:"id,omitempty"`
 		Event string         `json:"event"`
 		Code  int            `json:"code,omitempty,string"`
 		Msg   string         `json:"msg,omitempty"`
@@ -19,12 +20,19 @@ type (
 		arg        map[string]interface{}
 		untypedArg []interface{}
 	}
+	Success struct {
+		Code int            `json:"code,omitempty,string"`
+		Msg  string         `json:"msg,omitempty"`
+		ID   string         `json:"id,omitempty"`
+		Op   okex.Operation `json:"op,omitempty"`
+		Data []*Argument    `json:"data,omitempty"`
+	}
 	Error struct {
 		Event string         `json:"event,omitempty"`
 		Msg   string         `json:"msg,omitempty"`
 		Op    string         `json:"op,omitempty"`
 		Code  okex.JSONInt64 `json:"code"`
-		Id    okex.JSONInt64 `json:"id,omitempty"`
+		ID    string         `json:"id,omitempty"`
 	}
 	Login struct {
 		Event string `json:"event"`
