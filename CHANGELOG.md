@@ -2,6 +2,13 @@ Changelog
 =========
 All notable changes to this project will be documented in this file.
 
+v1.0.12-alpha
+------------
+
+### Changed
+
+- Fixed invalid channel name on `private.Order`
+
 v1.0.11-alpha
 ------------
 

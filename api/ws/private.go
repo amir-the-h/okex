@@ -120,7 +120,7 @@ func (c *Private) UBalanceAndPosition(rCh ...bool) error {
 // Order
 // Retrieve position information. Initial snapshot will be pushed according to subscription granularity. Data will be pushed when triggered by events such as placing/canceling order, and will also be pushed in regular interval according to subscription granularity.
 //
-// https://www.okex.com/docs-v5/en/#websocket-api-private-channel-positions-channel
+// https://www.okex.com/docs-v5/en/#websocket-api-private-channel-order-channel
 func (c *Private) Order(req requests.Order, ch ...chan *private.Order) error {
 	m := okex.S2M(req)
 	if len(ch) > 0 {
@@ -131,12 +131,12 @@ func (c *Private) Order(req requests.Order, ch ...chan *private.Order) error {
 		return err
 	}
 	c.waitForAuthorization()
-	return c.Subscribe(true, []okex.ChannelName{"positions"}, m)
+	return c.Subscribe(true, []okex.ChannelName{"orders"}, m)
 }
 
 // UOrder
 //
-// https://www.okex.com/docs-v5/en/#websocket-api-private-channel-positions-channel
+// https://www.okex.com/docs-v5/en/#websocket-api-private-channel-order-channel
 func (c *Private) UOrder(req requests.Order, rCh ...bool) error {
 	m := okex.S2M(req)
 	if len(rCh) > 0 && rCh[0] {
@@ -147,7 +147,7 @@ func (c *Private) UOrder(req requests.Order, rCh ...bool) error {
 		return err
 	}
 	c.waitForAuthorization()
-	return c.Unsubscribe(true, []okex.ChannelName{"positions"}, m)
+	return c.Unsubscribe(true, []okex.ChannelName{"orders"}, m)
 }
 
 func (c *Private) Process(data []byte, e *events.Basic) bool {
