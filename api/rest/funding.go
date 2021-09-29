@@ -6,6 +6,7 @@ import (
 	requests "github.com/amir-the-h/okex/requests/rest/funding"
 	responses "github.com/amir-the-h/okex/responses/funding"
 	"net/http"
+	"strings"
 )
 
 // Funding
@@ -46,6 +47,9 @@ func (c *Funding) GetCurrencies() (response responses.GetCurrencies, err error) 
 func (c *Funding) GetBalance(req requests.GetBalance) (response responses.GetBalance, err error) {
 	p := "/api/v5/asset/balances"
 	m := okex.S2M(req)
+	if len(req.Ccy) > 0 {
+		m["ccy"] = strings.Join(req.Ccy, ",")
+	}
 
 	res, err := c.client.Do(http.MethodGet, p, true, m)
 	if err != nil {

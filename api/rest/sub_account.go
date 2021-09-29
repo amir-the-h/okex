@@ -6,6 +6,7 @@ import (
 	requests "github.com/amir-the-h/okex/requests/rest/subaccount"
 	responses "github.com/amir-the-h/okex/responses/sub_account"
 	"net/http"
+	"strings"
 )
 
 // SubAccount
@@ -45,6 +46,9 @@ func (c *SubAccount) ViewList(req requests.ViewList) (response responses.ViewLis
 func (c *SubAccount) CreateAPIKey(req requests.CreateAPIKey) (response responses.APIKey, err error) {
 	p := "/api/v5/users/subaccount/apikey"
 	m := okex.S2M(req)
+	if len(req.IP) > 0 {
+		m["ip"] = strings.Join(req.IP, ",")
+	}
 	res, err := c.client.Do(http.MethodPost, p, true, m)
 	if err != nil {
 		return
@@ -81,6 +85,9 @@ func (c *SubAccount) QueryAPIKey(req requests.QueryAPIKey) (response responses.A
 func (c *SubAccount) ResetAPIKey(req requests.CreateAPIKey) (response responses.APIKey, err error) {
 	p := "/api/v5/users/subaccount/modify-apikey"
 	m := okex.S2M(req)
+	if len(req.IP) > 0 {
+		m["ip"] = strings.Join(req.IP, ",")
+	}
 	res, err := c.client.Do(http.MethodPost, p, true, m)
 	if err != nil {
 		return

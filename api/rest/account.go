@@ -6,6 +6,7 @@ import (
 	requests "github.com/amir-the-h/okex/requests/rest/account"
 	responses "github.com/amir-the-h/okex/responses/account"
 	"net/http"
+	"strings"
 )
 
 // Account
@@ -27,6 +28,9 @@ func NewAccount(c *ClientRest) *Account {
 func (c *Account) GetBalance(req requests.GetBalance) (response responses.GetBalance, err error) {
 	p := "/api/v5/account/balance"
 	m := okex.S2M(req)
+	if len(req.Ccy) > 0 {
+		m["ccy"] = strings.Join(req.Ccy, ",")
+	}
 	res, err := c.client.Do(http.MethodGet, p, true, m)
 	if err != nil {
 		return
@@ -45,6 +49,9 @@ func (c *Account) GetBalance(req requests.GetBalance) (response responses.GetBal
 func (c *Account) GetPositions(req requests.GetPositions) (response responses.GetPositions, err error) {
 	p := "/api/v5/account/positions"
 	m := okex.S2M(req)
+	if len(req.InstID) > 0 {
+		m["instId"] = strings.Join(req.InstID, ",")
+	}
 	res, err := c.client.Do(http.MethodGet, p, true, m)
 	if err != nil {
 		return
@@ -217,6 +224,9 @@ func (c *Account) IncreaseDecreaseMargin(req requests.IncreaseDecreaseMargin) (r
 func (c *Account) GetLeverage(req requests.GetLeverage) (response responses.Leverage, err error) {
 	p := "/api/v5/account/leverage-info"
 	m := okex.S2M(req)
+	if len(req.InstID) > 0 {
+		m["instId"] = strings.Join(req.InstID, ",")
+	}
 	res, err := c.client.Do(http.MethodGet, p, true, m)
 	if err != nil {
 		return

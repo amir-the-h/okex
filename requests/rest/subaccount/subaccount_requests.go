@@ -15,16 +15,16 @@ type (
 		SubAcct    string            `json:"subAcct"`
 		Label      string            `json:"label"`
 		Passphrase string            `json:"Passphrase"`
-		Ip         []string          `json:"ip,omitempty"`
+		IP         []string          `json:"ip,omitempty"`
 		Perm       okex.APIKeyAccess `json:"perm,string,omitempty"`
 	}
 	QueryAPIKey struct {
-		ApiKey  string `json:"apiKey"`
+		APIKey  string `json:"apiKey"`
 		SubAcct string `json:"subAcct"`
 	}
 	DeleteAPIKey struct {
 		Pwd     string `json:"pwd"`
-		ApiKey  string `json:"apiKey"`
+		APIKey  string `json:"apiKey"`
 		SubAcct string `json:"subAcct"`
 	}
 	GetBalance struct {

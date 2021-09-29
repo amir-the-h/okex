@@ -74,14 +74,14 @@ type (
 		ThetaPA     okex.JSONFloat64    `json:"thetaPA"`
 		VegaBS      okex.JSONFloat64    `json:"vegaBS"`
 		VegaPA      okex.JSONFloat64    `json:"vegaPA"`
-		PosSide     okex.PositionSide   `json:"posSide,string"`
-		MgnMode     okex.MarginMode     `json:"mgnMode,string"`
-		InstType    okex.InstrumentType `json:"instType,string"`
+		PosSide     okex.PositionSide   `json:"posSide"`
+		MgnMode     okex.MarginMode     `json:"mgnMode"`
+		InstType    okex.InstrumentType `json:"instType"`
 		CTime       okex.JSONTime       `json:"cTime"`
 		UTime       okex.JSONTime       `json:"uTime"`
 	}
 	BalanceAndPosition struct {
-		EventType okex.EventType    `json:"eventType,string"`
+		EventType okex.EventType    `json:"eventType"`
 		PTime     okex.JSONTime     `json:"pTime"`
 		UTime     okex.JSONTime     `json:"uTime"`
 		PosData   []*Position       `json:"posData"`
@@ -105,9 +105,9 @@ type (
 		NotionalCcy okex.JSONFloat64    `json:"notionalCcy"`
 		Pos         okex.JSONFloat64    `json:"pos"`
 		NotionalUsd okex.JSONFloat64    `json:"notionalUsd"`
-		PosSide     okex.PositionSide   `json:"posSide,string"`
-		InstType    okex.InstrumentType `json:"instType,string"`
-		MgnMode     okex.MarginMode     `json:"mgnMode,string"`
+		PosSide     okex.PositionSide   `json:"posSide"`
+		InstType    okex.InstrumentType `json:"instType"`
+		MgnMode     okex.MarginMode     `json:"mgnMode"`
 	}
 	Bill struct {
 		Ccy       string              `json:"ccy"`
@@ -124,10 +124,10 @@ type (
 		OrdID     okex.JSONFloat64    `json:"ordId"`
 		From      okex.AccountType    `json:"from,string"`
 		To        okex.AccountType    `json:"to,string"`
-		InstType  okex.InstrumentType `json:"instType,string"`
-		MgnMode   okex.MarginMode     `json:"MgnMode,string"`
-		Type      okex.BillType       `json:"type,string"`
-		SubType   okex.BillSubType    `json:"subType,string"`
+		InstType  okex.InstrumentType `json:"instType"`
+		MgnMode   okex.MarginMode     `json:"MgnMode"`
+		Type      okex.BillType       `json:"type"`
+		SubType   okex.BillSubType    `json:"subType"`
 		TS        okex.JSONTime       `json:"ts"`
 	}
 	Config struct {
@@ -145,8 +145,8 @@ type (
 	Leverage struct {
 		InstID  string            `json:"instId"`
 		Lever   okex.JSONFloat64  `json:"lever"`
-		MgnMode okex.MarginMode   `json:"mgnMode,string"`
-		PosSide okex.PositionSide `json:"posSide,string"`
+		MgnMode okex.MarginMode   `json:"mgnMode"`
+		PosSide okex.PositionSide `json:"posSide"`
 	}
 	MaxBuySellAmount struct {
 		InstID  string           `json:"instId"`
@@ -170,7 +170,7 @@ type (
 		MgnCcy  string           `json:"mgnCcy"`
 		Ccy     string           `json:"ccy"`
 		MaxLoan okex.JSONFloat64 `json:"maxLoan"`
-		MgnMode okex.MarginMode  `json:"mgnMode,string"`
+		MgnMode okex.MarginMode  `json:"mgnMode"`
 		Side    okex.OrderSide   `json:"side,string"`
 	}
 	Fee struct {
@@ -179,8 +179,8 @@ type (
 		Maker    okex.JSONFloat64    `json:"maker"`
 		Delivery okex.JSONFloat64    `json:"delivery,omitempty"`
 		Exercise okex.JSONFloat64    `json:"exercise,omitempty"`
-		Category okex.FeeCategory    `json:"category,string"`
-		InstType okex.InstrumentType `json:"instType,string"`
+		Category okex.FeeCategory    `json:"category"`
+		InstType okex.InstrumentType `json:"instType"`
 		TS       okex.JSONTime       `json:"ts"`
 	}
 	InterestAccrued struct {
@@ -189,7 +189,7 @@ type (
 		Interest     okex.JSONFloat64 `json:"interest"`
 		InterestRate okex.JSONFloat64 `json:"interestRate"`
 		Liab         okex.JSONFloat64 `json:"liab"`
-		MgnMode      okex.MarginMode  `json:"mgnMode,string"`
+		MgnMode      okex.MarginMode  `json:"mgnMode"`
 		TS           okex.JSONTime    `json:"ts"`
 	}
 	InterestRate struct {
