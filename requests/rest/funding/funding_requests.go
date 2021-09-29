@@ -10,7 +10,7 @@ type (
 		Ccy      string            `json:"ccy,string"`
 		Amt      float64           `json:"amt,string"`
 		SubAcct  string            `json:"subAcct,string,omitempty"`
-		InstID   string            `json:"instId,string,omitempty"`
+		nstID    string            `json:"instID,string,omitempty"`
 		ToInstID string            `json:"toInstId,string,omitempty"`
 		Type     okex.TransferType `json:"type,omitempty,string"`
 		From     okex.AccountType  `json:"from,string"`

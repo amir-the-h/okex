@@ -2,7 +2,7 @@ package sub_account
 
 import (
 	"github.com/amir-the-h/okex/models/account"
-	models "github.com/amir-the-h/okex/models/sub_account"
+	models "github.com/amir-the-h/okex/models/subaccount"
 	"github.com/amir-the-h/okex/responses"
 )
 
