@@ -2,6 +2,13 @@ Changelog
 =========
 All notable changes to this project will be documented in this file.
 
+v1.0.11-alpha
+------------
+
+### Changed
+
+- Better error handling on `Ws`
+
 v1.0.10-alpha
 ------------
 

@@ -366,7 +366,18 @@ func (c *ClientWs) process(data []byte, e *events.Basic) bool {
 		}()
 		return true
 	}
+	if c.Private.Process(data, e) {
+		return true
+	}
+	if c.Public.Process(data, e) {
+		return true
+	}
 	if e.ID != "" {
+		if e.Code != 0 {
+			ee := *e
+			ee.Event = "error"
+			return c.process(data, &ee)
+		}
 		e := events.Success{}
 		_ = json.Unmarshal(data, &e)
 		go func() {
@@ -375,12 +386,6 @@ func (c *ClientWs) process(data []byte, e *events.Basic) bool {
 			}
 			c.StructuredEventChan <- e
 		}()
-		return true
-	}
-	if c.Private.Process(data, e) {
-		return true
-	}
-	if c.Public.Process(data, e) {
 		return true
 	}
 	go func() { c.RawEventChan <- e }()

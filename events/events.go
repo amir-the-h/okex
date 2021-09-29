@@ -32,6 +32,9 @@ type (
 		Msg   string         `json:"msg,omitempty"`
 		Op    string         `json:"op,omitempty"`
 		Code  okex.JSONInt64 `json:"code"`
+		Args  []*Argument    `json:"args,omitempty"`
+		Arg   *Argument      `json:"arg,omitempty"`
+		Data  []*Argument    `json:"data,omitempty"`
 		ID    string         `json:"id,omitempty"`
 	}
 	Login struct {
