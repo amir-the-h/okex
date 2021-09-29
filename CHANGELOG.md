@@ -2,6 +2,14 @@ Changelog
 =========
 All notable changes to this project will be documented in this file.
 
+v1.0.9-alpha
+------------
+
+### Changed
+
+- Revert json tag changes on last version
+- Fixed `account_models/Config.PosMode` type
+
 v1.0.8-alpha
 ------------
 

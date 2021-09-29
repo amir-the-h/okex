@@ -4,45 +4,45 @@ import "github.com/amir-the-h/okex"
 
 type (
 	GetInstruments struct {
-		Uly      string              `json:"uly,string,omitempty"`
-		InstID   string              `json:"instId,string,omitempty"`
+		Uly      string              `json:"uly,omitempty"`
+		InstID   string              `json:"instId,omitempty"`
 		InstType okex.InstrumentType `json:"instType,string"`
 	}
 	GetDeliveryExerciseHistory struct {
-		Uly      string              `json:"uly,string"`
+		Uly      string              `json:"uly"`
 		After    int64               `json:"after,omitempty,string"`
 		Before   int64               `json:"before,omitempty,string"`
 		Limit    int64               `json:"limit,omitempty,string"`
 		InstType okex.InstrumentType `json:"instType,string"`
 	}
 	GetOpenInterest struct {
-		Uly      string              `json:"uly,string,omitempty"`
-		InstID   string              `json:"instId,string,omitempty"`
+		Uly      string              `json:"uly,omitempty"`
+		InstID   string              `json:"instId,omitempty"`
 		InstType okex.InstrumentType `json:"instType,string"`
 	}
 	GetFundingRate struct {
-		InstID string `json:"instId,string"`
+		InstID string `json:"instId"`
 	}
 	GetLimitPrice struct {
-		InstID string `json:"instId,string"`
+		InstID string `json:"instId"`
 	}
 	GetOptionMarketData struct {
-		Uly     string `json:"uly,string"`
-		ExpTime string `json:"expTime,string,omitempty"`
+		Uly     string `json:"uly"`
+		ExpTime string `json:"expTime,omitempty"`
 	}
 	GetEstimatedDeliveryExercisePrice struct {
-		Uly     string `json:"uly,string"`
-		ExpTime string `json:"expTime,string,omitempty"`
+		Uly     string `json:"uly"`
+		ExpTime string `json:"expTime,omitempty"`
 	}
 	GetDiscountRateAndInterestFreeQuota struct {
-		Uly        string  `json:"uly,string"`
-		Ccy        string  `json:"ccy,string,omitempty"`
+		Uly        string  `json:"uly"`
+		Ccy        string  `json:"ccy,omitempty"`
 		DiscountLv float64 `json:"discountLv,string"`
 	}
 	GetLiquidationOrders struct {
-		InstID   string              `json:"instId,string,omitempty"`
-		Ccy      string              `json:"ccy,string,omitempty"`
-		Uly      string              `json:"uly,string,omitempty"`
+		InstID   string              `json:"instId,omitempty"`
+		Ccy      string              `json:"ccy,omitempty"`
+		Uly      string              `json:"uly,omitempty"`
 		After    int64               `json:"after,omitempty,string"`
 		Before   int64               `json:"before,omitempty,string"`
 		Limit    int64               `json:"limit,omitempty,string"`
@@ -52,16 +52,16 @@ type (
 		State    okex.OrderState     `json:"state,string,omitempty"`
 	}
 	GetMarkPrice struct {
-		InstID   string              `json:"instId,string,omitempty"`
-		Uly      string              `json:"uly,string,omitempty"`
+		InstID   string              `json:"instId,omitempty"`
+		Uly      string              `json:"uly,omitempty"`
 		InstType okex.InstrumentType `json:"instType,string"`
 	}
 	GetPositionTiers struct {
-		InstID   string              `json:"instId,string,omitempty"`
-		Uly      string              `json:"uly,string,omitempty"`
+		InstID   string              `json:"instId,omitempty"`
+		Uly      string              `json:"uly,omitempty"`
 		InstType okex.InstrumentType `json:"instType,string"`
 		TdMode   okex.TradeMode      `json:"tdMode,string"`
-		Tier     okex.JSONInt64      `json:"tier,string,omitempty"`
+		Tier     okex.JSONInt64      `json:"tier,omitempty"`
 	}
 	GetUnderlying struct {
 		InstType okex.InstrumentType `json:"instType,string"`
