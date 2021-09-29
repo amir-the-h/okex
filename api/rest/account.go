@@ -52,6 +52,9 @@ func (c *Account) GetPositions(req requests.GetPositions) (response responses.Ge
 	if len(req.InstID) > 0 {
 		m["instId"] = strings.Join(req.InstID, ",")
 	}
+	if len(req.PosID) > 0 {
+		m["posId"] = strings.Join(req.PosID, ",")
+	}
 	res, err := c.client.Do(http.MethodGet, p, true, m)
 	if err != nil {
 		return
@@ -172,6 +175,9 @@ func (c *Account) SetLeverage(req requests.SetLeverage) (response responses.Leve
 func (c *Account) GetMaxBuySellAmount(req requests.GetMaxBuySellAmount) (response responses.GetMaxBuySellAmount, err error) {
 	p := "/api/v5/account/max-size"
 	m := okex.S2M(req)
+	if len(req.InstID) > 0 {
+		m["instId"] = strings.Join(req.InstID, ",")
+	}
 	res, err := c.client.Do(http.MethodGet, p, true, m)
 	if err != nil {
 		return
@@ -296,6 +302,9 @@ func (c *Account) GetInterestAccrued(req requests.GetInterestAccrued) (response 
 func (c *Account) GetInterestRates(req requests.GetBalance) (response responses.GetInterestRates, err error) {
 	p := "/api/v5/account/interest-rate"
 	m := okex.S2M(req)
+	if len(req.Ccy) > 0 {
+		m["ccy"] = strings.Join(req.Ccy, ",")
+	}
 	res, err := c.client.Do(http.MethodGet, p, true, m)
 	if err != nil {
 		return
@@ -331,6 +340,9 @@ func (c *Account) SetGreeks(req requests.SetGreeks) (response responses.SetGreek
 func (c *Account) GetMaxWithdrawals(req requests.GetBalance) (response responses.GetMaxWithdrawals, err error) {
 	p := "/api/v5/account/max-withdrawal"
 	m := okex.S2M(req)
+	if len(req.Ccy) > 0 {
+		m["ccy"] = strings.Join(req.Ccy, ",")
+	}
 	res, err := c.client.Do(http.MethodGet, p, true, m)
 	if err != nil {
 		return

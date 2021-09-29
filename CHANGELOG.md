@@ -2,12 +2,19 @@ Changelog
 =========
 All notable changes to this project will be documented in this file.
 
+v1.0.14-alpha
+------------
+
+### Changed
+
+- Fixed requests array type conversion
+
 v1.0.13-alpha
 ------------
 
 ### Changed
 
-- Fixed requests array typ conversion
+- Fixed requests array type conversion
 
 v1.0.12-alpha
 ------------
