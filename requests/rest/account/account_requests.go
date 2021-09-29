@@ -54,7 +54,7 @@ type (
 		ActionType okex.CountAction  `json:"actionType,string"`
 	}
 	GetLeverage struct {
-		InstID  []string        `json:"instId,string"`
+		InstID  []string        `json:"instId"`
 		MgnMode okex.MarginMode `json:"mgnMode,string"`
 	}
 	GetMaxLoan struct {

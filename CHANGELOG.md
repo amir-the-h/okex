@@ -2,6 +2,14 @@ Changelog
 =========
 All notable changes to this project will be documented in this file.
 
+v1.0.8-alpha
+------------
+
+### Changed
+
+- Fixed typo issue on `funding_requests.go`
+- Fixed json tag on `account_requests.go`
+
 v1.0.7-alpha
 ------------
 
