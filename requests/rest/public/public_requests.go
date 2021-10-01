@@ -66,4 +66,7 @@ type (
 	GetUnderlying struct {
 		InstType okex.InstrumentType `json:"instType,string"`
 	}
+	Status struct {
+		State string `json:"state,omitempty"`
+	}
 )

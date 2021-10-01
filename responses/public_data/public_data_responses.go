@@ -62,4 +62,8 @@ type (
 		responses.Basic
 		Underlings [][]string `json:"data,omitempty"`
 	}
+	Status struct {
+		responses.Basic
+		States []publicdata.State `json:"data,omitempty"`
+	}
 )

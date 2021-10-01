@@ -150,4 +150,14 @@ type (
 		IrDiscount    okex.JSONFloat64 `json:"irDiscount"`
 		LoanQuotaCoef int              `json:"loanQuotaCoef,string"`
 	}
+	State struct {
+		Title       string        `json:"title"`
+		State       string        `json:"state"`
+		Href        string        `json:"href"`
+		ServiceType string        `json:"serviceType"`
+		System      string        `json:"system"`
+		ScheDesc    string        `json:"scheDesc"`
+		Begin       okex.JSONTime `json:"begin"`
+		End         okex.JSONTime `json:"end"`
+	}
 )

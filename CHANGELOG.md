@@ -2,6 +2,13 @@ Changelog
 =========
 All notable changes to this project will be documented in this file.
 
+v1.0.15-alpha
+------------
+
+### Changed
+
+- Added status endpoint on rest
+
 v1.0.14-alpha
 ------------
 
