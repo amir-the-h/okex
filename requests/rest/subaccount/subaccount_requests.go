@@ -36,7 +36,7 @@ type (
 		After   int64             `json:"after,omitempty,string"`
 		Before  int64             `json:"before,omitempty,string"`
 		Limit   int64             `json:"limit,omitempty,string"`
-		Type    okex.TransferType `json:"type,omitempty"`
+		Type    okex.TransferType `json:"type,omitempty,string"`
 	}
 	ManageTransfers struct {
 		Ccy            string           `json:"ccy"`

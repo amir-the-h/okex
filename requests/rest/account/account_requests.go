@@ -22,8 +22,8 @@ type (
 		InstType okex.InstrumentType `json:"instType,omitempty"`
 		MgnMode  okex.MarginMode     `json:"mgnMode,omitempty"`
 		CtType   okex.ContractType   `json:"ctType,omitempty"`
-		Type     okex.BillType       `json:"type,omitempty"`
-		SubType  okex.BillSubType    `json:"subType,omitempty"`
+		Type     okex.BillType       `json:"type,omitempty,string"`
+		SubType  okex.BillSubType    `json:"subType,omitempty,string"`
 	}
 	SetPositionMode struct {
 		PositionMode okex.PositionType `json:"positionMode"`
@@ -65,7 +65,7 @@ type (
 	GetFeeRates struct {
 		InstID   string              `json:"instId,omitempty"`
 		Uly      string              `json:"uly,omitempty"`
-		Category okex.FeeCategory    `json:"category,omitempty"`
+		Category okex.FeeCategory    `json:"category,omitempty,string"`
 		InstType okex.InstrumentType `json:"instType"`
 	}
 	GetInterestAccrued struct {

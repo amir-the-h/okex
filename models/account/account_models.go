@@ -126,8 +126,8 @@ type (
 		To        okex.AccountType    `json:"to,string"`
 		InstType  okex.InstrumentType `json:"instType"`
 		MgnMode   okex.MarginMode     `json:"MgnMode"`
-		Type      okex.BillType       `json:"type"`
-		SubType   okex.BillSubType    `json:"subType"`
+		Type      okex.BillType       `json:"type,string"`
+		SubType   okex.BillSubType    `json:"subType,string"`
 		TS        okex.JSONTime       `json:"ts"`
 	}
 	Config struct {
@@ -179,7 +179,7 @@ type (
 		Maker    okex.JSONFloat64    `json:"maker"`
 		Delivery okex.JSONFloat64    `json:"delivery,omitempty"`
 		Exercise okex.JSONFloat64    `json:"exercise,omitempty"`
-		Category okex.FeeCategory    `json:"category"`
+		Category okex.FeeCategory    `json:"category,string"`
 		InstType okex.InstrumentType `json:"instType"`
 		TS       okex.JSONTime       `json:"ts"`
 	}

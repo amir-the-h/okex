@@ -27,7 +27,7 @@ type (
 		SubAcct string         `json:"subAcct,omitempty"`
 		Ccy     string         `json:"ccy,omitempty"`
 		BillId  okex.JSONInt64 `json:"billId,omitempty"`
-		Type    okex.BillType  `json:"type,string,omitempty"`
+		Type    okex.BillType  `json:"type,string,omitempty,string"`
 		TS      okex.JSONTime  `json:"ts,omitempty"`
 	}
 	Transfer struct {
