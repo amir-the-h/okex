@@ -2,6 +2,13 @@ Changelog
 =========
 All notable changes to this project will be documented in this file.
 
+v1.0.18-alpha
+------------
+
+### Changed
+
+- Renamed subaccount models filed names
+
 v1.0.17-alpha
 ------------
 

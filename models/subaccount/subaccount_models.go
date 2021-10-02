@@ -16,21 +16,21 @@ type (
 	APIKey struct {
 		SubAcct    string        `json:"subAcct,omitempty"`
 		Label      string        `json:"label,omitempty"`
-		ApiKey     string        `json:"apiKey,omitempty"`
+		APIKey     string        `json:"apiKey,omitempty"`
 		SecretKey  string        `json:"secretKey,omitempty"`
 		Passphrase string        `json:"Passphrase,omitempty"`
 		Perm       string        `json:"perm,omitempty"`
-		Ip         string        `json:"ip,omitempty"`
+		IP         string        `json:"ip,omitempty"`
 		TS         okex.JSONTime `json:"ts,omitempty"`
 	}
 	HistoryTransfer struct {
 		SubAcct string         `json:"subAcct,omitempty"`
 		Ccy     string         `json:"ccy,omitempty"`
-		BillId  okex.JSONInt64 `json:"billId,omitempty"`
-		Type    okex.BillType  `json:"type,string,omitempty,string"`
+		BillID  okex.JSONInt64 `json:"billId,omitempty"`
+		Type    okex.BillType  `json:"type,omitempty,string"`
 		TS      okex.JSONTime  `json:"ts,omitempty"`
 	}
 	Transfer struct {
-		TransId okex.JSONInt64 `json:"transId"`
+		TransID okex.JSONInt64 `json:"transId"`
 	}
 )
