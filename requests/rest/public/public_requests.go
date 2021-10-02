@@ -6,19 +6,19 @@ type (
 	GetInstruments struct {
 		Uly      string              `json:"uly,omitempty"`
 		InstID   string              `json:"instId,omitempty"`
-		InstType okex.InstrumentType `json:"instType,string"`
+		InstType okex.InstrumentType `json:"instType"`
 	}
 	GetDeliveryExerciseHistory struct {
 		Uly      string              `json:"uly"`
 		After    int64               `json:"after,omitempty,string"`
 		Before   int64               `json:"before,omitempty,string"`
 		Limit    int64               `json:"limit,omitempty,string"`
-		InstType okex.InstrumentType `json:"instType,string"`
+		InstType okex.InstrumentType `json:"instType"`
 	}
 	GetOpenInterest struct {
 		Uly      string              `json:"uly,omitempty"`
 		InstID   string              `json:"instId,omitempty"`
-		InstType okex.InstrumentType `json:"instType,string"`
+		InstType okex.InstrumentType `json:"instType"`
 	}
 	GetFundingRate struct {
 		InstID string `json:"instId"`
@@ -46,25 +46,25 @@ type (
 		After    int64               `json:"after,omitempty,string"`
 		Before   int64               `json:"before,omitempty,string"`
 		Limit    int64               `json:"limit,omitempty,string"`
-		InstType okex.InstrumentType `json:"instType,string"`
-		MgnMode  okex.MarginMode     `json:"mgnMode,string,omitempty"`
-		Alias    okex.AliasType      `json:"alias,string,omitempty"`
-		State    okex.OrderState     `json:"state,string,omitempty"`
+		InstType okex.InstrumentType `json:"instType"`
+		MgnMode  okex.MarginMode     `json:"mgnMode,omitempty"`
+		Alias    okex.AliasType      `json:"alias,omitempty"`
+		State    okex.OrderState     `json:"state,omitempty"`
 	}
 	GetMarkPrice struct {
 		InstID   string              `json:"instId,omitempty"`
 		Uly      string              `json:"uly,omitempty"`
-		InstType okex.InstrumentType `json:"instType,string"`
+		InstType okex.InstrumentType `json:"instType"`
 	}
 	GetPositionTiers struct {
 		InstID   string              `json:"instId,omitempty"`
 		Uly      string              `json:"uly,omitempty"`
-		InstType okex.InstrumentType `json:"instType,string"`
-		TdMode   okex.TradeMode      `json:"tdMode,string"`
+		InstType okex.InstrumentType `json:"instType"`
+		TdMode   okex.TradeMode      `json:"tdMode"`
 		Tier     okex.JSONInt64      `json:"tier,omitempty"`
 	}
 	GetUnderlying struct {
-		InstType okex.InstrumentType `json:"instType,string"`
+		InstType okex.InstrumentType `json:"instType"`
 	}
 	Status struct {
 		State string `json:"state,omitempty"`

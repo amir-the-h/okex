@@ -16,7 +16,7 @@ type (
 		Label      string            `json:"label"`
 		Passphrase string            `json:"Passphrase"`
 		IP         []string          `json:"ip,omitempty"`
-		Perm       okex.APIKeyAccess `json:"perm,string,omitempty"`
+		Perm       okex.APIKeyAccess `json:"perm,omitempty"`
 	}
 	QueryAPIKey struct {
 		APIKey  string `json:"apiKey"`
@@ -36,7 +36,7 @@ type (
 		After   int64             `json:"after,omitempty,string"`
 		Before  int64             `json:"before,omitempty,string"`
 		Limit   int64             `json:"limit,omitempty,string"`
-		Type    okex.TransferType `json:"type,string,omitempty"`
+		Type    okex.TransferType `json:"type,omitempty"`
 	}
 	ManageTransfers struct {
 		Ccy            string           `json:"ccy"`

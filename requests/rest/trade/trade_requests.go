@@ -34,7 +34,7 @@ type (
 		ReqID     string  `json:"reqId,omitempty"`
 		NewSz     float64 `json:"newSz,omitempty,string"`
 		NewPx     float64 `json:"newPx,omitempty,string"`
-		CxlOnFail bool    `json:"cxlOnFail,string,omitempty"`
+		CxlOnFail bool    `json:"cxlOnFail,omitempty"`
 	}
 	ClosePosition struct {
 		InstID  string            `json:"instId"`

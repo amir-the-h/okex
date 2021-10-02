@@ -2,6 +2,13 @@ Changelog
 =========
 All notable changes to this project will be documented in this file.
 
+v1.0.16-alpha
+------------
+
+### Changed
+
+- Fixed rest api request json tag issues
+
 v1.0.15-alpha
 ------------
 
