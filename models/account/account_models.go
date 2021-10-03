@@ -48,7 +48,8 @@ type (
 		LiabCcy     string              `json:"liabCcy,omitempty"`
 		OptVal      string              `json:"optVal,omitempty"`
 		Ccy         string              `json:"ccy"`
-		PosID       okex.JSONFloat64    `json:"posId"`
+		PosID       string              `json:"posId"`
+		TradeID     string              `json:"tradeId"`
 		Pos         okex.JSONFloat64    `json:"pos"`
 		AvailPos    okex.JSONFloat64    `json:"availPos,omitempty"`
 		AvgPx       okex.JSONFloat64    `json:"avgPx"`
@@ -62,7 +63,6 @@ type (
 		Mmr         okex.JSONFloat64    `json:"mmr"`
 		Liab        okex.JSONFloat64    `json:"liab,omitempty"`
 		Interest    okex.JSONFloat64    `json:"interest"`
-		TradeID     okex.JSONFloat64    `json:"tradeId"`
 		NotionalUsd okex.JSONFloat64    `json:"notionalUsd"`
 		ADL         okex.JSONFloat64    `json:"adl"`
 		Last        okex.JSONFloat64    `json:"last"`
@@ -113,7 +113,8 @@ type (
 		Ccy       string              `json:"ccy"`
 		InstID    string              `json:"instId"`
 		Notes     string              `json:"notes"`
-		BillID    okex.JSONFloat64    `json:"billId"`
+		BillID    string              `json:"billId"`
+		OrdID     string              `json:"ordId"`
 		BalChg    okex.JSONFloat64    `json:"balChg"`
 		PosBalChg okex.JSONFloat64    `json:"posBalChg"`
 		Bal       okex.JSONFloat64    `json:"bal"`
@@ -121,7 +122,6 @@ type (
 		Sz        okex.JSONFloat64    `json:"sz"`
 		Pnl       okex.JSONFloat64    `json:"pnl"`
 		Fee       okex.JSONFloat64    `json:"fee"`
-		OrdID     okex.JSONFloat64    `json:"ordId"`
 		From      okex.AccountType    `json:"from,string"`
 		To        okex.AccountType    `json:"to,string"`
 		InstType  okex.InstrumentType `json:"instType"`
@@ -135,7 +135,7 @@ type (
 		LevelTmp   string            `json:"levelTmp"`
 		AcctLv     string            `json:"acctLv"`
 		AutoLoan   bool              `json:"autoLoan"`
-		UID        okex.JSONFloat64  `json:"uid"`
+		UID        string            `json:"uid"`
 		GreeksType okex.GreekType    `json:"greeksType"`
 		PosMode    okex.PositionType `json:"posMode"`
 	}
