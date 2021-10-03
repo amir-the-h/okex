@@ -73,7 +73,6 @@ func NewClient(ctx context.Context, apiKey, secretKey, passphrase string, url ma
 	c.Private = NewPrivate(c)
 	c.Public = NewPublic(c)
 	c.Trade = NewTrade(c)
-
 	return c
 }
 
@@ -121,7 +120,6 @@ func (c *ClientWs) Login() error {
 			"sign":       sign,
 		},
 	}
-
 	return c.Send(true, okex.LoginOperation, args)
 }
 
@@ -143,7 +141,6 @@ func (c *ClientWs) Subscribe(p bool, ch []okex.ChannelName, args map[string]stri
 			tmpArgs[i][k] = v
 		}
 	}
-
 	return c.Send(p, okex.SubscribeOperation, tmpArgs)
 }
 
@@ -159,7 +156,6 @@ func (c *ClientWs) Unsubscribe(p bool, ch []okex.ChannelName, args map[string]st
 			tmpArgs[i][k] = v
 		}
 	}
-
 	return c.Send(p, okex.UnsubscribeOperation, tmpArgs)
 }
 
@@ -169,7 +165,6 @@ func (c *ClientWs) Send(p bool, op okex.Operation, args []map[string]string, ext
 	if err != nil {
 		return err
 	}
-
 	data := map[string]interface{}{
 		"op":   op,
 		"args": args,
@@ -183,9 +178,7 @@ func (c *ClientWs) Send(p bool, op okex.Operation, args []map[string]string, ext
 	if err != nil {
 		return err
 	}
-
 	c.sendChan[p] <- j
-
 	return nil
 }
 
@@ -224,7 +217,6 @@ func (c *ClientWs) dial(p bool) error {
 		}
 	}()
 	c.conn[p] = conn
-
 	return nil
 }
 func (c *ClientWs) sender(p bool) error {
@@ -239,18 +231,15 @@ func (c *ClientWs) sender(p bool) error {
 				c.mu[p].Unlock()
 				return err
 			}
-
 			w, err := c.conn[p].NextWriter(websocket.TextMessage)
 			if err != nil {
 				c.mu[p].Unlock()
 				return err
 			}
-
 			if _, err = w.Write(data); err != nil {
 				c.mu[p].Unlock()
 				return err
 			}
-
 			now := time.Now()
 			c.lastTransmit[p] = &now
 			c.mu[p].Unlock()
@@ -280,7 +269,6 @@ func (c *ClientWs) receiver(p bool) error {
 				c.rmu[p].Unlock()
 				return err
 			}
-
 			mt, data, err := c.conn[p].ReadMessage()
 			if err != nil {
 				c.rmu[p].Unlock()
@@ -289,7 +277,6 @@ func (c *ClientWs) receiver(p bool) error {
 				}
 				return err
 			}
-
 			c.rmu[p].Unlock()
 			now := time.Now()
 			c.mu[p].Lock()
@@ -314,8 +301,6 @@ func (c *ClientWs) sign(method, path string) (string, string) {
 	p := []byte(s)
 	h := hmac.New(sha256.New, c.secretKey)
 	h.Write(p)
-
-	// Get result and encode as hexadecimal string
 	return ts, base64.StdEncoding.EncodeToString(h.Sum(nil))
 }
 func (c *ClientWs) handleCancel(msg string) error {
@@ -389,6 +374,5 @@ func (c *ClientWs) process(data []byte, e *events.Basic) bool {
 		return true
 	}
 	go func() { c.RawEventChan <- e }()
-
 	return false
 }

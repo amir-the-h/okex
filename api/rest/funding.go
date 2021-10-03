@@ -50,16 +50,13 @@ func (c *Funding) GetBalance(req requests.GetBalance) (response responses.GetBal
 	if len(req.Ccy) > 0 {
 		m["ccy"] = strings.Join(req.Ccy, ",")
 	}
-
 	res, err := c.client.Do(http.MethodGet, p, true, m)
 	if err != nil {
 		return
 	}
 	defer res.Body.Close()
-
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
-
 	return
 }
 
@@ -70,16 +67,13 @@ func (c *Funding) GetBalance(req requests.GetBalance) (response responses.GetBal
 func (c *Funding) FundsTransfer(req requests.FundsTransfer) (response responses.FundsTransfer, err error) {
 	p := "/api/v5/asset/transfer"
 	m := okex.S2M(req)
-
 	res, err := c.client.Do(http.MethodPost, p, true, m)
 	if err != nil {
 		return
 	}
 	defer res.Body.Close()
-
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
-
 	return
 }
 
@@ -90,16 +84,13 @@ func (c *Funding) FundsTransfer(req requests.FundsTransfer) (response responses.
 func (c *Funding) AssetBillsDetails(req requests.AssetBillsDetails) (response responses.AssetBillsDetails, err error) {
 	p := "/api/v5/asset/bills"
 	m := okex.S2M(req)
-
 	res, err := c.client.Do(http.MethodGet, p, true, m)
 	if err != nil {
 		return
 	}
 	defer res.Body.Close()
-
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
-
 	return
 }
 
@@ -110,16 +101,13 @@ func (c *Funding) AssetBillsDetails(req requests.AssetBillsDetails) (response re
 func (c *Funding) GetDepositAddress(req requests.GetDepositAddress) (response responses.GetDepositAddress, err error) {
 	p := "/api/v5/asset/deposit-address"
 	m := okex.S2M(req)
-
 	res, err := c.client.Do(http.MethodGet, p, true, m)
 	if err != nil {
 		return
 	}
 	defer res.Body.Close()
-
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
-
 	return
 }
 
@@ -130,16 +118,13 @@ func (c *Funding) GetDepositAddress(req requests.GetDepositAddress) (response re
 func (c *Funding) GetDepositHistory(req requests.GetDepositHistory) (response responses.GetDepositHistory, err error) {
 	p := "/api/v5/asset/deposit-history"
 	m := okex.S2M(req)
-
 	res, err := c.client.Do(http.MethodGet, p, true, m)
 	if err != nil {
 		return
 	}
 	defer res.Body.Close()
-
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
-
 	return
 }
 
@@ -150,16 +135,13 @@ func (c *Funding) GetDepositHistory(req requests.GetDepositHistory) (response re
 func (c *Funding) Withdrawal(req requests.Withdrawal) (response responses.Withdrawal, err error) {
 	p := "/api/v5/asset/withdrawal"
 	m := okex.S2M(req)
-
 	res, err := c.client.Do(http.MethodPost, p, true, m)
 	if err != nil {
 		return
 	}
 	defer res.Body.Close()
-
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
-
 	return
 }
 
@@ -170,16 +152,13 @@ func (c *Funding) Withdrawal(req requests.Withdrawal) (response responses.Withdr
 func (c *Funding) GetWithdrawalHistory(req requests.GetWithdrawalHistory) (response responses.GetWithdrawalHistory, err error) {
 	p := "/api/v5/asset/withdrawal-history"
 	m := okex.S2M(req)
-
 	res, err := c.client.Do(http.MethodGet, p, true, m)
 	if err != nil {
 		return
 	}
 	defer res.Body.Close()
-
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
-
 	return
 }
 
@@ -189,16 +168,13 @@ func (c *Funding) GetWithdrawalHistory(req requests.GetWithdrawalHistory) (respo
 func (c *Funding) PiggyBankPurchaseRedemption(req requests.PiggyBankPurchaseRedemption) (response responses.PiggyBankPurchaseRedemption, err error) {
 	p := "/api/v5/asset/purchase_redempt"
 	m := okex.S2M(req)
-
 	res, err := c.client.Do(http.MethodPost, p, true, m)
 	if err != nil {
 		return
 	}
 	defer res.Body.Close()
-
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
-
 	return
 }
 
@@ -208,15 +184,12 @@ func (c *Funding) PiggyBankPurchaseRedemption(req requests.PiggyBankPurchaseRede
 func (c *Funding) GetPiggyBankBalance(req requests.GetPiggyBankBalance) (response responses.GetPiggyBankBalance, err error) {
 	p := "/api/v5/asset/piggy-balance"
 	m := okex.S2M(req)
-
 	res, err := c.client.Do(http.MethodGet, p, true, m)
 	if err != nil {
 		return
 	}
 	defer res.Body.Close()
-
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
-
 	return
 }

@@ -33,13 +33,11 @@ func (c *Trade) PlaceOrder(req []requests.PlaceOrder) (response responses.PlaceO
 		p = "/api/trade/batch-orders"
 	}
 	m := okex.S2M(tmp)
-
 	res, err := c.client.Do(http.MethodPost, p, true, m)
 	if err != nil {
 		return
 	}
 	defer res.Body.Close()
-
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
 
@@ -53,13 +51,11 @@ func (c *Trade) PlaceOrder(req []requests.PlaceOrder) (response responses.PlaceO
 func (c *Trade) PlaceMultipleOrders(req []requests.PlaceOrder) (response responses.PlaceOrder, err error) {
 	p := "/api/v5/trade/batch-order"
 	m := okex.S2M(req)
-
 	res, err := c.client.Do(http.MethodPost, p, true, m)
 	if err != nil {
 		return
 	}
 	defer res.Body.Close()
-
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
 
@@ -83,16 +79,13 @@ func (c *Trade) CandleOrder(req []requests.CancelOrder) (response responses.Plac
 		p = "/api/trade/cancel-batch-orders"
 	}
 	m := okex.S2M(tmp)
-
 	res, err := c.client.Do(http.MethodPost, p, true, m)
 	if err != nil {
 		return
 	}
 	defer res.Body.Close()
-
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
-
 	return
 }
 
@@ -113,16 +106,13 @@ func (c *Trade) AmendOrder(req []requests.OrderList) (response responses.AmendOr
 		p = "/api/trade/amend-batch-orders"
 	}
 	m := okex.S2M(tmp)
-
 	res, err := c.client.Do(http.MethodPost, p, true, m)
 	if err != nil {
 		return
 	}
 	defer res.Body.Close()
-
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
-
 	return
 }
 
@@ -133,16 +123,13 @@ func (c *Trade) AmendOrder(req []requests.OrderList) (response responses.AmendOr
 func (c *Trade) ClosePosition(req requests.ClosePosition) (response responses.ClosePosition, err error) {
 	p := "/api/v5/trade/close-position"
 	m := okex.S2M(req)
-
 	res, err := c.client.Do(http.MethodPost, p, true, m)
 	if err != nil {
 		return
 	}
 	defer res.Body.Close()
-
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
-
 	return
 }
 
@@ -153,16 +140,13 @@ func (c *Trade) ClosePosition(req requests.ClosePosition) (response responses.Cl
 func (c *Trade) GetOrderDetail(req requests.OrderList) (response responses.Order, err error) {
 	p := "/api/v5/trade/order"
 	m := okex.S2M(req)
-
 	res, err := c.client.Do(http.MethodGet, p, true, m)
 	if err != nil {
 		return
 	}
 	defer res.Body.Close()
-
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
-
 	return
 }
 
@@ -173,16 +157,13 @@ func (c *Trade) GetOrderDetail(req requests.OrderList) (response responses.Order
 func (c *Trade) GetOrderList(req requests.OrderList) (response responses.Order, err error) {
 	p := "/api/v5/trade/orders-pending"
 	m := okex.S2M(req)
-
 	res, err := c.client.Do(http.MethodGet, p, true, m)
 	if err != nil {
 		return
 	}
 	defer res.Body.Close()
-
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
-
 	return
 }
 
@@ -199,16 +180,13 @@ func (c *Trade) GetOrderHistory(req requests.OrderList, arch bool) (response res
 		p = "/api/trade/orders-history-archive"
 	}
 	m := okex.S2M(req)
-
 	res, err := c.client.Do(http.MethodGet, p, true, m)
 	if err != nil {
 		return
 	}
 	defer res.Body.Close()
-
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
-
 	return
 }
 
@@ -226,15 +204,12 @@ func (c *Trade) GetTransactionDetails(req requests.TransactionDetails, arch bool
 		p = "/api/trade/fills-history"
 	}
 	m := okex.S2M(req)
-
 	res, err := c.client.Do(http.MethodGet, p, true, m)
 	if err != nil {
 		return
 	}
 	defer res.Body.Close()
-
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
-
 	return
 }

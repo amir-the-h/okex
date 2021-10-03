@@ -49,7 +49,6 @@ func NewClient(apiKey, secretKey, passphrase string, baseURL okex.BaseURL, desti
 	c.Market = NewMarket(c)
 	c.PublicData = NewPublicData(c)
 	c.TradeData = NewTradeData(c)
-
 	return c
 }
 
@@ -91,10 +90,8 @@ func (c *ClientRest) Do(method, path string, private bool, params ...map[string]
 		if err != nil {
 			return nil, err
 		}
-
 		r.Header.Add("Content-Type", "application/json")
 	}
-
 	if err != nil {
 		return nil, err
 	}
@@ -108,7 +105,6 @@ func (c *ClientRest) Do(method, path string, private bool, params ...map[string]
 	if c.destination == okex.DemoServer {
 		r.Header.Add("x-simulated-trading", "1")
 	}
-
 	return c.client.Do(r)
 }
 
@@ -126,7 +122,6 @@ func (c *ClientRest) Status(req requests.Status) (response responses.Status, err
 	defer res.Body.Close()
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
-
 	return
 }
 
@@ -138,7 +133,5 @@ func (c *ClientRest) sign(method, path, body string) (string, string) {
 	p := []byte(s)
 	h := hmac.New(sha256.New, c.secretKey)
 	h.Write(p)
-
-	// Get result and encode as hexadecimal string
 	return ts, base64.StdEncoding.EncodeToString(h.Sum(nil))
 }
