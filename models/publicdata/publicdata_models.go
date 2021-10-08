@@ -19,14 +19,14 @@ type (
 		LotSz     okex.JSONFloat64     `json:"lotSz,omitempty"`
 		MinSz     okex.JSONFloat64     `json:"minSz,omitempty"`
 		Lever     okex.JSONFloat64     `json:"lever"`
-		InstType  okex.InstrumentType  `json:"instType,string"`
+		InstType  okex.InstrumentType  `json:"instType"`
 		Category  okex.FeeCategory     `json:"category,string"`
-		OptType   okex.OptionType      `json:"optType,string,omitempty"`
+		OptType   okex.OptionType      `json:"optType,omitempty"`
 		ListTime  okex.JSONTime        `json:"listTime"`
 		ExpTime   okex.JSONTime        `json:"expTime,omitempty"`
-		CtType    okex.ContractType    `json:"ctType,string,omitempty"`
-		Alias     okex.AliasType       `json:"alias,string,omitempty"`
-		State     okex.InstrumentState `json:"state,string"`
+		CtType    okex.ContractType    `json:"ctType,omitempty"`
+		Alias     okex.AliasType       `json:"alias,omitempty"`
+		State     okex.InstrumentState `json:"state"`
 	}
 	DeliveryExerciseHistory struct {
 		Details []*DeliveryExerciseHistoryDetails `json:"details"`
@@ -35,18 +35,18 @@ type (
 	DeliveryExerciseHistoryDetails struct {
 		InstID string                    `json:"instId"`
 		Px     okex.JSONFloat64          `json:"px"`
-		Type   okex.DeliveryExerciseType `json:"type,string"`
+		Type   okex.DeliveryExerciseType `json:"type"`
 	}
 	OpenInterest struct {
 		InstID   string              `json:"instId"`
 		Oi       okex.JSONFloat64    `json:"oi"`
 		OiCcy    okex.JSONFloat64    `json:"oiCcy"`
-		InstType okex.InstrumentType `json:"instType,string"`
+		InstType okex.InstrumentType `json:"instType"`
 		TS       okex.JSONTime       `json:"ts"`
 	}
 	FundingRate struct {
 		InstID          string              `json:"instId"`
-		InstType        okex.InstrumentType `json:"instType,string"`
+		InstType        okex.InstrumentType `json:"instType"`
 		FundingRate     okex.JSONFloat64    `json:"fundingRate"`
 		NextFundingRate okex.JSONFloat64    `json:"NextFundingRate"`
 		FundingTime     okex.JSONTime       `json:"fundingTime"`
@@ -54,21 +54,21 @@ type (
 	}
 	LimitPrice struct {
 		InstID   string              `json:"instId"`
-		InstType okex.InstrumentType `json:"instType,string"`
+		InstType okex.InstrumentType `json:"instType"`
 		BuyLmt   okex.JSONFloat64    `json:"buyLmt"`
 		SellLmt  okex.JSONFloat64    `json:"sellLmt"`
 		TS       okex.JSONTime       `json:"ts"`
 	}
 	EstimatedDeliveryExercisePrice struct {
 		InstID   string              `json:"instId"`
-		InstType okex.InstrumentType `json:"instType,string"`
+		InstType okex.InstrumentType `json:"instType"`
 		SettlePx okex.JSONFloat64    `json:"settlePx"`
 		TS       okex.JSONTime       `json:"ts"`
 	}
 	OptionMarketData struct {
 		InstID   string              `json:"instId"`
 		Uly      string              `json:"uly"`
-		InstType okex.InstrumentType `json:"instType,string"`
+		InstType okex.InstrumentType `json:"instType"`
 		Delta    okex.JSONFloat64    `json:"delta"`
 		Gamma    okex.JSONFloat64    `json:"gamma"`
 		Vega     okex.JSONFloat64    `json:"vega"`
@@ -101,14 +101,14 @@ type (
 	LiquidationOrder struct {
 		InstID    string                    `json:"instId"`
 		Uly       string                    `json:"uly,omitempty"`
-		InstType  okex.InstrumentType       `json:"instType,string"`
+		InstType  okex.InstrumentType       `json:"instType"`
 		TotalLoss okex.JSONFloat64          `json:"totalLoss"`
 		Details   []*LiquidationOrderDetail `json:"details"`
 	}
 	LiquidationOrderDetail struct {
 		Ccy     string            `json:"ccy,omitempty"`
-		Side    okex.OrderSide    `json:"side,string"`
-		OosSide okex.PositionSide `json:"posSide,string"`
+		Side    okex.OrderSide    `json:"side"`
+		OosSide okex.PositionSide `json:"posSide"`
 		BkPx    okex.JSONFloat64  `json:"bkPx"`
 		Sz      okex.JSONFloat64  `json:"sz"`
 		BkLoss  okex.JSONFloat64  `json:"bkLoss"`
@@ -116,14 +116,14 @@ type (
 	}
 	MarkPrice struct {
 		InstID   string              `json:"instId"`
-		InstType okex.InstrumentType `json:"instType,string"`
+		InstType okex.InstrumentType `json:"instType"`
 		MarkPx   okex.JSONFloat64    `json:"markPx"`
 		TS       okex.JSONTime       `json:"ts"`
 	}
 	PositionTier struct {
 		InstID       string              `json:"instId"`
 		Uly          string              `json:"uly,omitempty"`
-		InstType     okex.InstrumentType `json:"instType,string"`
+		InstType     okex.InstrumentType `json:"instType"`
 		Tier         okex.JSONInt64      `json:"tier"`
 		MinSz        okex.JSONFloat64    `json:"minSz"`
 		MaxSz        okex.JSONFloat64    `json:"maxSz"`
