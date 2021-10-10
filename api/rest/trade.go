@@ -137,7 +137,7 @@ func (c *Trade) ClosePosition(req requests.ClosePosition) (response responses.Cl
 // Retrieve order details.
 //
 // https://www.okex.com/docs-v5/en/#rest-api-trade-get-order-details
-func (c *Trade) GetOrderDetail(req requests.OrderList) (response responses.Order, err error) {
+func (c *Trade) GetOrderDetail(req requests.OrderList) (response responses.OrderList, err error) {
 	p := "/api/v5/trade/order"
 	m := okex.S2M(req)
 	res, err := c.client.Do(http.MethodGet, p, true, m)
@@ -154,7 +154,7 @@ func (c *Trade) GetOrderDetail(req requests.OrderList) (response responses.Order
 // Retrieve all incomplete orders under the current account.
 //
 // https://www.okex.com/docs-v5/en/#rest-api-trade-get-order-list
-func (c *Trade) GetOrderList(req requests.OrderList) (response responses.Order, err error) {
+func (c *Trade) GetOrderList(req requests.OrderList) (response responses.OrderList, err error) {
 	p := "/api/v5/trade/orders-pending"
 	m := okex.S2M(req)
 	res, err := c.client.Do(http.MethodGet, p, true, m)
@@ -174,7 +174,7 @@ func (c *Trade) GetOrderList(req requests.OrderList) (response responses.Order, 
 //
 // Retrieve the completed order data of the last 3 months, and the incomplete orders that have been canceled are only reserved for 2 hours.
 // https://www.okex.com/docs-v5/en/#rest-api-trade-get-order-history-last-3-months
-func (c *Trade) GetOrderHistory(req requests.OrderList, arch bool) (response responses.Order, err error) {
+func (c *Trade) GetOrderHistory(req requests.OrderList, arch bool) (response responses.OrderList, err error) {
 	p := "/api/v5/trade/orders-history"
 	if arch {
 		p = "/api/trade/orders-history-archive"
@@ -211,5 +211,92 @@ func (c *Trade) GetTransactionDetails(req requests.TransactionDetails, arch bool
 	defer res.Body.Close()
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
+	return
+}
+
+// PlaceAlgoOrder
+// The algo order includes trigger order, oco order, conditional order,iceberg order and twap order.
+//
+// `iceberg` order and `twap` order just supported on demo trading
+//
+// https://www.okex.com/docs-v5/en/#rest-api-trade-place-algo-order
+func (c *Trade) PlaceAlgoOrder(req requests.PlaceAlgoOrder) (response responses.PlaceAlgoOrder, err error) {
+	p := "/api/v5/trade/order-algo"
+	m := okex.S2M(req)
+	res, err := c.client.Do(http.MethodPost, p, true, m)
+	if err != nil {
+		return
+	}
+	defer res.Body.Close()
+	d := json.NewDecoder(res.Body)
+	err = d.Decode(&response)
+
+	return
+}
+
+// CancelAlgoOrder
+// Cancel unfilled algo orders(trigger order, oco order, conditional order). A maximum of 10 orders can be canceled at a time. Request parameters should be passed in the form of an array.
+//
+// https://www.okex.com/docs-v5/en/#rest-api-trade-cancel-algo-order
+func (c *Trade) CancelAlgoOrder(req requests.CancelAlgoOrder) (response responses.CancelAlgoOrder, err error) {
+	p := "/api/v5/trade/cancel-algos"
+	m := okex.S2M(req)
+	res, err := c.client.Do(http.MethodPost, p, true, m)
+	if err != nil {
+		return
+	}
+	defer res.Body.Close()
+	d := json.NewDecoder(res.Body)
+	err = d.Decode(&response)
+
+	return
+}
+
+// CancelAdvanceAlgoOrder
+// Cancel unfilled algo orders(iceberg order and twap order). A maximum of 10 orders can be canceled at a time. Request parameters should be passed in the form of an array.
+//
+// Only released on demo trading
+//
+// https://www.okex.com/docs-v5/en/#rest-api-trade-cancel-advance-algo-order
+func (c *Trade) CancelAdvanceAlgoOrder(req requests.CancelAlgoOrder) (response responses.CancelAlgoOrder, err error) {
+	p := "/api/v5/trade/cancel-advance-algos"
+	m := okex.S2M(req)
+	res, err := c.client.Do(http.MethodPost, p, true, m)
+	if err != nil {
+		return
+	}
+	defer res.Body.Close()
+	d := json.NewDecoder(res.Body)
+	err = d.Decode(&response)
+
+	return
+}
+
+// GetAlgoOrderList
+// Retrieve a list of untriggered Algo orders under the current account.
+//
+// `iceberg` order and `twap` order just supported on demo trading
+//
+// https://www.okex.com/docs-v5/en/#rest-api-trade-get-algo-order-list
+//
+// Retrieve a list of all algo orders under the current account in the last 3 months.
+//
+// `iceberg` order and `twap` order just supported on demo trading
+//
+// https://www.okex.com/docs-v5/en/#rest-api-trade-get-algo-order-history
+func (c *Trade) GetAlgoOrderList(req requests.AlgoOrderList, arch bool) (response responses.AlgoOrderList, err error) {
+	p := "/api/v5/trade/orders-algo-pending"
+	if arch {
+		p = "/api/trade/orders-algo-history"
+	}
+	m := okex.S2M(req)
+	res, err := c.client.Do(http.MethodGet, p, true, m)
+	if err != nil {
+		return
+	}
+	defer res.Body.Close()
+	d := json.NewDecoder(res.Body)
+	err = d.Decode(&response)
+
 	return
 }

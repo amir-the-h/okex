@@ -22,12 +22,24 @@ type (
 		responses.Basic
 		ClosePositions []*trade.ClosePosition `json:"data"`
 	}
-	Order struct {
+	OrderList struct {
 		responses.Basic
 		Orders []*trade.Order `json:"data"`
 	}
 	TransactionDetail struct {
 		responses.Basic
 		TransactionDetails []*trade.TransactionDetail `json:"data"`
+	}
+	PlaceAlgoOrder struct {
+		responses.Basic
+		PlaceAlgoOrders []*trade.PlaceAlgoOrder `json:"data"`
+	}
+	CancelAlgoOrder struct {
+		responses.Basic
+		CancelAlgoOrders []*trade.CancelAlgoOrder `json:"data"`
+	}
+	AlgoOrderList struct {
+		responses.Basic
+		AlgoOrders []*trade.AlgoOrder `json:"data"`
 	}
 )

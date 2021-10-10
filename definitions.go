@@ -17,6 +17,7 @@ type (
 	ContractType         string
 	PositionType         string
 	PositionSide         string
+	ActualSide           string
 	TradeMode            string
 	CountAction          string
 	OrderSide            string
@@ -27,6 +28,7 @@ type (
 	Operation            string
 	EventType            string
 	OrderType            string
+	AlgoOrderType        string
 	QuantityType         string
 	OrderFlowType        string
 	OrderState           string
@@ -147,6 +149,9 @@ const (
 	PositionShortSide = PositionSide("short")
 	PositionNetSide   = PositionSide("net")
 
+	TpSide = ActualSide("tp")
+	SlSide = ActualSide("sl")
+
 	TradeCrossMode    = TradeMode("cross")
 	TradeIsolatedMode = TradeMode("isolated")
 	TradeCashMode     = TradeMode("cash")
@@ -198,6 +203,12 @@ const (
 	OrderIOC             = OrderType("ioc")
 	OrderOptimalLimitIoc = OrderType("optimal_limit_ioc")
 
+	AlgoOrderConditional = AlgoOrderType("conditional")
+	AlgoOrderOCO         = AlgoOrderType("oco")
+	AlgoOrderTrigger     = AlgoOrderType("trigger")
+	AlgoOrderIceberg     = AlgoOrderType("iceberg")
+	AlgoOrderTwap        = AlgoOrderType("twap")
+
 	QuantityBaseCcy  = QuantityType("base_ccy")
 	QuantityQuoteCcy = QuantityType("quote_ccy")
 
@@ -210,6 +221,7 @@ const (
 	ClassD = FeeCategory(4)
 
 	OrderCancel          = OrderState("canceled")
+	OrderPause           = OrderState("pause")
 	OrderLive            = OrderState("live")
 	OrderPartiallyFilled = OrderState("partially_filled")
 	OrderFilled          = OrderState("filled")

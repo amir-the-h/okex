@@ -2,6 +2,15 @@ Changelog
 =========
 All notable changes to this project will be documented in this file.
 
+v1.0.22-alpha
+------------
+
+### Changed
+
+- Added place algo order
+- Added cancel algo order
+- Added get algo order list and history
+
 v1.0.21-alpha
 ------------
 
