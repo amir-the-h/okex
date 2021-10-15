@@ -107,9 +107,14 @@ func (c *ClientWs) Connect(p bool) error {
 //
 // https://www.okex.com/docs-v5/en/#websocket-api-login
 func (c *ClientWs) Login() error {
-	if c.AuthRequested != nil || time.Since(*c.AuthRequested) < PingPeriod {
+	if c.Authorized {
 		return nil
 	}
+	if c.AuthRequested != nil && time.Since(*c.AuthRequested) < 30 {
+		return nil
+	}
+	now := time.Now()
+	c.AuthRequested = &now
 	method := http.MethodGet
 	path := "/users/self/verify"
 	ts, sign := c.sign(method, path)
