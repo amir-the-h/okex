@@ -6,7 +6,6 @@ import (
 	"github.com/amir-the-h/okex/events"
 	"github.com/amir-the-h/okex/events/private"
 	requests "github.com/amir-the-h/okex/requests/ws/private"
-	"time"
 )
 
 // Private
@@ -34,10 +33,10 @@ func (c *Private) Account(req requests.Account, ch ...chan *private.Account) err
 	if len(ch) > 0 {
 		c.aCh = ch[0]
 	}
-	if err := c.Login(); err != nil {
+	err := c.WaitForAuthorization()
+	if err != nil {
 		return err
 	}
-	c.waitForAuthorization()
 	return c.Subscribe(true, []okex.ChannelName{"account"}, m)
 }
 
@@ -61,10 +60,10 @@ func (c *Private) Position(req requests.Position, ch ...chan *private.Position) 
 	if len(ch) > 0 {
 		c.pCh = ch[0]
 	}
-	if err := c.Login(); err != nil {
+	err := c.WaitForAuthorization()
+	if err != nil {
 		return err
 	}
-	c.waitForAuthorization()
 	return c.Subscribe(true, []okex.ChannelName{"positions"}, m)
 }
 
@@ -76,10 +75,10 @@ func (c *Private) UPosition(req requests.Position, rCh ...bool) error {
 	if len(rCh) > 0 && rCh[0] {
 		c.pCh = nil
 	}
-	if err := c.Login(); err != nil {
+	err := c.WaitForAuthorization()
+	if err != nil {
 		return err
 	}
-	c.waitForAuthorization()
 	return c.Unsubscribe(true, []okex.ChannelName{"positions"}, m)
 }
 
@@ -92,10 +91,10 @@ func (c *Private) BalanceAndPosition(ch ...chan *private.BalanceAndPosition) err
 	if len(ch) > 0 {
 		c.bnpCh = ch[0]
 	}
-	if err := c.Login(); err != nil {
+	err := c.WaitForAuthorization()
+	if err != nil {
 		return err
 	}
-	c.waitForAuthorization()
 	return c.Subscribe(true, []okex.ChannelName{"balance_and_position"}, m)
 }
 
@@ -119,10 +118,10 @@ func (c *Private) Order(req requests.Order, ch ...chan *private.Order) error {
 	if len(ch) > 0 {
 		c.oCh = ch[0]
 	}
-	if err := c.Login(); err != nil {
+	err := c.WaitForAuthorization()
+	if err != nil {
 		return err
 	}
-	c.waitForAuthorization()
 	return c.Subscribe(true, []okex.ChannelName{"orders"}, m)
 }
 
@@ -134,10 +133,10 @@ func (c *Private) UOrder(req requests.Order, rCh ...bool) error {
 	if len(rCh) > 0 && rCh[0] {
 		c.oCh = nil
 	}
-	if err := c.Login(); err != nil {
+	err := c.WaitForAuthorization()
+	if err != nil {
 		return err
 	}
-	c.waitForAuthorization()
 	return c.Unsubscribe(true, []okex.ChannelName{"orders"}, m)
 }
 
@@ -203,14 +202,4 @@ func (c *Private) Process(data []byte, e *events.Basic) bool {
 		}
 	}
 	return false
-}
-
-func (c *Private) waitForAuthorization() {
-	ticker := time.NewTicker(time.Millisecond * 300)
-	defer ticker.Stop()
-	for range ticker.C {
-		if c.AuthorizedUntil != nil && time.Since(*c.AuthorizedUntil) < PingPeriod {
-			return
-		}
-	}
 }

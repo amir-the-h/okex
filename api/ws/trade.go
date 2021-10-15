@@ -3,7 +3,6 @@ package ws
 import (
 	"github.com/amir-the-h/okex"
 	requests "github.com/amir-the-h/okex/requests/rest/trade"
-	"time"
 )
 
 // Trade
@@ -35,10 +34,10 @@ func (c *Trade) PlaceOrder(req ...requests.PlaceOrder) error {
 	for i, order := range req {
 		tmpArgs[i] = okex.S2M(order)
 	}
-	if err := c.Login(); err != nil {
+	err := c.WaitForAuthorization()
+	if err != nil {
 		return err
 	}
-	c.waitForAuthorization()
 	return c.Send(true, op, tmpArgs, map[string]string{"id": req[0].ID})
 }
 
@@ -59,10 +58,10 @@ func (c *Trade) CancelOrder(req ...requests.CancelOrder) error {
 	for i, order := range req {
 		tmpArgs[i] = okex.S2M(order)
 	}
-	if err := c.Login(); err != nil {
+	err := c.WaitForAuthorization()
+	if err != nil {
 		return err
 	}
-	c.waitForAuthorization()
 	return c.Send(true, op, tmpArgs, map[string]string{"id": req[0].ID})
 }
 
@@ -83,22 +82,9 @@ func (c *Trade) AmendOrder(req ...requests.AmendOrder) error {
 	for i, order := range req {
 		tmpArgs[i] = okex.S2M(order)
 	}
-	if err := c.Login(); err != nil {
+	err := c.WaitForAuthorization()
+	if err != nil {
 		return err
 	}
-	c.waitForAuthorization()
 	return c.Send(true, op, tmpArgs, map[string]string{"id": req[0].ID})
-}
-
-func (c *Trade) waitForAuthorization() {
-	if c.AuthorizedUntil != nil && time.Since(*c.AuthorizedUntil) < PingPeriod {
-		return
-	}
-	ticker := time.NewTicker(time.Millisecond * 300)
-	defer ticker.Stop()
-	for range ticker.C {
-		if c.AuthorizedUntil != nil && time.Since(*c.AuthorizedUntil) < PingPeriod {
-			return
-		}
-	}
 }

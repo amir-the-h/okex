@@ -37,7 +37,8 @@ type ClientWs struct {
 	lastTransmit        map[bool]*time.Time
 	mu                  map[bool]*sync.Mutex
 	rmu                 map[bool]*sync.Mutex
-	AuthorizedUntil     *time.Time
+	AuthRequested       *time.Time
+	Authorized          bool
 	Private             *Private
 	Public              *Public
 	Trade               *Trade
@@ -106,7 +107,7 @@ func (c *ClientWs) Connect(p bool) error {
 //
 // https://www.okex.com/docs-v5/en/#websocket-api-login
 func (c *ClientWs) Login() error {
-	if c.AuthorizedUntil != nil && time.Since(*c.AuthorizedUntil) < PingPeriod {
+	if c.AuthRequested != nil || time.Since(*c.AuthRequested) < PingPeriod {
 		return nil
 	}
 	method := http.MethodGet
@@ -189,6 +190,21 @@ func (c *ClientWs) SetChannels(errCh chan *events.Error, subCh chan *events.Subs
 	c.UnsubscribeCh = unSub
 	c.LoginChan = lCh
 	c.SuccessChan = sCh
+}
+
+// WaitForAuthorization waits for the auth response and try to log in if it was needed
+func (c *ClientWs) WaitForAuthorization() error {
+	ticker := time.NewTicker(time.Millisecond * 300)
+	defer ticker.Stop()
+	if err := c.Login(); err != nil {
+		return err
+	}
+	for range ticker.C {
+		if c.Authorized {
+			return nil
+		}
+	}
+	return nil
 }
 
 func (c *ClientWs) dial(p bool) error {
@@ -309,6 +325,8 @@ func (c *ClientWs) handleCancel(msg string) error {
 	}()
 	return fmt.Errorf("operation cancelled: %s", msg)
 }
+
+// TODO: break each case into a separate function
 func (c *ClientWs) process(data []byte, e *events.Basic) bool {
 	switch e.Event {
 	case "error":
@@ -339,8 +357,13 @@ func (c *ClientWs) process(data []byte, e *events.Basic) bool {
 		}()
 		return true
 	case "login":
-		au := time.Now().Add(time.Second * 30)
-		c.AuthorizedUntil = &au
+		au := time.Now().Add(time.Second * -30)
+		if au.After(*c.AuthRequested) {
+			c.AuthRequested = nil
+			_ = c.Login()
+			break
+		}
+		c.Authorized = true
 		e := events.Login{}
 		_ = json.Unmarshal(data, &e)
 		go func() {
