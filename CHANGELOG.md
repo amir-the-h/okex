@@ -2,6 +2,13 @@ Changelog
 =========
 All notable changes to this project will be documented in this file.
 
+v1.0.25-alpha
+------------
+
+### Changed
+
+- Fixed login process
+
 v1.0.24-alpha
 ------------
 

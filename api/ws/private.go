@@ -33,10 +33,6 @@ func (c *Private) Account(req requests.Account, ch ...chan *private.Account) err
 	if len(ch) > 0 {
 		c.aCh = ch[0]
 	}
-	err := c.WaitForAuthorization()
-	if err != nil {
-		return err
-	}
 	return c.Subscribe(true, []okex.ChannelName{"account"}, m)
 }
 
@@ -60,10 +56,6 @@ func (c *Private) Position(req requests.Position, ch ...chan *private.Position) 
 	if len(ch) > 0 {
 		c.pCh = ch[0]
 	}
-	err := c.WaitForAuthorization()
-	if err != nil {
-		return err
-	}
 	return c.Subscribe(true, []okex.ChannelName{"positions"}, m)
 }
 
@@ -74,10 +66,6 @@ func (c *Private) UPosition(req requests.Position, rCh ...bool) error {
 	m := okex.S2M(req)
 	if len(rCh) > 0 && rCh[0] {
 		c.pCh = nil
-	}
-	err := c.WaitForAuthorization()
-	if err != nil {
-		return err
 	}
 	return c.Unsubscribe(true, []okex.ChannelName{"positions"}, m)
 }
@@ -90,10 +78,6 @@ func (c *Private) BalanceAndPosition(ch ...chan *private.BalanceAndPosition) err
 	m := make(map[string]string)
 	if len(ch) > 0 {
 		c.bnpCh = ch[0]
-	}
-	err := c.WaitForAuthorization()
-	if err != nil {
-		return err
 	}
 	return c.Subscribe(true, []okex.ChannelName{"balance_and_position"}, m)
 }
@@ -118,10 +102,6 @@ func (c *Private) Order(req requests.Order, ch ...chan *private.Order) error {
 	if len(ch) > 0 {
 		c.oCh = ch[0]
 	}
-	err := c.WaitForAuthorization()
-	if err != nil {
-		return err
-	}
 	return c.Subscribe(true, []okex.ChannelName{"orders"}, m)
 }
 
@@ -132,10 +112,6 @@ func (c *Private) UOrder(req requests.Order, rCh ...bool) error {
 	m := okex.S2M(req)
 	if len(rCh) > 0 && rCh[0] {
 		c.oCh = nil
-	}
-	err := c.WaitForAuthorization()
-	if err != nil {
-		return err
 	}
 	return c.Unsubscribe(true, []okex.ChannelName{"orders"}, m)
 }

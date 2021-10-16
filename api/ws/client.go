@@ -10,6 +10,7 @@ import (
 	"github.com/amir-the-h/okex"
 	"github.com/amir-the-h/okex/events"
 	"github.com/gorilla/websocket"
+	"log"
 	"net/http"
 	"sync"
 	"time"
@@ -107,14 +108,17 @@ func (c *ClientWs) Connect(p bool) error {
 //
 // https://www.okex.com/docs-v5/en/#websocket-api-login
 func (c *ClientWs) Login() error {
+	c.mu[true].Lock()
 	if c.Authorized {
 		return nil
 	}
-	if c.AuthRequested != nil && time.Since(*c.AuthRequested) < 30 {
+	if c.AuthRequested != nil && time.Since(*c.AuthRequested).Seconds() < 30 {
 		return nil
 	}
+	log.Println("login")
 	now := time.Now()
 	c.AuthRequested = &now
+	c.mu[true].Unlock()
 	method := http.MethodGet
 	path := "/users/self/verify"
 	ts, sign := c.sign(method, path)
@@ -167,10 +171,20 @@ func (c *ClientWs) Unsubscribe(p bool, ch []okex.ChannelName, args map[string]st
 
 // Send message through either connections
 func (c *ClientWs) Send(p bool, op okex.Operation, args []map[string]string, extras ...map[string]string) error {
-	err := c.Connect(p)
-	if err != nil {
-		return err
+	if op != okex.LoginOperation {
+		err := c.Connect(p)
+		if err == nil {
+			if p {
+				err = c.WaitForAuthorization()
+				if err != nil {
+					return err
+				}
+			}
+		} else {
+			return err
+		}
 	}
+
 	data := map[string]interface{}{
 		"op":   op,
 		"args": args,
@@ -199,11 +213,14 @@ func (c *ClientWs) SetChannels(errCh chan *events.Error, subCh chan *events.Subs
 
 // WaitForAuthorization waits for the auth response and try to log in if it was needed
 func (c *ClientWs) WaitForAuthorization() error {
-	ticker := time.NewTicker(time.Millisecond * 300)
-	defer ticker.Stop()
+	if c.Authorized {
+		return nil
+	}
 	if err := c.Login(); err != nil {
 		return err
 	}
+	ticker := time.NewTicker(time.Millisecond * 300)
+	defer ticker.Stop()
 	for range ticker.C {
 		if c.Authorized {
 			return nil
@@ -220,21 +237,20 @@ func (c *ClientWs) dial(p bool) error {
 		c.rmu[p].Unlock()
 	}()
 	conn, res, err := websocket.DefaultDialer.Dial(string(c.url[p]), nil)
+	defer res.Body.Close()
 	if err != nil {
-		return fmt.Errorf("error %d: %s", res.StatusCode, err)
+		return fmt.Errorf("error %d: %w", res.StatusCode, err)
 	}
 	go func() {
 		err := c.receiver(p)
 		if err != nil {
 			fmt.Printf("receiver error: %v\n", err)
-			c.Cancel()
 		}
 	}()
 	go func() {
 		err := c.sender(p)
 		if err != nil {
 			fmt.Printf("sender error: %v\n", err)
-			c.Cancel()
 		}
 	}()
 	c.conn[p] = conn
@@ -362,8 +378,7 @@ func (c *ClientWs) process(data []byte, e *events.Basic) bool {
 		}()
 		return true
 	case "login":
-		au := time.Now().Add(time.Second * -30)
-		if au.After(*c.AuthRequested) {
+		if time.Since(*c.AuthRequested).Seconds() > 30 {
 			c.AuthRequested = nil
 			_ = c.Login()
 			break

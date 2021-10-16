@@ -34,10 +34,6 @@ func (c *Trade) PlaceOrder(req ...requests.PlaceOrder) error {
 	for i, order := range req {
 		tmpArgs[i] = okex.S2M(order)
 	}
-	err := c.WaitForAuthorization()
-	if err != nil {
-		return err
-	}
 	return c.Send(true, op, tmpArgs, map[string]string{"id": req[0].ID})
 }
 
@@ -58,10 +54,6 @@ func (c *Trade) CancelOrder(req ...requests.CancelOrder) error {
 	for i, order := range req {
 		tmpArgs[i] = okex.S2M(order)
 	}
-	err := c.WaitForAuthorization()
-	if err != nil {
-		return err
-	}
 	return c.Send(true, op, tmpArgs, map[string]string{"id": req[0].ID})
 }
 
@@ -81,10 +73,6 @@ func (c *Trade) AmendOrder(req ...requests.AmendOrder) error {
 	}
 	for i, order := range req {
 		tmpArgs[i] = okex.S2M(order)
-	}
-	err := c.WaitForAuthorization()
-	if err != nil {
-		return err
 	}
 	return c.Send(true, op, tmpArgs, map[string]string{"id": req[0].ID})
 }
