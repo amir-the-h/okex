@@ -2,6 +2,13 @@ Changelog
 =========
 All notable changes to this project will be documented in this file.
 
+v1.0.26-alpha
+------------
+
+### Changed
+
+- Removed extra login log entry
+
 v1.0.25-alpha
 ------------
 

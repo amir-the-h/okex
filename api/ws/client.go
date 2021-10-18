@@ -10,7 +10,6 @@ import (
 	"github.com/amir-the-h/okex"
 	"github.com/amir-the-h/okex/events"
 	"github.com/gorilla/websocket"
-	"log"
 	"net/http"
 	"sync"
 	"time"
@@ -115,7 +114,6 @@ func (c *ClientWs) Login() error {
 	if c.AuthRequested != nil && time.Since(*c.AuthRequested).Seconds() < 30 {
 		return nil
 	}
-	log.Println("login")
 	now := time.Now()
 	c.AuthRequested = &now
 	c.mu[true].Unlock()
