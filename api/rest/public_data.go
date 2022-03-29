@@ -144,7 +144,7 @@ func (c *PublicData) GetDiscountRateAndInterestFreeQuota(req requests.GetDiscoun
 //
 // https://www.okex.com/docs-v5/en/#rest-api-public-data-get-system-time
 func (c *PublicData) GetSystemTime() (response responses.GetSystemTime, err error) {
-	p := "/api/v5/public/estimated-price"
+	p := "/api/v5/public/time"
 	res, err := c.client.Do(http.MethodGet, p, false)
 	if err != nil {
 		return
