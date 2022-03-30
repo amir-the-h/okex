@@ -2,6 +2,13 @@ Changelog
 =========
 All notable changes to this project will be documented in this file.
 
+v1.0.28-alpha
+-------------
+
+### Chaned
+
+- Fixed nil pointer reference bug on websocket connection
+
 v1.0.27-alpha
 -------------
 
