@@ -22,7 +22,7 @@ Installation
 -----------------
 
 ```bash
-go get github.com/amir-the-h/okex@v1.0.1-alpha
+go get github.com/amir-the-h/okex@v1.0.27-alpha
 ```
 
 Usage

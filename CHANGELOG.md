@@ -2,6 +2,14 @@ Changelog
 =========
 All notable changes to this project will be documented in this file.
 
+v1.0.27-alpha
+-------------
+
+### Changed
+
+- Fixed typo on `GetSystemTime` func
+- Added `string` tag to `GetCandlesticks`
+
 v1.0.26-alpha
 ------------
 
