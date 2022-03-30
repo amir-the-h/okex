@@ -235,10 +235,10 @@ func (c *ClientWs) dial(p bool) error {
 		c.rmu[p].Unlock()
 	}()
 	conn, res, err := websocket.DefaultDialer.Dial(string(c.url[p]), nil)
-	defer res.Body.Close()
 	if err != nil {
 		return fmt.Errorf("error %d: %w", res.StatusCode, err)
 	}
+	defer res.Body.Close()
 	go func() {
 		err := c.receiver(p)
 		if err != nil {
