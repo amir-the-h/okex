@@ -236,7 +236,11 @@ func (c *ClientWs) dial(p bool) error {
 	}()
 	conn, res, err := websocket.DefaultDialer.Dial(string(c.url[p]), nil)
 	if err != nil {
-		return fmt.Errorf("error %d: %w", res.StatusCode, err)
+		var statusCode int
+		if res != nil {
+			statusCode = res.StatusCode
+		}
+		return fmt.Errorf("error %d: %w", statusCode, err)
 	}
 	defer res.Body.Close()
 	go func() {
