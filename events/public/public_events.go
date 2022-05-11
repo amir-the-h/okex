@@ -44,8 +44,9 @@ type (
 		Limit []*publicdata.LimitPrice `json:"data"`
 	}
 	OrderBook struct {
-		Arg   *events.Argument      `json:"arg"`
-		Books []*market.OrderBookWs `json:"data"`
+		Arg    *events.Argument      `json:"arg"`
+		Books  []*market.OrderBookWs `json:"data"`
+		Action string                `json:"action"`
 	}
 	OPTIONSummary struct {
 		Arg     *events.Argument               `json:"arg"`

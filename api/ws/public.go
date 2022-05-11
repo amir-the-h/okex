@@ -269,7 +269,7 @@ func (c *Public) UOrderBook(req requests.OrderBook, rCh ...bool) error {
 	if len(rCh) > 0 && rCh[0] {
 		c.obCh = nil
 	}
-	return c.Unsubscribe(false, []okex.ChannelName{}, m)
+	return c.Unsubscribe(false, []okex.ChannelName{okex.ChannelName(req.Channel)}, m)
 }
 
 // OPTIONSummary
