@@ -137,7 +137,7 @@ func (c *Trade) ClosePosition(req requests.ClosePosition) (response responses.Cl
 // Retrieve order details.
 //
 // https://www.okex.com/docs-v5/en/#rest-api-trade-get-order-details
-func (c *Trade) GetOrderDetail(req requests.OrderList) (response responses.OrderList, err error) {
+func (c *Trade) GetOrderDetail(req requests.OrderDetails) (response responses.OrderList, err error) {
 	p := "/api/v5/trade/order"
 	m := okex.S2M(req)
 	res, err := c.client.Do(http.MethodGet, p, true, m)
