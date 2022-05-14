@@ -2,6 +2,16 @@ Changelog
 =========
 All notable changes to this project will be documented in this file.
 
+v1.0.29-alpha
+-------------
+
+### Chaned
+
+- Fixed websocket's client sender racing issue
+- Fixed websocket's public `UOrderBook` racing issue
+- Added `Action` field to  `OrderBook` struct
+- Fixed `GetOrderDetail` function parameter
+
 v1.0.28-alpha
 -------------
 
