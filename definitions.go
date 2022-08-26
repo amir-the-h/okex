@@ -169,7 +169,7 @@ const (
 	Bar3m  = BarSize("3m")
 	Bar5m  = BarSize("5m")
 	Bar15m = BarSize("15m")
-	Bar30m = BarSize("130")
+	Bar30m = BarSize("30m")
 	Bar1H  = BarSize("1H")
 	Bar2H  = BarSize("2H")
 	Bar4H  = BarSize("4H")
