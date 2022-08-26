@@ -29,7 +29,7 @@ type (
 		PositionMode okex.PositionType `json:"positionMode"`
 	}
 	SetLeverage struct {
-		Lever   int64             `json:"lever,string"`
+		Lever   float64           `json:"lever,string"`
 		InstID  string            `json:"instId,omitempty"`
 		Ccy     string            `json:"ccy,omitempty"`
 		MgnMode okex.MarginMode   `json:"mgnMode"`
