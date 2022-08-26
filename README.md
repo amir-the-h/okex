@@ -1,10 +1,10 @@
 okex
 ====
 [![Go Reference](https://pkg.go.dev/badge/github.com/marperia/okex.svg)](https://pkg.go.dev/github.com/marperia/okex)
-[![GitHub go.mod Go version of a Go module](https://img.shields.io/github/go-mod/go-version/amir-the-h/okex.svg)](https://github.com/marperia/okex)
+[![GitHub go.mod Go version of a Go module](https://img.shields.io/github/go-mod/go-version/marperia/okex.svg)](https://github.com/marperia/okex)
 [![GoReportCard example](https://goreportcard.com/badge/github.com/marperia/okex)](https://goreportcard.com/report/github.com/marperia/okex)
-[![GitHub license](https://img.shields.io/github/license/amir-the-h/okex.svg)](https://github.com/marperia/okex/blob/main/LICENSE)
-[![GitHub release](https://img.shields.io/github/release/amir-the-h/okex.svg)](https://github.com/marperia/okex/releases/)
+[![GitHub license](https://img.shields.io/github/license/marperia/okex.svg)](https://github.com/marperia/okex/blob/main/LICENSE)
+[![GitHub release](https://img.shields.io/github/release/marperia/okex.svg)](https://github.com/marperia/okex/releases/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![CI](https://github.com/marperia/okex/actions/workflows/main.yml/badge.svg)](https://github.com/marperia/okex/actions/workflows/main.yml)
 [![CodeQL](https://github.com/marperia/okex/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/marperia/okex/actions/workflows/codeql-analysis.yml)
@@ -22,7 +22,7 @@ Installation
 -----------------
 
 ```bash
-go get github.com/marperia/okex@v1.0.28-alpha
+go get github.com/marperia/okex@v1.0.29-alpha
 ```
 
 Usage
@@ -48,7 +48,7 @@ func main() {
 	passphrase := "YOUR-PASS-PHRASE"
 	dest := okex.NormalServer // The main API server
 	ctx := context.Background()
-	client, err := api.NewClient(ctx, apiKey, secretKey, passphrase, &dest)
+	client, err := api.NewClient(ctx, apiKey, secretKey, passphrase, dest)
 	if err != nil {
 		log.Fatalln(err)
 	}
