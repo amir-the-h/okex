@@ -2,10 +2,18 @@ Changelog
 =========
 All notable changes to this project will be documented in this file.
 
+v1.0.30-alpha
+-------------
+
+### Changed
+
+- Fixed `PlaceOrder` struct Sz field by changing it to float64
+- Added `UnmarshalJSON` to `Basic` response struct
+
 v1.0.29-alpha
 -------------
 
-### Chaned
+### Changed
 
 - Fixed websocket's client sender racing issue
 - Fixed websocket's public `UOrderBook` racing issue
@@ -15,7 +23,7 @@ v1.0.29-alpha
 v1.0.28-alpha
 -------------
 
-### Chaned
+### Changed
 
 - Fixed nil pointer reference bug on websocket connection
 
