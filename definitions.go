@@ -465,3 +465,11 @@ func S2M(i interface{}) map[string]string {
 
 	return m
 }
+
+func S2SM(i interface{}) []map[string]string {
+	m := make([]map[string]string, 0)
+	j, _ := json.Marshal(i)
+	_ = json.Unmarshal(j, &m)
+
+	return m
+}

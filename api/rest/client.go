@@ -54,7 +54,7 @@ func NewClient(apiKey, secretKey, passphrase string, baseURL okex.BaseURL, desti
 }
 
 // Do the http request to the server
-func (c *ClientRest) Do(method, path string, private bool, params ...map[string]string) (*http.Response, error) {
+func (c *ClientRest) Do(method, path string, private bool, params ...interface{}) (*http.Response, error) {
 	u := fmt.Sprintf("%s%s", c.baseURL, path)
 	var (
 		r    *http.Request
@@ -69,12 +69,16 @@ func (c *ClientRest) Do(method, path string, private bool, params ...map[string]
 		}
 
 		if len(params) > 0 {
+			param,ok:= params[0].(map[string]string)
+			if !ok{
+				return nil, fmt.Errorf("params is not the mam[string]string type")
+			}
 			q := r.URL.Query()
-			for k, v := range params[0] {
+			for k, v := range param {
 				q.Add(k, strings.ReplaceAll(v, "\"", ""))
 			}
 			r.URL.RawQuery = q.Encode()
-			if len(params[0]) > 0 {
+			if len(param) > 0 {
 				path += "?" + r.URL.RawQuery
 			}
 		}
@@ -84,7 +88,7 @@ func (c *ClientRest) Do(method, path string, private bool, params ...map[string]
 			return nil, err
 		}
 		body = string(j)
-		if body == "{}" {
+		if body == "{}"||body=="[]" {
 			body = ""
 		}
 		r, err = http.NewRequest(method, u, bytes.NewBuffer(j))

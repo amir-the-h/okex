@@ -26,13 +26,12 @@ func NewTrade(c *ClientRest) *Trade {
 // https://www.okex.com/docs-v5/en/#rest-api-trade-get-positions
 func (c *Trade) PlaceOrder(req []requests.PlaceOrder) (response responses.PlaceOrder, err error) {
 	p := "/api/v5/trade/order"
-	var tmp interface{}
-	tmp = req[0]
+	var m interface{}
+	m = okex.S2M(req[0])
 	if len(req) > 1 {
-		tmp = req
+		m = okex.S2SM(req)
 		p = "/api/v5/trade/batch-orders"
 	}
-	m := okex.S2M(tmp)
 	res, err := c.client.Do(http.MethodPost, p, true, m)
 	if err != nil {
 		return
@@ -49,7 +48,7 @@ func (c *Trade) PlaceOrder(req []requests.PlaceOrder) (response responses.PlaceO
 // https://www.okex.com/docs-v5/en/#rest-api-trade-place-multiple-orders
 func (c *Trade) PlaceMultipleOrders(req []requests.PlaceOrder) (response responses.PlaceOrder, err error) {
 	p := "/api/v5/trade/batch-order"
-	m := okex.S2M(req)
+	m := okex.S2SM(req)
 	res, err := c.client.Do(http.MethodPost, p, true, m)
 	if err != nil {
 		return
@@ -70,13 +69,12 @@ func (c *Trade) PlaceMultipleOrders(req []requests.PlaceOrder) (response respons
 // https://www.okex.com/docs-v5/en/#rest-api-trade-cancel-multiple-orders
 func (c *Trade) CandleOrder(req []requests.CancelOrder) (response responses.PlaceOrder, err error) {
 	p := "/api/v5/trade/cancel-order"
-	var tmp interface{}
-	tmp = req[0]
+	var m interface{}
+	m = okex.S2M(req[0])
 	if len(req) > 1 {
-		tmp = req
+		m = okex.S2SM(req)
 		p = "/api/v5/trade/cancel-batch-orders"
 	}
-	m := okex.S2M(tmp)
 	res, err := c.client.Do(http.MethodPost, p, true, m)
 	if err != nil {
 		return
@@ -96,13 +94,12 @@ func (c *Trade) CandleOrder(req []requests.CancelOrder) (response responses.Plac
 // https://www.okex.com/docs-v5/en/#rest-api-trade-amend-multiple-orders
 func (c *Trade) AmendOrder(req []requests.OrderList) (response responses.AmendOrder, err error) {
 	p := "/api/v5/trade/amend-order"
-	var tmp interface{}
-	tmp = req[0]
+	var m interface{}
+	m = okex.S2M(req[0])
 	if len(req) > 1 {
-		tmp = req
+		m = okex.S2SM(req)
 		p = "/api/v5/trade/amend-batch-orders"
 	}
-	m := okex.S2M(tmp)
 	res, err := c.client.Do(http.MethodPost, p, true, m)
 	if err != nil {
 		return
