@@ -30,7 +30,7 @@ func (c *Trade) PlaceOrder(req []requests.PlaceOrder) (response responses.PlaceO
 	tmp = req[0]
 	if len(req) > 1 {
 		tmp = req
-		p = "/api/trade/batch-orders"
+		p = "/api/v5/trade/batch-orders"
 	}
 	m := okex.S2M(tmp)
 	res, err := c.client.Do(http.MethodPost, p, true, m)
@@ -74,7 +74,7 @@ func (c *Trade) CandleOrder(req []requests.CancelOrder) (response responses.Plac
 	tmp = req[0]
 	if len(req) > 1 {
 		tmp = req
-		p = "/api/trade/cancel-batch-orders"
+		p = "/api/v5/trade/cancel-batch-orders"
 	}
 	m := okex.S2M(tmp)
 	res, err := c.client.Do(http.MethodPost, p, true, m)
@@ -100,7 +100,7 @@ func (c *Trade) AmendOrder(req []requests.OrderList) (response responses.AmendOr
 	tmp = req[0]
 	if len(req) > 1 {
 		tmp = req
-		p = "/api/trade/amend-batch-orders"
+		p = "/api/v5/trade/amend-batch-orders"
 	}
 	m := okex.S2M(tmp)
 	res, err := c.client.Do(http.MethodPost, p, true, m)
@@ -170,7 +170,7 @@ func (c *Trade) GetOrderList(req requests.OrderList) (response responses.OrderLi
 func (c *Trade) GetOrderHistory(req requests.OrderList, arch bool) (response responses.OrderList, err error) {
 	p := "/api/v5/trade/orders-history"
 	if arch {
-		p = "/api/trade/orders-history-archive"
+		p = "/api/v5/trade/orders-history-archive"
 	}
 	m := okex.S2M(req)
 	res, err := c.client.Do(http.MethodGet, p, true, m)
@@ -193,7 +193,7 @@ func (c *Trade) GetOrderHistory(req requests.OrderList, arch bool) (response res
 func (c *Trade) GetTransactionDetails(req requests.TransactionDetails, arch bool) (response responses.TransactionDetail, err error) {
 	p := "/api/v5/trade/fills"
 	if arch {
-		p = "/api/trade/fills-history"
+		p = "/api/v5/trade/fills-history"
 	}
 	m := okex.S2M(req)
 	res, err := c.client.Do(http.MethodGet, p, true, m)
@@ -275,7 +275,7 @@ func (c *Trade) CancelAdvanceAlgoOrder(req requests.CancelAlgoOrder) (response r
 func (c *Trade) GetAlgoOrderList(req requests.AlgoOrderList, arch bool) (response responses.AlgoOrderList, err error) {
 	p := "/api/v5/trade/orders-algo-pending"
 	if arch {
-		p = "/api/trade/orders-algo-history"
+		p = "/api/v5/trade/orders-algo-history"
 	}
 	m := okex.S2M(req)
 	res, err := c.client.Do(http.MethodGet, p, true, m)

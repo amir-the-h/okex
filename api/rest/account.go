@@ -92,7 +92,7 @@ func (c *Account) GetAccountAndPositionRisk(req requests.GetAccountAndPositionRi
 func (c *Account) GetBills(req requests.GetBills, arc bool) (response responses.GetBills, err error) {
 	p := "/api/v5/account/bills"
 	if arc {
-		p = "/api/account/bills-archive"
+		p = "/api/v5/account/bills-archive"
 	}
 	m := okex.S2M(req)
 	res, err := c.client.Do(http.MethodGet, p, true, m)
