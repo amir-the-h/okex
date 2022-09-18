@@ -1,11 +1,11 @@
 package rest
 
 import (
-	"encoding/json"
+	"net/http"
+
 	"github.com/amir-the-h/okex"
 	requests "github.com/amir-the-h/okex/requests/rest/market"
 	responses "github.com/amir-the-h/okex/responses/market"
-	"net/http"
 )
 
 // Market
@@ -32,8 +32,7 @@ func (c *Market) GetTickers(req requests.GetTickers) (response responses.Ticker,
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -49,8 +48,7 @@ func (c *Market) GetTicker(req requests.GetTickers) (response responses.Ticker, 
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -66,8 +64,7 @@ func (c *Market) GetIndexTickers(req requests.GetIndexTickers) (response respons
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -83,8 +80,7 @@ func (c *Market) GetOrderBook(req requests.GetOrderBook) (response responses.Ord
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -100,8 +96,7 @@ func (c *Market) GetCandlesticks(req requests.GetCandlesticks) (response respons
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -117,8 +112,7 @@ func (c *Market) GetCandlesticksHistory(req requests.GetCandlesticks) (response 
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -134,8 +128,7 @@ func (c *Market) GetIndexCandlesticks(req requests.GetCandlesticks) (response re
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -151,8 +144,7 @@ func (c *Market) GetMarkPriceCandlesticks(req requests.GetCandlesticks) (respons
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -168,8 +160,7 @@ func (c *Market) GetTrades(req requests.GetTrades) (response responses.Trade, er
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -184,8 +175,7 @@ func (c *Market) Get24HTotalVolume() (response responses.TotalVolume24H, err err
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -201,7 +191,6 @@ func (c *Market) GetIndexComponents(req requests.GetIndexComponents) (response r
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }

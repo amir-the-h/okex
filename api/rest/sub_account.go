@@ -1,12 +1,12 @@
 package rest
 
 import (
-	"encoding/json"
+	"net/http"
+	"strings"
+
 	"github.com/amir-the-h/okex"
 	requests "github.com/amir-the-h/okex/requests/rest/subaccount"
 	responses "github.com/amir-the-h/okex/responses/sub_account"
-	"net/http"
-	"strings"
 )
 
 // SubAccount
@@ -33,8 +33,7 @@ func (c *SubAccount) ViewList(req requests.ViewList) (response responses.ViewLis
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -53,8 +52,7 @@ func (c *SubAccount) CreateAPIKey(req requests.CreateAPIKey) (response responses
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -70,8 +68,7 @@ func (c *SubAccount) QueryAPIKey(req requests.QueryAPIKey) (response responses.A
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -90,8 +87,7 @@ func (c *SubAccount) ResetAPIKey(req requests.CreateAPIKey) (response responses.
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -107,8 +103,7 @@ func (c *SubAccount) DeleteAPIKey(req requests.DeleteAPIKey) (response responses
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -125,8 +120,7 @@ func (c *SubAccount) GetBalance(req requests.GetBalance) (response responses.Get
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -142,8 +136,7 @@ func (c *SubAccount) HistoryTransfer(req requests.HistoryTransfer) (response res
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -159,7 +152,6 @@ func (c *SubAccount) ManageTransfers(req requests.ManageTransfers) (response res
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }

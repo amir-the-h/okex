@@ -7,12 +7,13 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	"github.com/amir-the-h/okex"
-	requests "github.com/amir-the-h/okex/requests/rest/public"
-	responses "github.com/amir-the-h/okex/responses/public_data"
 	"net/http"
 	"strings"
 	"time"
+
+	"github.com/amir-the-h/okex"
+	requests "github.com/amir-the-h/okex/requests/rest/public"
+	responses "github.com/amir-the-h/okex/responses/public_data"
 )
 
 // ClientRest is the rest api client
@@ -120,8 +121,7 @@ func (c *ClientRest) Status(req requests.Status) (response responses.Status, err
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 

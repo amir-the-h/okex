@@ -1,11 +1,11 @@
 package rest
 
 import (
-	"encoding/json"
+	"net/http"
+
 	"github.com/amir-the-h/okex"
 	requests "github.com/amir-the-h/okex/requests/rest/trade"
 	responses "github.com/amir-the-h/okex/responses/trade"
-	"net/http"
 )
 
 // Trade
@@ -38,8 +38,7 @@ func (c *Trade) PlaceOrder(req []requests.PlaceOrder) (response responses.PlaceO
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 
 	return
 }
@@ -56,8 +55,7 @@ func (c *Trade) PlaceMultipleOrders(req []requests.PlaceOrder) (response respons
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 
 	return
 }
@@ -84,8 +82,7 @@ func (c *Trade) CandleOrder(req []requests.CancelOrder) (response responses.Plac
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -111,8 +108,7 @@ func (c *Trade) AmendOrder(req []requests.OrderList) (response responses.AmendOr
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -128,8 +124,7 @@ func (c *Trade) ClosePosition(req requests.ClosePosition) (response responses.Cl
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -145,8 +140,7 @@ func (c *Trade) GetOrderDetail(req requests.OrderDetails) (response responses.Or
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -162,8 +156,7 @@ func (c *Trade) GetOrderList(req requests.OrderList) (response responses.OrderLi
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -185,8 +178,7 @@ func (c *Trade) GetOrderHistory(req requests.OrderList, arch bool) (response res
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -209,8 +201,7 @@ func (c *Trade) GetTransactionDetails(req requests.TransactionDetails, arch bool
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -228,8 +219,7 @@ func (c *Trade) PlaceAlgoOrder(req requests.PlaceAlgoOrder) (response responses.
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 
 	return
 }
@@ -246,8 +236,7 @@ func (c *Trade) CancelAlgoOrder(req requests.CancelAlgoOrder) (response response
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 
 	return
 }
@@ -255,7 +244,7 @@ func (c *Trade) CancelAlgoOrder(req requests.CancelAlgoOrder) (response response
 // CancelAdvanceAlgoOrder
 // Cancel unfilled algo orders(iceberg order and twap order). A maximum of 10 orders can be canceled at a time. Request parameters should be passed in the form of an array.
 //
-// Only released on demo trading
+// # Only released on demo trading
 //
 // https://www.okex.com/docs-v5/en/#rest-api-trade-cancel-advance-algo-order
 func (c *Trade) CancelAdvanceAlgoOrder(req requests.CancelAlgoOrder) (response responses.CancelAlgoOrder, err error) {
@@ -266,8 +255,7 @@ func (c *Trade) CancelAdvanceAlgoOrder(req requests.CancelAlgoOrder) (response r
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 
 	return
 }
@@ -295,8 +283,7 @@ func (c *Trade) GetAlgoOrderList(req requests.AlgoOrderList, arch bool) (respons
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 
 	return
 }

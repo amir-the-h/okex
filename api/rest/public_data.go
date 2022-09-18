@@ -1,11 +1,11 @@
 package rest
 
 import (
-	"encoding/json"
+	"net/http"
+
 	"github.com/amir-the-h/okex"
 	requests "github.com/amir-the-h/okex/requests/rest/public"
 	responses "github.com/amir-the-h/okex/responses/public_data"
-	"net/http"
 )
 
 // PublicData
@@ -32,8 +32,7 @@ func (c *PublicData) GetInstruments(req requests.GetInstruments) (response respo
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -49,8 +48,7 @@ func (c *PublicData) GetDeliveryExerciseHistory(req requests.GetDeliveryExercise
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -66,8 +64,7 @@ func (c *PublicData) GetOpenInterest(req requests.GetOpenInterest) (response res
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -83,8 +80,7 @@ func (c *PublicData) GetLimitPrice(req requests.GetLimitPrice) (response respons
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -100,8 +96,7 @@ func (c *PublicData) GetOptionMarketData(req requests.GetOptionMarketData) (resp
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -117,8 +112,7 @@ func (c *PublicData) GetEstimatedDeliveryExercisePrice(req requests.GetEstimated
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -134,8 +128,7 @@ func (c *PublicData) GetDiscountRateAndInterestFreeQuota(req requests.GetDiscoun
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -150,8 +143,7 @@ func (c *PublicData) GetSystemTime() (response responses.GetSystemTime, err erro
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -167,8 +159,7 @@ func (c *PublicData) GetLiquidationOrders(req requests.GetLiquidationOrders) (re
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -186,8 +177,7 @@ func (c *PublicData) GetMarkPrice(req requests.GetMarkPrice) (response responses
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -203,8 +193,7 @@ func (c *PublicData) GetPositionTiers(req requests.GetPositionTiers) (response r
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -219,8 +208,7 @@ func (c *PublicData) GetInterestRateAndLoanQuota() (response responses.GetIntere
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -235,7 +223,6 @@ func (c *PublicData) GetUnderlying(req requests.GetUnderlying) (response respons
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }

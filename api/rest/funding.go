@@ -1,12 +1,12 @@
 package rest
 
 import (
-	"encoding/json"
+	"net/http"
+	"strings"
+
 	"github.com/amir-the-h/okex"
 	requests "github.com/amir-the-h/okex/requests/rest/funding"
 	responses "github.com/amir-the-h/okex/responses/funding"
-	"net/http"
-	"strings"
 )
 
 // Funding
@@ -34,8 +34,7 @@ func (c *Funding) GetCurrencies() (response responses.GetCurrencies, err error) 
 	}
 	defer res.Body.Close()
 
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 
 	return
 }
@@ -55,8 +54,7 @@ func (c *Funding) GetBalance(req requests.GetBalance) (response responses.GetBal
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -72,8 +70,7 @@ func (c *Funding) FundsTransfer(req requests.FundsTransfer) (response responses.
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -89,8 +86,7 @@ func (c *Funding) AssetBillsDetails(req requests.AssetBillsDetails) (response re
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -106,8 +102,7 @@ func (c *Funding) GetDepositAddress(req requests.GetDepositAddress) (response re
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -123,8 +118,7 @@ func (c *Funding) GetDepositHistory(req requests.GetDepositHistory) (response re
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -140,8 +134,7 @@ func (c *Funding) Withdrawal(req requests.Withdrawal) (response responses.Withdr
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -157,8 +150,7 @@ func (c *Funding) GetWithdrawalHistory(req requests.GetWithdrawalHistory) (respo
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -173,8 +165,7 @@ func (c *Funding) PiggyBankPurchaseRedemption(req requests.PiggyBankPurchaseRede
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -189,7 +180,6 @@ func (c *Funding) GetPiggyBankBalance(req requests.GetPiggyBankBalance) (respons
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }

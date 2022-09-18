@@ -1,12 +1,12 @@
 package rest
 
 import (
-	"encoding/json"
+	"net/http"
+	"strings"
+
 	"github.com/amir-the-h/okex"
 	requests "github.com/amir-the-h/okex/requests/rest/account"
 	responses "github.com/amir-the-h/okex/responses/account"
-	"net/http"
-	"strings"
 )
 
 // Account
@@ -36,8 +36,7 @@ func (c *Account) GetBalance(req requests.GetBalance) (response responses.GetBal
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 
 	return
 }
@@ -60,8 +59,7 @@ func (c *Account) GetPositions(req requests.GetPositions) (response responses.Ge
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 
 	return
 }
@@ -78,8 +76,7 @@ func (c *Account) GetAccountAndPositionRisk(req requests.GetAccountAndPositionRi
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 
 	return
 }
@@ -103,8 +100,7 @@ func (c *Account) GetBills(req requests.GetBills, arc bool) (response responses.
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 
 	return
 }
@@ -120,8 +116,7 @@ func (c *Account) GetConfig() (response responses.GetConfig, err error) {
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 
 	return
 }
@@ -138,8 +133,7 @@ func (c *Account) SetPositionMode(req requests.SetPositionMode) (response respon
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 
 	return
 }
@@ -163,8 +157,7 @@ func (c *Account) SetLeverage(req requests.SetLeverage) (response responses.Leve
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 
 	return
 }
@@ -183,8 +176,7 @@ func (c *Account) GetMaxBuySellAmount(req requests.GetMaxBuySellAmount) (respons
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 
 	return
 }
@@ -200,8 +192,7 @@ func (c *Account) GetMaxAvailableTradeAmount(req requests.GetMaxAvailableTradeAm
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 
 	return
 }
@@ -218,8 +209,7 @@ func (c *Account) IncreaseDecreaseMargin(req requests.IncreaseDecreaseMargin) (r
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 
 	return
 }
@@ -238,8 +228,7 @@ func (c *Account) GetLeverage(req requests.GetLeverage) (response responses.Leve
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 
 	return
 }
@@ -255,8 +244,7 @@ func (c *Account) GetMaxLoan(req requests.GetMaxLoan) (response responses.GetMax
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 
 	return
 }
@@ -272,8 +260,7 @@ func (c *Account) GetFeeRates(req requests.GetFeeRates) (response responses.GetF
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 
 	return
 }
@@ -289,8 +276,7 @@ func (c *Account) GetInterestAccrued(req requests.GetInterestAccrued) (response 
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 
 	return
 }
@@ -310,8 +296,7 @@ func (c *Account) GetInterestRates(req requests.GetBalance) (response responses.
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 
 	return
 }
@@ -328,8 +313,7 @@ func (c *Account) SetGreeks(req requests.SetGreeks) (response responses.SetGreek
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 
 	return
 }
@@ -348,8 +332,7 @@ func (c *Account) GetMaxWithdrawals(req requests.GetBalance) (response responses
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 
 	return
 }

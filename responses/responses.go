@@ -1,9 +1,6 @@
 package responses
 
-import (
-	"encoding/json"
-	"fmt"
-)
+import "fmt"
 
 type (
 	Basic struct {
@@ -12,15 +9,7 @@ type (
 	}
 )
 
-type resCode Basic
-
-func (b *Basic) UnmarshalJSON(bf []byte) error {
-	var r resCode
-	err := json.Unmarshal(bf, &r)
-	if err != nil {
-		return err
-	}
-	b = (*Basic)(&r)
+func (b *Basic) ErrStatus() error {
 	if b.Code != 0 {
 		return fmt.Errorf("recevied error:%+v", b)
 	}

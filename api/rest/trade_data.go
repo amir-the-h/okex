@@ -1,11 +1,11 @@
 package rest
 
 import (
-	"encoding/json"
+	"net/http"
+
 	"github.com/amir-the-h/okex"
 	requests "github.com/amir-the-h/okex/requests/rest/tradedata"
 	responses "github.com/amir-the-h/okex/responses/trade_data"
-	"net/http"
 )
 
 // TradeData
@@ -31,8 +31,7 @@ func (c *TradeData) GetSupportCoin() (response responses.GetSupportCoin, err err
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -48,8 +47,7 @@ func (c *TradeData) GetTakerVolume(req requests.GetTakerVolume) (response respon
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -65,8 +63,7 @@ func (c *TradeData) GetMarginLendingRatio(req requests.GetRatio) (response respo
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -82,8 +79,7 @@ func (c *TradeData) GetLongShortRatio(req requests.GetRatio) (response responses
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -99,8 +95,7 @@ func (c *TradeData) GetContractsOpenInterestAndVolume(req requests.GetRatio) (re
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -116,8 +111,7 @@ func (c *TradeData) GetOptionsOpenInterestAndVolume(req requests.GetRatio) (resp
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -133,8 +127,7 @@ func (c *TradeData) GetPutCallRatio(req requests.GetRatio) (response responses.G
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -150,8 +143,7 @@ func (c *TradeData) GetOpenInterestAndVolumeExpiry(req requests.GetRatio) (respo
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -167,8 +159,7 @@ func (c *TradeData) GetOpenInterestAndVolumeStrike(req requests.GetOpenInterestA
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
 
@@ -184,7 +175,6 @@ func (c *TradeData) GetTakerFlow(req requests.GetRatio) (response responses.GetT
 		return
 	}
 	defer res.Body.Close()
-	d := json.NewDecoder(res.Body)
-	err = d.Decode(&response)
+	err = Decode(res.Body, &response)
 	return
 }
