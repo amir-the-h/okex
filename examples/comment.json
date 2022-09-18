@@ -1,0 +1,3342 @@
+{
+    "0": [
+        "必填参数{0}不能为空",
+        "400",
+        "50014",
+        "参数{0}和{1}不能同时为空",
+        "参数{0}和{1}不匹配",
+        "{0}币种处于ADL冻结中，无法进行相关操作",
+        "{0}币种处于强平冻结中，无法进行相关操作",
+        "参数{0}和{1}不能同时存在",
+        "参数{0}传值个数超过最大限制{1}",
+        "你的账户已经触发风控体系，禁止该标的{0}交易，请联系客服进行处理",
+        "{0}参数错误",
+        "委托价格不在限价范围内（最高买入价：{0}，最低卖出价：{1}）",
+        "委托失败，账户 {0} 可用余额不足",
+        "委托失败，账户 {0} 可用保证金不足",
+        "委托失败，账户 {0} 可用余额不足，且未开启自动借币",
+        "委托失败，账户 {0} 可用保证金不足，且未开启自动借币",
+        "委托失败，因为 {0} 剩余的档位限额不足，导致可借不足（需借：{1}， 剩余额度{2}，限额 {3}，已用额度{4}）",
+        "委托失败，因为 {0} 剩余的母账户限额不足，导致可借不足（需借 {1}，剩余额度 {2}，限额 {3}，已用额度 {4}）",
+        "委托失败，因为 {0} 剩余的币对限额不足，导致可借不足",
+        "委托失败，因为 {0} 剩余的借贷池限额不足，导致可借不足",
+        "当前订单类型{0}， {1}不支持设置止盈和止损",
+        "批量下单时，超过最大单数{0}",
+        "委托价格或触发价格超过{0}美元",
+        "下单数量不足{0}张",
+        "委托价格小于最小值{0}",
+        "仓位可用余额为0",
+        "您的平仓价格已触发限价，最高买入价格为{0}",
+        "您的平仓价格已触发限价，最低卖出价格为{0}",
+        "您的开仓价格已触发限价，最高买入价格为{0}",
+        "您的开仓价格已触发限价，最低卖出价格为{0}",
+        "普通委托数量超出最大限制{0}",
+        "请先撤销当前下单产品{0}的只减仓挂单，避免反向开仓",
+        "跟踪委托回调服务错误，回调幅度限制为{0}\u003cx\u003c={1}%",
+        "每个用户最多可同时持有{0}笔未成交的跟踪委托",
+        "每个用户最多可同时持有{0}笔未成交的止盈止损",
+        "每个用户最多可同时持有{0}笔未成交的冰山委托",
+        "每个用户最多可同时持有{0}笔未成交的时间加权单",
+        "时间加权委托间隔错误，应为{0}\u003c=x\u003c={1}",
+        "时间加权委托深度限制为 0\u003cx\u003c=1%",
+        "时间加权委托失败，扫单比例应该为 0\u003cx\u003c=100%",
+        "时间加权委托失败，扫单范围应该为 0\u003cx\u003c=1%",
+        "时间加权委托总量应为大于 0",
+        "时间间隔的范围{0}s~{1}s",
+        "单笔数量的范围{0}~{1}",
+        "委托总量的范围{0}~{1}",
+        "下单金额需大于等于{0}",
+        "策略委托失败，用户最多可持有{0}笔该类型委托",
+        "移动止盈止损委托失败，回调幅度限制为{0}\u003cx\u003c={1}",
+        "移动止盈止损委托失败，委托数量范围{0}\u003cx\u003c={1}",
+        "投入保证金需大于{0}{1}",
+        "单格收益必须大于0",
+        "杠杆倍数范围{0}~{1}",
+        "撤单数量超过最大允许单数{0}",
+        "修改订单超过最大允许单数{0}",
+        "申购/赎回额度不可超过{0}",
+        "币种{0}不支持当前操作",
+        "该链{0}暂不支持",
+        "{0} 子账户没有转出权限，请先设置",
+        "该币种暂不支持从{0}提现至{1}，敬请谅解",
+        "提现手续费应填写为提币数量的{0}%",
+        "该链{0}充值已关闭",
+        "币种{0}不允许创建充值地址",
+        "杠杆倍数设置不能小于{0}，请重新调整杠杆倍数",
+        "您下单后仓位总张数所处档位的最高可用杠杆为{0}，请重新调整",
+        "该{0}对应的产品业务线不支持使用tgtCcy参数",
+        "{0}该子账户被冻结",
+        "该产品类型 {0} 的标的指数 {0} 不存在",
+        "产品类型 {0} 存在重复设置",
+        "总价值应该大于最小值{0}",
+        "不能取消处于{0}状态的询价单",
+        "取消失败，由于询价单数量超过限制数量{0}",
+        "不能对处于{0}状态的询价单报价",
+        "报价的组合交易没有匹配{0}的组合交易",
+        "不能取消处于{0}状态的报价单",
+        "取消失败，由于报价单数量超过限制数量{0}",
+        "询价单{0}没有被{1}报价",
+        "组合交易没有匹配{0}的组合交易",
+        "执行的组合交易没有匹配{0}的组合交易",
+        "执行失败，因为询价单的状态是{0}",
+        "执行失败，因为报价单的状态是{0}",
+        "多腿的数量不能超过 {0}",
+        "执行和验证的第{0}条腿不匹配",
+        "参数{0}不可为空"
+    ],
+    "1": [
+        "委托失败，委托数量不可小于 1 张（用户下单数量不足 1 张时）",
+        "200",
+        "51007",
+        "市价委托单笔价值不能超过 1,000,000 USDT"
+    ],
+    "10000USDT": [
+        "逐仓自主划转保证金模式，初次划入仓位的资产价值需大于10000USDT",
+        "200",
+        "59005"
+    ],
+    "180": [
+        "起始日期和结束日期的时间间隔不能超过180天。",
+        "200",
+        "59615"
+    ],
+    "2": [
+        "转出账户和转入账户必须是同一个母账户下的2个不同的子账户",
+        "200",
+        "59507"
+    ],
+    "3": [
+        "对于正在处理的同一订单，改单请求次数不得超过3次",
+        "200",
+        "51513"
+    ],
+    "30": [
+        "交割后30分钟内不能转出",
+        "200",
+        "55000",
+        "30秒内没有数据通讯，连接关闭"
+    ],
+    "5": [
+        "交易账户资产总价值需要大于5万美元来交易期权",
+        "200",
+        "51147"
+    ],
+    "50": [
+        "每个账户最多可创建 50个APIKey",
+        "200",
+        "59501"
+    ],
+    "ADL": [
+        "当前仓位处于ADL冻结中，无法进行相关操作",
+        "200",
+        "50017",
+        "当前账户处于ADL冻结中，无法进行相关操作"
+    ],
+    "API": [
+        "用户没有使用此API接口的权限",
+        "200",
+        "50030"
+    ],
+    "APIKey": [
+        "该接口要求APIKey必须绑定IP",
+        "403",
+        "50035",
+        "APIKey 与当前环境不匹配",
+        "备注名不可以与当前已创建的APIKey备注名重复",
+        "每个 APIKey 最多可以绑定20个IP地址",
+        "APIKey 不存在",
+        "超出最大允许订阅的APIKey数量{0}",
+        "不支持APIKey和token同时登录"
+    ],
+    "APIkey": [
+        "创建的APIkey数量超过上限",
+        "200",
+        "59602",
+        "仅母账APIkey有操作此接口的权限",
+        "子账户的APIkey不存在"
+    ],
+    "APP": [
+        "您在法币区的交易异常，现已被限制划转功能，请您在网页或APP进行法币划转操作以完成身份验证",
+        "200",
+        "58105"
+    ],
+    "Api": [
+        "Api 已被冻结，请联系客服处理",
+        "400",
+        "50100"
+    ],
+    "Broker": [
+        "仅Broker账户有操作此接口的权限",
+        "200",
+        "59608"
+    ],
+    "Content_Type": [
+        "无效的Content_Type，请使用\"application/json\"格式",
+        "400",
+        "50006"
+    ],
+    "Data": [
+        "Data数组必须至少含有一个有效元素",
+        "200",
+        "70009"
+    ],
+    "Delta": [
+        "委托失败，账户资产不足，且 Delta 校验不通过",
+        "200",
+        "51008",
+        "您的一部分现货正用于仓位间的 Delta 对冲，若划转数量超过可用金额，可能会影响现有的现货对冲结构，进而导致维持保证金率增加，请留意您的风险水平。"
+    ],
+    "ID": [
+        "用户ID为空",
+        "200",
+        "50010",
+        "券商ID不存在",
+        "交易产品ID不存在",
+        "交易产品ID不匹配指数",
+        "无效的订单ID",
+        "客户自定义ID重复使用",
+        "提币申请ID不存在",
+        "只支持同一业务线下交易产品ID",
+        "无效的产品ID {0}",
+        "组合交易中的产品ID重复"
+    ],
+    "IMR": [
+        "委托失败，账户资产不足，美金层面有效保证金小于 IMR",
+        "200",
+        "51008"
+    ],
+    "IOC": [
+        "当前账户风险状态，仅支持降低账户风险方向的IOC订单",
+        "200",
+        "51037",
+        "当前风险模块下已经存在降低账户风险方向的IOC类型订单"
+    ],
+    "IP": [
+        "您的IP{0}不在APIKey绑定IP名单中 (您可以将您的IP加入到APIKey绑定白名单中)",
+        "401",
+        "50110"
+    ],
+    "MMP": [
+        "MMP状态下操作失败。冻结时间为 {0} 秒",
+        "200",
+        "70008"
+    ],
+    "NEO": [
+        "NEO最小提现数量为1，且提现数量必须为整数",
+        "200",
+        "58202"
+    ],
+    "OKX": [
+        "该类型币种暂不支持链上提币到 OKX 地址，请通过内部转账进行提币",
+        "200",
+        "58224"
+    ],
+    "OK_ACCESS_KEY": [
+        "请求头\"OK_ACCESS_KEY\"不能为空",
+        "401",
+        "50103",
+        "无效的OK_ACCESS_KEY",
+        "\"OK_ACCESS_KEY\"不能为空",
+        "无效的 OK_ACCESS_KEY"
+    ],
+    "OK_ACCESS_PASSPHRASE": [
+        "请求头\"OK_ACCESS_PASSPHRASE\"不能为空",
+        "401",
+        "50104",
+        "请求头\"OK_ACCESS_PASSPHRASE\"错误",
+        "\"OK_ACCESS_PASSPHRASE\"不能为空"
+    ],
+    "OK_ACCESS_SIGN": [
+        "请求头\"OK_ACCESS_SIGN\"不能为空",
+        "401",
+        "50106",
+        "\"OK_ACCESS_SIGN\"不能为空"
+    ],
+    "OK_ACCESS_TIMESTAMP": [
+        "请求头\"OK_ACCESS_TIMESTAMP\"不能为空",
+        "401",
+        "50107",
+        "无效的OK_ACCESS_TIMESTAMP",
+        "无效的 OK_ACCESS_TIMESTAMP"
+    ],
+    "PM": [
+        "PM账户仅支持买卖模式",
+        "200",
+        "51041",
+        "PM账户不支持ordType为{0}的策略委托单",
+        "PM账户下交割和永续的全仓不能调整杠杆倍数",
+        "PM账户下衍生品全仓不支持杠杆查询"
+    ],
+    "Post": [
+        "操作失败，订单价格不满足Post Only条件",
+        "200",
+        "51511"
+    ],
+    "VIP": [
+        "市场化借币额度不足，VIP还币失败",
+        "200",
+        "59308"
+    ],
+    "accFillSz": [
+        "accFillSz",
+        "String",
+        "累计成交数量",
+        " accFillSz"
+    ],
+    "acctLv": [
+        "acctLv",
+        "String",
+        "账户层级1：简单交易模式，2：单币种保证金模式 ，3：跨币种保证金模式 ，4：组合保证金模式"
+    ],
+    "action": [
+        "action",
+        "String",
+        "推送数据动作，增量推送数据还是全量推送数据 snapshot：全量 update：增量"
+    ],
+    "activePx": [
+        "activePx",
+        "String",
+        "否",
+        "激活价格",
+        " activePx"
+    ],
+    "actualDepBlkConfirm": [
+        "actualDepBlkConfirm",
+        "String",
+        "最新的充币网络确认数"
+    ],
+    "actualLever": [
+        "actualLever",
+        "String",
+        "实际杠杆倍数适用于合约网格",
+        " actualLever"
+    ],
+    "actualPx": [
+        "actualPx",
+        "String",
+        "实际委托价",
+        " actualPx"
+    ],
+    "actualSide": [
+        "actualSide",
+        "String",
+        "实际触发方向， tp：止盈 sl： 止损",
+        " actualSide"
+    ],
+    "actualSz": [
+        "actualSz",
+        "String",
+        "实际委托量",
+        " actualSz"
+    ],
+    "addr": [
+        "addr",
+        "String",
+        "充值地址"
+    ],
+    "addrEx": [
+        "addrEx",
+        "Object ",
+        " 充值地址备注，部分币种充值需要，若不需要则不返回此字段如币种TONCOIN的充值地址备注标签名为comment,则该字段返回：{'comment':'123456'} "
+    ],
+    "adjEq": [
+        "adjEq",
+        "String",
+        "美金层面有效保证金适用于跨币种保证金模式和组合保证金模式"
+    ],
+    "adl": [
+        "adl",
+        "String",
+        "信号区分为5档，从1到5，数字越小代表adl强度越弱",
+        " adl"
+    ],
+    "after": [
+        "after",
+        "String",
+        "否",
+        "请求此ID之前（更旧的数据）的分页内容，传的值为对应接口的ordId"
+    ],
+    "algoId": [
+        "algoId",
+        "String",
+        "策略委托单ID",
+        " algoId"
+    ],
+    "algoOrdType": [
+        "algoOrdType",
+        "String",
+        "是",
+        " 策略订单类型grid：现货网格委托contract_grid：合约网格委托moon_grid：天地网格委托 ",
+        " algoOrdType"
+    ],
+    "alias": [
+        "alias",
+        "String",
+        "合约日期别名this_week：本周 next_week：次周 quarter：季度next_quarter：次季度 仅适用于交割",
+        " alias"
+    ],
+    "allowEarlyRedeem": [
+        "allowEarlyRedeem",
+        "Boolean",
+        "否",
+        "是否提前赎回默认为false"
+    ],
+    "amendResult": [
+        " amendResult",
+        "String",
+        "修改订单的结果 -1： 失败 0：成功 1：自动撤单（因为修改失败导致订单自动撤销） 通过API修改订单时，如果cxlOnFail设置为false且修改失败后，则amendResult返回 -1 通过API修改订单时，如果cxlOnFail设置为true且修改失败后，则amendResult返回1 通过Web/APP修改订单时，如果修改失败后，则amendResult返回-1"
+    ],
+    "amt": [
+        "amt",
+        "String",
+        "是",
+        "划转数量",
+        " amt",
+        "amt"
+    ],
+    "annualizedRate": [
+        "annualizedRate",
+        "String",
+        "网格年化",
+        " annualizedRate"
+    ],
+    "anonymous": [
+        "anonymous",
+        "Boolean",
+        "否",
+        "是否匿名询价，true表示匿名询价，false表示公开询价，默认值为 false，为true时，即使在交易执行之后，身份也不会透露给报价方。"
+    ],
+    "apiKey": [
+        "apiKey",
+        "String",
+        "是",
+        "子账户API的公钥",
+        " apiKey"
+    ],
+    "apy": [
+        "apy",
+        "String",
+        "预估年化如果年化为7% ，则该字段为0.07"
+    ],
+    "arbitrageNum": [
+        "arbitrageNum",
+        "String",
+        "网格套利次数",
+        " arbitrageNum"
+    ],
+    "arg": [
+        "arg",
+        "Object",
+        "否",
+        "订阅的频道"
+    ],
+    "args": [
+        "args",
+        "Array",
+        "是",
+        "账户列表，最多100组",
+        "无效的参数 args"
+    ],
+    "askPx": [
+        "askPx",
+        "String",
+        "卖一价"
+    ],
+    "askSz": [
+        "askSz",
+        "String",
+        "卖一价的挂单数数量"
+    ],
+    "askVol": [
+        "askVol",
+        "String",
+        "ask波动率",
+        " askVol"
+    ],
+    "asks": [
+        "asks",
+        "Array ",
+        "卖方深度",
+        " asks"
+    ],
+    "atRisk": [
+        "atRisk",
+        "String",
+        "自动借币模式下的账户风险状态true： 当前账户为特定风险状态false： 当前不是特定风险状态"
+    ],
+    "atRiskIdx": [
+        "atRiskIdx",
+        "Array",
+        "衍生品的risk unit列表"
+    ],
+    "atRiskMgn": [
+        "atRiskMgn",
+        "Array",
+        "杠杆的risk unit列表"
+    ],
+    "auto": [
+        "auto",
+        "Boolean",
+        "否",
+        "是否自动借币转 true 或 false，默认false仅适用于逐仓自主划转保证金模式下的币币杠杆"
+    ],
+    "autoCxl": [
+        "autoCxl",
+        "Boolean",
+        "否",
+        "当市价全平时，平仓单是否需要自动撤销,默认为false.false：不自动撤单 true：自动撤单"
+    ],
+    "autoLoan": [
+        "autoLoan",
+        "Boolean",
+        "是否自动借币true：自动借币 false：非自动借币"
+    ],
+    "availBal": [
+        "availBal",
+        "String",
+        "可用余额",
+        " availBal"
+    ],
+    "availBuy": [
+        "availBuy",
+        "String",
+        "最大买入可用数量"
+    ],
+    "availEq": [
+        " availEq",
+        "String",
+        "可用保证金适用于单币种保证金模式和跨币种保证金模式和组合保证金模式"
+    ],
+    "availLoan": [
+        "availLoan",
+        "String",
+        "当前账户剩余可用（锁定额度内）",
+        " availLoan"
+    ],
+    "availPos": [
+        "availPos",
+        "String",
+        "可平仓数量，适用于 币币杠杆,交割/永续（开平仓模式），期权（交易账户及保证金账户逐仓）。",
+        " availPos"
+    ],
+    "availSell": [
+        "availSell",
+        "String",
+        "最大卖出可用数量"
+    ],
+    "avgAmt": [
+        "avgAmt",
+        "String",
+        "过去24小时平均借贷量"
+    ],
+    "avgAmtUsd": [
+        "avgAmtUsd",
+        "String",
+        "过去24小时平均借贷美元价值"
+    ],
+    "avgPx": [
+        "avgPx",
+        "String",
+        "成交均价，如果成交数量为0，该字段也为0",
+        " avgPx",
+        " avgPx"
+    ],
+    "avgRate": [
+        "avgRate",
+        "String",
+        "过去24小时平均借出利率"
+    ],
+    "bal": [
+        "bal",
+        "String",
+        "余额",
+        "bal"
+    ],
+    "balChg": [
+        "balChg",
+        "String",
+        "账户层面的余额变动数量"
+    ],
+    "balData": [
+        "balData",
+        "Array",
+        "币种资产信息",
+        " balData"
+    ],
+    "balance": [
+        " balance",
+        "String",
+        "风险准备金总量"
+    ],
+    "banAmend": [
+        "banAmend",
+        "Boolean",
+        "否",
+        "是否禁止币币市价改单，true 或 false，默认false 为true时，余额不足时，系统不会改单，下单会失败，仅适用于币币市价单",
+        " banAmend"
+    ],
+    "bar": [
+        "bar",
+        "String",
+        "否",
+        "时间粒度，默认值1m如 [1m/3m/5m/15m/30m/1H/2H/4H] 香港时间开盘价k线：[6H/12H/1D/2D/3D/1W/1M/3M/6M/1Y]UTC时间开盘价k线：[/6Hutc/12Hutc/1Dutc/2Dutc/3Dutc/1Wutc/1Mutc/3Mutc/6Mutc/1Yutc] "
+    ],
+    "baseBal": [
+        "baseBal",
+        "String",
+        "交易币余额，适用于 币币杠杆（逐仓自主划转模式）",
+        " baseBal",
+        " baseBal"
+    ],
+    "baseCcy": [
+        "baseCcy",
+        "String",
+        "交易货币币种，如 BTC-USDT中的BTC",
+        " baseCcy"
+    ],
+    "baseCcyMax": [
+        "baseCcyMax",
+        "String",
+        "交易货币支持闪兑的最大值"
+    ],
+    "baseCcyMin": [
+        "baseCcyMin",
+        "String",
+        "交易货币支持闪兑的最小值"
+    ],
+    "baseMaxLoan": [
+        "baseMaxLoan",
+        "String",
+        "交易货币 最大借币量（仅适用于杠杆，且instId参数生效时），例如 BTC-USDT 里的 BTC最大借币量"
+    ],
+    "basePos": [
+        "basePos",
+        "Boolean",
+        "否",
+        "是否开底仓默认为false中性合约网格忽略该参数",
+        " basePos"
+    ],
+    "baseSz": [
+        "baseSz",
+        "String",
+        "闪兑交易币数量",
+        " baseSz"
+    ],
+    "basic": [
+        "basic",
+        "Array",
+        "基础利率和借币限额"
+    ],
+    "before": [
+        "before",
+        "String",
+        "否",
+        "请求此ID之后（更新的数据）的分页内容，传的值为对应接口的ordId",
+        "时间戳分页时，不支持使用before参数"
+    ],
+    "begin": [
+        "begin",
+        "String",
+        "否",
+        "筛选的开始时间戳，Unix 时间戳为毫秒数格式，如 1597026383085",
+        " begin"
+    ],
+    "beginId": [
+        "beginId",
+        "String",
+        "否",
+        "请求的起始询价单ID，请求此ID之后（更新的数据）的分页内容，不包括 beginId"
+    ],
+    "bidPx": [
+        "bidPx",
+        "String",
+        "买一价"
+    ],
+    "bidSz": [
+        "bidSz",
+        "String",
+        "买一价的挂单数量"
+    ],
+    "bidVol": [
+        "bidVol",
+        "String",
+        "bid波动率",
+        " bidVol"
+    ],
+    "bids": [
+        "bids",
+        "Array ",
+        "买方深度",
+        " bids"
+    ],
+    "billId": [
+        "billId",
+        "String",
+        "账单 ID"
+    ],
+    "bkLoss": [
+        "bkLoss",
+        "String",
+        "穿仓亏损数量"
+    ],
+    "bkPx": [
+        "bkPx",
+        "String",
+        "破产价格，与系统爆仓账号委托成交的价格。"
+    ],
+    "blockTdId": [
+        " blockTdId",
+        "String",
+        "大宗交易ID",
+        "blockTdId"
+    ],
+    "blockVolCny": [
+        "blockVolCny",
+        "String",
+        "24小时平台场外交易总量，以人民币为单位"
+    ],
+    "blockVolUsd": [
+        "blockVolUsd",
+        "String",
+        "24小时平台场外交易总量，以美元为单位"
+    ],
+    "body": [
+        "body不能为空",
+        "400",
+        "50000"
+    ],
+    "books": [
+        "books-l2-tbt深度频道仅支持手续费等级为VIP5及以上的用户订阅使用",
+        "60029"
+    ],
+    "books50": [
+        "books50-l2-tbt深度频道仅支持手续费等级为VIP4及以上的用户订阅使用",
+        "60030"
+    ],
+    "buyLmt": [
+        "buyLmt",
+        "String",
+        "最高买价",
+        " buyLmt"
+    ],
+    "buyVol": [
+        "buyVol",
+        "String",
+        "买入量"
+    ],
+    "c": [
+        "c",
+        "String",
+        "收盘价格",
+        " c"
+    ],
+    "cTime": [
+        "cTime",
+        "String",
+        "订单创建时间，Unix时间戳的毫秒数格式， 如 ：1597026383085",
+        " cTime"
+    ],
+    "callBlockVol": [
+        "callBlockVol",
+        "String",
+        "看涨大单"
+    ],
+    "callBuyVol": [
+        "callBuyVol",
+        "String",
+        "看涨买入量 以结算货币为单位"
+    ],
+    "callOI": [
+        "callOI",
+        "String",
+        "看涨持仓总量（以币为单位）"
+    ],
+    "callSellVol": [
+        "callSellVol",
+        "String",
+        "看涨卖出量 以结算货币为单位"
+    ],
+    "callVolume": [
+        "callVolume",
+        "String",
+        "看涨交易总量（以币为单位）"
+    ],
+    "callbackRatio": [
+        "callbackRatio",
+        "String",
+        "可选",
+        "回调幅度的比例，如 0.05callbackRatio和callbackSpread只能传入一个",
+        " callbackRatio"
+    ],
+    "callbackSpread": [
+        "callbackSpread",
+        "String",
+        "可选",
+        "回调幅度的价距",
+        " callbackSpread"
+    ],
+    "canDep": [
+        "canDep",
+        "Boolean",
+        "是否可充值，false表示不可链上充值，true表示可以链上充值"
+    ],
+    "canInternal": [
+        "canInternal",
+        "Boolean",
+        "是否可内部转账，false表示不可内部转账，true表示可以内部转账"
+    ],
+    "canTransOut": [
+        "canTransOut",
+        "Boolean",
+        "是否可以主动转出，false：不可转出，true：可以转出"
+    ],
+    "canWd": [
+        "canWd",
+        "Boolean",
+        "是否可提币，false表示不可链上提币，true表示可以链上提币"
+    ],
+    "cancelType": [
+        "cancelType",
+        "String",
+        " 网格策略停止原因0：无1：手动停止2：止盈停止3：止损停止4：风控停止5：交割停止 ",
+        " cancelType"
+    ],
+    "cashBal": [
+        " cashBal",
+        "String",
+        "币种余额",
+        " cashBal"
+    ],
+    "category": [
+        "category",
+        "String",
+        "订单种类 normal：普通委托twap：TWAP自动换币 adl：ADL自动减仓 full_liquidation：强制平仓 partial_liquidation：强制减仓 delivery：交割 ddh：对冲减仓类型订单 ",
+        " category"
+    ],
+    "ccy": [
+        "ccy",
+        "String",
+        "否",
+        "保证金币种，仅适用于单币种保证金模式下的全仓杠杆订单",
+        " ccy",
+        "ccy",
+        " ccy"
+    ],
+    "chain": [
+        "chain",
+        "String",
+        " 币种链信息有的币种下有多个链，必须要做区分，如USDT下有USDT-ERC20，USDT-TRC20，USDT-Omni多个链 "
+    ],
+    "chainName": [
+        "{chainName}维护中，暂停提币",
+        "200",
+        "58214"
+    ],
+    "channel": [
+        " channel",
+        "String",
+        "是",
+        "频道名"
+    ],
+    "checksum": [
+        " checksum",
+        "Integer",
+        "检验和 （下方注解）"
+    ],
+    "clBlockTdId": [
+        "重复的clBlockTdId",
+        "200",
+        "56003",
+        "执行和验证的clBlockTdId 不匹配"
+    ],
+    "clOrdId": [
+        "clOrdId",
+        "String",
+        "否",
+        "客户自定义订单ID 字母（区分大小写）与数字的组合，可以是纯字母、纯数字且长度要在1-32位之间。",
+        " clOrdId",
+        "clOrdId重复"
+    ],
+    "clQReqId": [
+        "clQReqId",
+        "String",
+        "否",
+        "客户端自定义的订单标识字母（区分大小写）与数字的组合，可以是纯字母、纯数字且长度要在1-32位之间。"
+    ],
+    "clQuoteId": [
+        " clQuoteId",
+        "String",
+        "报价单自定义ID，为客户敏感信息，不会公开，对询价方返回\"\"。",
+        "clQuoteId",
+        "clQuoteId重复"
+    ],
+    "clQuoteIds": [
+        "clQuoteIds",
+        "Array of string",
+        "可选",
+        "报价单自定义ID，当 clQuoteIds 和 quoteIds 都传时，以 quoteIds 为准。"
+    ],
+    "clRfqId": [
+        "clRfqId",
+        "String",
+        "否",
+        "询价单自定义ID，字母（区分大小写）与数字的组合，可以是纯字母、纯数字且长度要在1-32位之间。",
+        " clRfqId",
+        "clRfqId重复"
+    ],
+    "clRfqIds": [
+        "clRfqIds",
+        "Array of string",
+        "可选",
+        "询价单自定义ID，当 clRfqIds 和 rfqIds 都传时，以 rfqIds 为准。"
+    ],
+    "clTReqId": [
+        "clTReqId",
+        "String",
+        "否",
+        "用户自定义的订单标识字母（区分大小写）与数字的组合，可以是纯字母、纯数字且长度要在1-32位之间。"
+    ],
+    "classic": [
+        " classic",
+        "String",
+        "经典账户 (已废弃)"
+    ],
+    "clientId": [
+        "clientId",
+        "String",
+        "否",
+        "客户自定义ID字母（区分大小写）与数字的组合，可以是纯字母、纯数字且长度要在1-32位之间。"
+    ],
+    "closeAvgPx": [
+        "closeAvgPx",
+        "String",
+        "平仓均价"
+    ],
+    "closeTotalPos": [
+        "closeTotalPos",
+        "String",
+        "累计平仓量"
+    ],
+    "cnvAmt": [
+        " cnvAmt",
+        "String",
+        "转换后的OKB数量"
+    ],
+    "cnvPx": [
+        " cnvPx",
+        "String",
+        "换算成指数后的价格"
+    ],
+    "cnvtPx": [
+        "cnvtPx",
+        "String",
+        "闪兑价格，单位为计价币"
+    ],
+    "code": [
+        "code",
+        "String",
+        "结果代码，0 表示成功。",
+        " code"
+    ],
+    "coinUsdPrice": [
+        " coinUsdPrice",
+        "String",
+        "币种美元指数"
+    ],
+    "components": [
+        "components",
+        "String",
+        "成分"
+    ],
+    "contract": [
+        "contract",
+        "Array",
+        "合约交易大数据接口功能支持的币种"
+    ],
+    "count": [
+        " count",
+        "String",
+        "策略订单计数仅适用于冰山委托和时间加权委托"
+    ],
+    "counterparties": [
+        "counterparties",
+        "Array of strings",
+        "是",
+        "报价方列表。",
+        " counterparties"
+    ],
+    "crossLiab": [
+        " crossLiab",
+        "String",
+        "币种全仓负债额适用于跨币种保证金模式和组合保证金模式"
+    ],
+    "ctAddr": [
+        "ctAddr",
+        "String",
+        "合约地址后6位"
+    ],
+    "ctIsoMode": [
+        "ctIsoMode",
+        "String",
+        "衍生品的逐仓保证金划转模式automatic：开仓划转 autonomy：自主划转 "
+    ],
+    "ctMult": [
+        "ctMult",
+        "String",
+        "合约乘数，仅适用于交割/永续/期权",
+        " ctMult"
+    ],
+    "ctType": [
+        "ctType",
+        "String",
+        "否",
+        "linear： 正向合约inverse： 反向合约仅交割/永续有效",
+        " ctType"
+    ],
+    "ctVal": [
+        "ctVal",
+        "String",
+        "合约面值仅支持FUTURES/SWAP",
+        " ctVal"
+    ],
+    "ctValCcy": [
+        "ctValCcy",
+        "String",
+        "合约面值计价币种，仅适用于交割/永续/期权",
+        " ctValCcy"
+    ],
+    "curBaseSz": [
+        "curBaseSz",
+        "String",
+        "当前持有的交易币资产仅适用于现货网格/天地网格",
+        " curBaseSz"
+    ],
+    "curQuoteSz": [
+        "curQuoteSz",
+        "String",
+        "当前持有的计价币资产仅适用于现货网格/天地网格",
+        " curQuoteSz"
+    ],
+    "cxlOnFail": [
+        "cxlOnFail",
+        "Boolean",
+        "否",
+        "false：不自动撤单 true：自动撤单 当订单修改失败时，该订单是否需要自动撤销。默认为false",
+        " cxlOnFail"
+    ],
+    "data": [
+        "data",
+        "Array of objects",
+        "询价单结果"
+    ],
+    "debt": [
+        "debt",
+        "String",
+        "当前负债，单位为USDT"
+    ],
+    "debtAmt": [
+        " debtAmt",
+        "String",
+        "可负债币种数量包括本金和利息"
+    ],
+    "debtCcy": [
+        " debtCcy",
+        "String",
+        "负债币种",
+        "debtCcy"
+    ],
+    "debtData": [
+        "debtData",
+        "Array",
+        "负债币种信息"
+    ],
+    "debtSz": [
+        "debtSz",
+        "String",
+        "对应的负债币种成交数量"
+    ],
+    "debtType": [
+        "debtType",
+        "String",
+        "否",
+        "负债类型 cross: 全仓负债 isolated: 逐仓负债"
+    ],
+    "delivery": [
+        "delivery",
+        "String",
+        "交割手续费率"
+    ],
+    "delta": [
+        " delta",
+        "String",
+        "期权价格对uly价格的敏感度",
+        "delta"
+    ],
+    "deltaBS": [
+        "deltaBS",
+        "String",
+        "美金本位持仓仓位delta，仅适用于期权",
+        " deltaBS"
+    ],
+    "deltaPA": [
+        "deltaPA",
+        "String",
+        "币本位持仓仓位delta，仅适用于期权",
+        " deltaPA"
+    ],
+    "depId": [
+        "depId",
+        "String",
+        "否",
+        "充值记录 ID"
+    ],
+    "depQuotaFixed": [
+        "depQuotaFixed",
+        "String",
+        "充币固定限额，单位为BTC没有充币限制则返回\"\""
+    ],
+    "dest": [
+        "dest",
+        "String",
+        "是",
+        "提币方式3：内部转账 4：链上提币"
+    ],
+    "details": [
+        "details",
+        "Array",
+        "各个账户的资产估值"
+    ],
+    "direction": [
+        "direction",
+        "String",
+        "持仓方向 long：多 short：空 仅适用于 币币杠杆/交割/永续/期权",
+        " direction"
+    ],
+    "disEq": [
+        " disEq",
+        "String",
+        "美金层面币种折算权益"
+    ],
+    "discountInfo": [
+        "discountInfo",
+        "Array",
+        "币种折算率详情"
+    ],
+    "discountLv": [
+        "discountLv",
+        "String",
+        "否",
+        "折算率等级1:第一档 2:第二档 3:第三档 4:第四档 5:第五档"
+    ],
+    "discountRate": [
+        " discountRate",
+        "String",
+        "折算率"
+    ],
+    "duration": [
+        "duration",
+        "String",
+        "否",
+        " 回测周期7D：7天，30D：30天，180D：180天默认现货网格为7D，天地网格为180D "
+    ],
+    "earlyRedeem": [
+        "earlyRedeem",
+        "Boolean",
+        "项目是否支持提前赎回"
+    ],
+    "earn": [
+        " earn",
+        "String",
+        "金融账户"
+    ],
+    "earningData": [
+        "earningData",
+        "Array",
+        "收益信息"
+    ],
+    "earningType": [
+        "earningType",
+        "String",
+        "收益类型0: 预估收益1: 累计发放收益"
+    ],
+    "earnings": [
+        "earnings",
+        "String",
+        "币种持仓收益",
+        "earnings"
+    ],
+    "enable": [
+        "enable",
+        "String",
+        "否",
+        "子账户状态，true：正常使用 false：冻结"
+    ],
+    "end": [
+        "end",
+        "String",
+        "否",
+        "筛选的结束时间戳，Unix 时间戳为毫秒数格式，如 1597027383085",
+        " end"
+    ],
+    "endId": [
+        "endId",
+        "String",
+        "否",
+        "请求的结束询价单ID，请求此ID之前（更旧的数据）的分页内容，不包括 endId"
+    ],
+    "eq": [
+        " eq",
+        "String",
+        "币种总权益",
+        "eq"
+    ],
+    "eqUsd": [
+        " eqUsd",
+        "String",
+        "币种权益美金价值"
+    ],
+    "estRate": [
+        "estRate",
+        "String",
+        "下一次预估借贷年利率"
+    ],
+    "event": [
+        "event",
+        "String",
+        "是",
+        "操作，login error"
+    ],
+    "eventType": [
+        " eventType",
+        "String",
+        "事件类型，枚举值：snapshot：首推快照 delivered：交割 exercised：行权 transferred：划转filled：成交 liquidation：强平 claw_back：穿仓补偿 adl：ADL自动减仓 funding_fee：资金费 adjust_margin：调整保证金 set_leverage：设置杠杆 interest_deduction：扣息"
+    ],
+    "exch": [
+        " exch",
+        "String",
+        "交易所名称"
+    ],
+    "execType": [
+        "execType",
+        "String",
+        "流动性方向 T：taker M：maker",
+        " execType"
+    ],
+    "exercise": [
+        "exercise",
+        "String",
+        "行权手续费率"
+    ],
+    "expTime": [
+        "expTime",
+        "String",
+        "否",
+        "请求有效截止时间。Unix时间戳的毫秒数格式，如 1597026383085",
+        " expTime",
+        "无效的expTime"
+    ],
+    "expiresIn": [
+        "expiresIn",
+        "String",
+        "否",
+        "报价单的有效时长（以秒为单位）。 10到120之间的任何整数。 默认值为60"
+    ],
+    "fee": [
+        "fee",
+        "String",
+        "订单交易手续费，平台向用户收取的交易手续费，手续费扣除为负数。如： -0.01",
+        " fee",
+        " fee"
+    ],
+    "feeCcy": [
+        "feeCcy",
+        "String",
+        "交易手续费币种",
+        " feeCcy",
+        " feeCcy"
+    ],
+    "fillBaseSz": [
+        "fillBaseSz",
+        "String",
+        "成交的交易币数量"
+    ],
+    "fillDebtSz": [
+        "fillDebtSz",
+        "String",
+        "负债币种成交数量"
+    ],
+    "fillFee": [
+        " fillFee",
+        "String",
+        "最新一笔成交的手续费金额或者返佣金额：手续费扣除 为 ‘负数’，如 -0.01 ； 手续费返佣 为 ‘正数’，如 0.01"
+    ],
+    "fillFeeCcy": [
+        " fillFeeCcy",
+        "String",
+        "最新一笔成交的手续费币种"
+    ],
+    "fillFromSz": [
+        "fillFromSz",
+        "String",
+        "小币偿还币种支付数量"
+    ],
+    "fillNotionalUsd": [
+        " fillNotionalUsd",
+        "String",
+        "委托单已成交的美元价值"
+    ],
+    "fillPx": [
+        "fillPx",
+        "String",
+        "最新成交价格，如果成交数量为0，该字段也为0",
+        " fillPx"
+    ],
+    "fillQuoteSz": [
+        "fillQuoteSz",
+        "String",
+        "成交的计价币数量"
+    ],
+    "fillRepaySz": [
+        "fillRepaySz",
+        "String",
+        "偿还币种成交数量"
+    ],
+    "fillSz": [
+        "fillSz",
+        "String",
+        "最新成交数量",
+        " fillSz"
+    ],
+    "fillTime": [
+        "fillTime",
+        "String",
+        "最新成交时间",
+        " fillTime"
+    ],
+    "fillToSz": [
+        "fillToSz",
+        "String",
+        "兑换的主流币成交数量"
+    ],
+    "floatProfit": [
+        "floatProfit",
+        "String",
+        "浮动盈亏",
+        " floatProfit"
+    ],
+    "from": [
+        "from",
+        "String",
+        "是",
+        "转出账户6：资金账户 18：交易账户",
+        "from和to不可相同"
+    ],
+    "fromAmt": [
+        " fromAmt",
+        "String",
+        "可兑换币种数量"
+    ],
+    "fromCcy": [
+        " fromCcy",
+        "String",
+        "可兑换币种",
+        "fromCcy",
+        "fromCcy与toCcy不可相同"
+    ],
+    "fromData": [
+        "fromData",
+        "Array",
+        "当前拥有并可兑换的小币币种列表信息"
+    ],
+    "fromSubAccount": [
+        "fromSubAccount",
+        "String",
+        "是",
+        "转出子账户的子账户名称"
+    ],
+    "fromSz": [
+        "fromSz",
+        "String",
+        "对应的小币支付数量"
+    ],
+    "frozenBal": [
+        "frozenBal",
+        "String",
+        "冻结（不可用）",
+        " frozenBal"
+    ],
+    "funding": [
+        " funding",
+        "String",
+        "资金账户"
+    ],
+    "fundingRate": [
+        "fundingRate",
+        "String",
+        "资金费率",
+        " fundingRate"
+    ],
+    "fundingTime": [
+        "fundingTime",
+        "String",
+        "资金费时间 ，Unix时间戳的毫秒数格式，如 1597026383085",
+        " fundingTime"
+    ],
+    "fwdPx": [
+        "fwdPx",
+        "String",
+        "远期价格",
+        " fwdPx"
+    ],
+    "gAuth": [
+        "gAuth",
+        "Boolean",
+        "子账户是否开启的登录时的谷歌验证 true：已开启 false：未开启"
+    ],
+    "gamma": [
+        " gamma",
+        "String",
+        "delta对uly价格的敏感度",
+        "gamma"
+    ],
+    "gammaBS": [
+        "gammaBS",
+        "String",
+        "美金本位持仓仓位gamma，仅适用于期权",
+        " gammaBS"
+    ],
+    "gammaPA": [
+        "gammaPA",
+        "String",
+        "币本位持仓仓位gamma，仅适用于期权",
+        " gammaPA"
+    ],
+    "greeksType": [
+        "greeksType",
+        "String",
+        "当前希腊字母展示方式PA：币本位 BS：美元本位"
+    ],
+    "gridNum": [
+        "gridNum",
+        "String",
+        "是",
+        "网格数量",
+        " gridNum"
+    ],
+    "gridProfit": [
+        "gridProfit",
+        "String",
+        "网格利润",
+        " gridProfit"
+    ],
+    "groupId": [
+        "groupId",
+        "String",
+        "否",
+        "组ID",
+        " groupId"
+    ],
+    "h": [
+        "h",
+        "String",
+        "最高价格",
+        " h"
+    ],
+    "high24h": [
+        "high24h",
+        "String",
+        "24小时最高价",
+        " high24h"
+    ],
+    "href": [
+        "href",
+        "String",
+        "系统维护详情的超级链接,若无返回值，默认值为空，如： “”",
+        " href"
+    ],
+    "id": [
+        "id",
+        "String",
+        "是",
+        "消息的唯一标识 用户提供，返回参数中会返回以便于找到相应的请求。字母（区分大小写）与数字的组合，可以是纯字母、纯数字且长度必须要在1-32位之间。",
+        "币对 id 或币对名称与订单信息不匹配",
+        "币对 id 或币对名称不能同时为空",
+        "订单状态和订单id不能同时存在",
+        "订单状态或订单id必须存在一个"
+    ],
+    "idxPx": [
+        "idxPx",
+        "String",
+        "最新指数价格",
+        " idxPx"
+    ],
+    "imr": [
+        "imr",
+        "String",
+        "美金层面占用保证金适用于跨币种保证金模式和组合保证金模式",
+        " imr"
+    ],
+    "inclRealPos": [
+        "inclRealPos",
+        "Boolean",
+        "否",
+        "是否代入已有仓位true：调整被代入的已有仓位信息 false：不代入已有仓位，仅使用simPos里新增的模拟仓位进行计算,默认为True"
+    ],
+    "index": [
+        "index",
+        "String",
+        "是",
+        "指数，如 BTC-USDT"
+    ],
+    "instId": [
+        "instId",
+        "String",
+        "是",
+        "产品ID，如 BTC-USD-190927-5000-C",
+        " instId",
+        " instId",
+        "instId和instType不匹配",
+        "查询条件中的instId的交易产品当前不是可交易状态，请填写单个instid逐个查询状态详情",
+        "instId {0} 报价不可以超过你预设的价格限制"
+    ],
+    "instType": [
+        "instType",
+        "String",
+        "产品类型 SPOT：币币MARGIN：币币杠杆SWAP：永续合约 FUTURES：交割合约 OPTION：期权",
+        " instType",
+        " instType",
+        "交易产品类型不匹配指数（instType和uly不匹配）"
+    ],
+    "interest": [
+        " interest",
+        "String",
+        "计息适用于跨币种保证金模式和组合保证金模式",
+        "interest"
+    ],
+    "interestRate": [
+        "interestRate",
+        "String",
+        "计息利率(小时)"
+    ],
+    "investData": [
+        "investData",
+        "Array",
+        "目前用户可用来投资的目标币种信息"
+    ],
+    "investment": [
+        "investment",
+        "String",
+        "投入金额现货网格如果投入了交易币则折算为计价币",
+        " investment"
+    ],
+    "invoice": [
+        "invoice",
+        "String",
+        "invoice 号码",
+        "创建invoice失败",
+        "invoice已经过期",
+        "invoice无效"
+    ],
+    "invoice10000": [
+        "单日达到生成invoice10000个的上限",
+        "200",
+        "58354"
+    ],
+    "ip": [
+        "ip",
+        "String",
+        "否",
+        "子账户APIKey绑定ip地址，多个ip用半角逗号隔开，最多支持20个ip。 如果填写该字段，那该字段会被重置 如果ip传\"\"，则表示解除IP绑定"
+    ],
+    "irDiscount": [
+        " irDiscount",
+        "String",
+        "利率的折扣率"
+    ],
+    "isoEq": [
+        "isoEq",
+        "String",
+        "美金层面逐仓仓位权益适用于单币种保证金模式和跨币种保证金模式和组合保证金模式",
+        " isoEq"
+    ],
+    "isoLiab": [
+        " isoLiab",
+        "String",
+        "币种逐仓负债额适用于跨币种保证金模式和组合保证金模式"
+    ],
+    "isoMode": [
+        "isoMode",
+        "String",
+        "是",
+        "逐仓保证金划转模式 automatic:开仓自动划转 autonomy:自主划转"
+    ],
+    "isoUpl": [
+        " isoUpl",
+        "String",
+        "逐仓未实现盈亏适用于单币种保证金模式和跨币种保证金模式和组合保证金模式"
+    ],
+    "json": [
+        "非法的json数据",
+        "400",
+        "50002"
+    ],
+    "l": [
+        "l",
+        "String",
+        "最低价格",
+        " l"
+    ],
+    "label": [
+        "label",
+        "String",
+        "子账户备注"
+    ],
+    "last": [
+        "last",
+        "String",
+        "最新成交价",
+        " last"
+    ],
+    "lastSz": [
+        "lastSz",
+        "String",
+        "最新成交的数量"
+    ],
+    "legs": [
+        "legs",
+        "Array of objects",
+        "是",
+        "组合交易，每次最多可以提交15组交易信息",
+        " legs"
+    ],
+    "level": [
+        "level",
+        "String",
+        "当前在平台上真实交易量的用户等级，例如 lv1",
+        " level"
+    ],
+    "levelList": [
+        "levelList",
+        "Array",
+        "不同VIP等级下的限额信息"
+    ],
+    "levelTmp": [
+        "levelTmp",
+        "String",
+        "特约用户的临时体验用户等级，例如 lv3"
+    ],
+    "lever": [
+        "lever",
+        "String",
+        "杠杆倍数，0.01到125之间的数值，仅适用于 币币杠杆/交割/永续",
+        " lever"
+    ],
+    "leverage": [
+        "leverage",
+        "String",
+        "否",
+        "开仓杠杆倍数默认为当前杠杆倍数仅适用于币币杠杆/交割/永续"
+    ],
+    "liab": [
+        " liab",
+        "String",
+        "币种负债额适用于跨币种保证金模式和组合保证金模式",
+        "liab"
+    ],
+    "liabCcy": [
+        "liabCcy",
+        "String",
+        "负债币种，仅适用于币币杠杆",
+        " liabCcy"
+    ],
+    "limit": [
+        "limit",
+        "String",
+        "否",
+        "返回结果的数量，最大为100，默认100条"
+    ],
+    "liqPx": [
+        "liqPx",
+        "String",
+        "预估强平价 不适用于期权",
+        " liqPx"
+    ],
+    "listTime": [
+        "listTime",
+        "String",
+        "上线日期 Unix时间戳的毫秒数格式，如 1597026383085",
+        " listTime"
+    ],
+    "loanAmt": [
+        "loanAmt",
+        "String",
+        "已出借数量"
+    ],
+    "loanQuota": [
+        "loanQuota",
+        "String",
+        "借币限额",
+        " loanQuota"
+    ],
+    "loanQuotaCoef": [
+        " loanQuotaCoef",
+        "String",
+        "借币限额系数"
+    ],
+    "loanTrans": [
+        "loanTrans",
+        "Boolean",
+        "否",
+        "是否支持跨币种保证金模式或组合保证金模式下的借币转入/转出true 或 false，默认false"
+    ],
+    "logoLink": [
+        "logoLink",
+        "String",
+        "币种Logo链接"
+    ],
+    "lotSz": [
+        "lotSz",
+        "String",
+        "下单数量精度，如 BTC-USDT-SWAP：1",
+        " lotSz"
+    ],
+    "low24h": [
+        "low24h",
+        "String",
+        "24小时最低价",
+        " low24h"
+    ],
+    "mTraderCode": [
+        " mTraderCode",
+        "String",
+        "报价方唯一标识代码。 报价时 anonymous 设置为 true 时不可见。"
+    ],
+    "mainNet": [
+        "mainNet",
+        "Boolean",
+        "当前链是否为主链如果是则返回true，否则返回false"
+    ],
+    "maker": [
+        "maker",
+        "String",
+        "USDT\u0026USDⓈ\u0026Crypto 交易区挂单手续费率，永续和交割合约时，为币本位合约费率"
+    ],
+    "makerPxBand": [
+        " makerPxBand",
+        "String",
+        "否",
+        "价格限制以价格精度tick为单位，以标记价格为基准。设置makerPxBand为1个tick代表: 如果买一价 标记价格 + 1 tick, 操作将被拦截 如果 买一价 \u003c 标记价格 - 1 tick, 操作将被拦截"
+    ],
+    "makerU": [
+        "makerU",
+        "String",
+        "USDT 合约挂单手续费率，仅适用于交割/永续"
+    ],
+    "makerUSDC": [
+        "makerUSDC",
+        "String",
+        "USDC 交易区的挂单手续费率"
+    ],
+    "margin": [
+        "margin",
+        "String",
+        "保证金余额，可增减，仅适用于逐仓",
+        " margin"
+    ],
+    "markPx": [
+        "markPx",
+        "String",
+        "标记价格",
+        " markPx"
+    ],
+    "markVol": [
+        "markVol",
+        "String",
+        "标记波动率",
+        " markVol"
+    ],
+    "mass": [
+        "用户没有执行mass cancel的权限",
+        "200",
+        "51411"
+    ],
+    "max": [
+        "max",
+        "String",
+        "支持闪兑的最大值"
+    ],
+    "maxAmt": [
+        "maxAmt",
+        "String",
+        "最多可调整的保证金数量",
+        "maxAmt",
+        " maxAmt"
+    ],
+    "maxBlockSz": [
+        " maxBlockSz",
+        "String",
+        "否",
+        "该种产品最大可交易数量。FUTURES, OPTION and SWAP 的单位是合约数量。SPOT的单位是交易货币。"
+    ],
+    "maxBuy": [
+        "maxBuy",
+        "String",
+        " 币币/币币杠杆：最大可买的交易币数量单币种保证金模式下的全仓杠杆订单，为交易币数量交割/永续/期权：最大可开多的合约张数 "
+    ],
+    "maxFee": [
+        "maxFee",
+        "String",
+        "最大提币手续费数量"
+    ],
+    "maxIcebergSz": [
+        "maxIcebergSz",
+        "String",
+        "合约或现货冰山委托的单笔最大委托数量",
+        " maxIcebergSz"
+    ],
+    "maxLever": [
+        "maxLever",
+        "String",
+        "最高可用杠杆倍数"
+    ],
+    "maxLmtSz": [
+        "maxLmtSz",
+        "String",
+        "合约或现货限价单的单笔最大委托数量",
+        " maxLmtSz"
+    ],
+    "maxLoan": [
+        " maxLoan",
+        "String",
+        "币种最大可借适用于跨币种保证金模式和组合保证金模式",
+        "maxLoan"
+    ],
+    "maxMktSz": [
+        "maxMktSz",
+        "String",
+        "合约或现货市价单的单笔最大委托数量",
+        " maxMktSz"
+    ],
+    "maxPx": [
+        "maxPx",
+        "String",
+        "是",
+        "区间最高价格",
+        " maxPx"
+    ],
+    "maxSell": [
+        "maxSell",
+        "String",
+        " 币币/币币杠杆：最大可卖的计价币数量单币种保证金模式下的全仓杠杆订单，为交易币数量交割/永续/期权：最大可开空的合约张数 "
+    ],
+    "maxStopSz": [
+        "maxStopSz",
+        "String",
+        "合约或现货止盈止损委托的单笔最大委托数量",
+        " maxStopSz"
+    ],
+    "maxSz": [
+        "maxSz",
+        "String",
+        "最大持仓量"
+    ],
+    "maxTriggerSz": [
+        "maxTriggerSz",
+        "String",
+        "合约或现货计划委托委托的单笔最大委托数量",
+        " maxTriggerSz"
+    ],
+    "maxTwapSz": [
+        "maxTwapSz",
+        "String",
+        "合约或现货时间加权单的单笔最大委托数量",
+        " maxTwapSz"
+    ],
+    "maxWd": [
+        "maxWd",
+        "String",
+        "币种单笔最大提币量"
+    ],
+    "maxWdEx": [
+        "maxWdEx",
+        "String",
+        "最大可划转数量（支持跨币种保证金模式借币转出）"
+    ],
+    "memo": [
+        "memo",
+        "String",
+        "部分币种充值需要 memo，若不需要则不返回此字段"
+    ],
+    "messages": [
+        "messages",
+        "String",
+        "数组包含对[ kind，timestamp，key，value]进行ABI编码的值，其中kind恒等于prices，timestamp是获取价格的时间戳，key是加密资产（例如，ETH），value是资产价格 "
+    ],
+    "mgnCcy": [
+        "mgnCcy",
+        "String",
+        "可选",
+        "保证金币种，如 BTC币币杠杆单币种全仓情况下必须指定保证金币种"
+    ],
+    "mgnIsoMode": [
+        "mgnIsoMode",
+        "String",
+        "币币杠杆的逐仓保证金划转模式automatic：开仓划转 autonomy：自主划转 "
+    ],
+    "mgnMode": [
+        "mgnMode",
+        "String",
+        "是",
+        "保证金模式 cross：全仓 ； isolated：逐仓",
+        " mgnMode",
+        " mgnMode"
+    ],
+    "mgnRatio": [
+        "mgnRatio",
+        "String",
+        "美金层面保证金率适用于跨币种保证金模式 和组合保证金模式",
+        " mgnRatio"
+    ],
+    "min": [
+        "min",
+        "String",
+        "支持闪兑的最小值"
+    ],
+    "minAmt": [
+        "minAmt",
+        "String",
+        "最小申购量",
+        " minAmt"
+    ],
+    "minDep": [
+        "minDep",
+        "String",
+        "币种单笔最小充值量"
+    ],
+    "minDepArrivalConfirm": [
+        "minDepArrivalConfirm",
+        "String",
+        "充值到账最小网络确认数。币已到账但不可提。"
+    ],
+    "minFee": [
+        "minFee",
+        "String",
+        "最小提币手续费数量"
+    ],
+    "minInvestment": [
+        "minInvestment",
+        "String",
+        "最小投资数量"
+    ],
+    "minPx": [
+        "minPx",
+        "String",
+        "是",
+        "区间最低价格",
+        " minPx"
+    ],
+    "minSz": [
+        "minSz",
+        "String",
+        "最小下单数量",
+        " minSz"
+    ],
+    "minWd": [
+        "minWd",
+        "String",
+        "币种单笔最小提币量"
+    ],
+    "minWdUnlockConfirm": [
+        "minWdUnlockConfirm",
+        "String",
+        "提现解锁最小网络确认数"
+    ],
+    "mmr": [
+        "mmr",
+        "String",
+        "美金层面维持保证金适用于跨币种保证金模式和组合保证金模式",
+        " mmr"
+    ],
+    "mobile": [
+        "mobile",
+        "String",
+        "子账户绑定手机号"
+    ],
+    "moveTriggerPx": [
+        "moveTriggerPx",
+        "String",
+        "移动止盈止损触发价格仅适用于移动止盈止损",
+        " moveTriggerPx"
+    ],
+    "mr1": [
+        "mr1",
+        "String",
+        "现货\u0026波动率压力测试值"
+    ],
+    "mr2": [
+        "mr2",
+        "String",
+        "时间价值压力测试值"
+    ],
+    "mr3": [
+        "mr3",
+        "String",
+        "波动率跨期压力测试值"
+    ],
+    "mr4": [
+        "mr4",
+        "String",
+        "基差压力测试值"
+    ],
+    "mr5": [
+        "mr5",
+        "String",
+        "利率风险压力测试值"
+    ],
+    "mr6": [
+        "mr6",
+        "String",
+        "极端市场波动压力测试值"
+    ],
+    "mr7": [
+        "mr7",
+        "String",
+        "减仓成本压力测试值"
+    ],
+    "msg": [
+        "msg",
+        "String",
+        "错误信息，如果代码不为 0，则不为空。",
+        " msg"
+    ],
+    "name": [
+        "name",
+        "String",
+        "币种中文名称，不显示则无对应名称"
+    ],
+    "needTag": [
+        "needTag",
+        "Boolean",
+        "当前链是否需要标签（tag/memo）信息"
+    ],
+    "newPx": [
+        "newPx",
+        "String",
+        "可选",
+        "修改的新价格",
+        " newPx"
+    ],
+    "newSz": [
+        "newSz",
+        "String",
+        "可选",
+        "修改的新数量，newSz和newPx不可同时为空。对于部分成交订单，该数量应包含已成交数量。 ",
+        " newSz"
+    ],
+    "nextDiscountTime": [
+        "nextDiscountTime",
+        "String",
+        "下次扣息时间，Unix时间戳的毫秒数格式，如 1597026383085"
+    ],
+    "nextFundingRate": [
+        "nextFundingRate",
+        "String",
+        "下一期预测资金费率",
+        " nextFundingRate"
+    ],
+    "nextFundingTime": [
+        "nextFundingTime",
+        "String",
+        "下一期资金费时间 ，Unix时间戳的毫秒数格式，如 1622851200000"
+    ],
+    "nextInterestTime": [
+        "nextInterestTime",
+        "String",
+        "下次计息时间，Unix时间戳的毫秒数格式，如 1597026383085"
+    ],
+    "notes": [
+        "notes",
+        "String",
+        "备注仅适用于资金划转，不是资金划转时，返回 \"\""
+    ],
+    "notionalCcy": [
+        " notionalCcy",
+        "String",
+        "以币为单位的持仓数量"
+    ],
+    "notionalLever": [
+        " notionalLever",
+        "String",
+        "币种杠杆倍数适用于单币种保证金模式"
+    ],
+    "notionalUsd": [
+        "notionalUsd",
+        "String",
+        "以美金价值为单位的持仓数量，即仓位美金价值适用于跨币种保证金模式和组合保证金模式",
+        " notionalUsd"
+    ],
+    "o": [
+        "o",
+        "String",
+        "开盘价格",
+        " o"
+    ],
+    "oi": [
+        "oi",
+        "String",
+        "持仓量（按张折算）",
+        " oi"
+    ],
+    "oiCcy": [
+        "oiCcy",
+        "String",
+        "持仓量（按币折算）",
+        " oiCcy"
+    ],
+    "oiRatio": [
+        "oiRatio",
+        "String",
+        "看涨/看跌 持仓总量比"
+    ],
+    "omitPosRisk": [
+        "omitPosRisk",
+        "String",
+        "否",
+        "是否忽略仓位风险默认为false仅适用于组合保证金模式"
+    ],
+    "op": [
+        "op",
+        "String",
+        "是",
+        "操作，login",
+        "无效的op{0}"
+    ],
+    "open24h": [
+        "open24h",
+        "String",
+        "24小时开盘价",
+        " open24h"
+    ],
+    "openAvgPx": [
+        "openAvgPx",
+        "String",
+        "开仓均价"
+    ],
+    "openMaxPos": [
+        "openMaxPos",
+        "String",
+        "最大持仓量"
+    ],
+    "optMgnFactor": [
+        "optMgnFactor",
+        "String",
+        "期权保证金系数 （仅适用于期权）"
+    ],
+    "optType": [
+        "optType",
+        "String",
+        "期权类型，C或P 仅适用于期权",
+        " optType"
+    ],
+    "optVal": [
+        "optVal",
+        "String",
+        "期权市值，仅适用于期权",
+        " optVal"
+    ],
+    "option": [
+        "option",
+        "Array",
+        "期权交易大数据接口功能支持的币种"
+    ],
+    "ordFroz": [
+        "ordFroz",
+        "String",
+        "美金层面全仓挂单占用保证金适用于跨币种保证金模式和组合保证金模式"
+    ],
+    "ordFrozen": [
+        " ordFrozen",
+        "String",
+        "挂单冻结数量"
+    ],
+    "ordId": [
+        "ordId",
+        "String",
+        "订单ID",
+        " ordId",
+        "ordId或clOrdId至少填一个",
+        "ordId重复"
+    ],
+    "ordIds": [
+        "ordIds 和 clOrdIds 不能同时为空",
+        "200",
+        "51407"
+    ],
+    "ordPx": [
+        "ordPx",
+        "String",
+        "计划委托委托价格",
+        " ordPx"
+    ],
+    "ordType": [
+        "ordType",
+        "String",
+        "是",
+        "订单类型 market：市价单limit：限价单 post_only：只做maker单 fok：全部成交或立即取消 ioc：立即成交并取消剩余 optimal_limit_ioc：市价委托立即成交并取消剩余（仅适用交割、永续）",
+        " ordType",
+        "逐仓自主划转保证金模式不支持ordType为iceberg、twap的策略委托单"
+    ],
+    "orderPx": [
+        "orderPx",
+        "String",
+        "是",
+        "委托价格 委托价格为-1时，执行市价委托"
+    ],
+    "origRfqSz": [
+        "origRfqSz",
+        "String",
+        "原始报价的数量"
+    ],
+    "pTime": [
+        " pTime",
+        "String",
+        "持仓信息的推送时间，Unix时间戳的毫秒数格式，如 1597026383085"
+    ],
+    "param": [
+        "闪兑交易参数{param}与报价不一致",
+        "200",
+        "52919"
+    ],
+    "passphrase": [
+        " passphrase",
+        "String",
+        "是",
+        "APIKey 的密码",
+        "passphrase 格式不正确，支持6-32位字母和数字组合（区分大小写，不支持空格符号）",
+        "passphrase不正确"
+    ],
+    "pendingAmt": [
+        "pendingAmt",
+        "String",
+        "未出借数量"
+    ],
+    "perMaxProfitRate": [
+        "perMaxProfitRate",
+        "String",
+        "预期单网格最高利润率",
+        " perMaxProfitRate"
+    ],
+    "perMinProfitRate": [
+        "perMinProfitRate",
+        "String",
+        "预期单网格最低利润率",
+        " perMinProfitRate"
+    ],
+    "percent": [
+        "percent",
+        "String",
+        "可选",
+        "调整保证金百分比"
+    ],
+    "period": [
+        "period",
+        "String",
+        "否",
+        "时间粒度，默认值5m。支持[5m/1H/1D] 5m粒度最多只能查询两天之内的数据1H粒度最多只能查询30天之内的数据 1D粒度最多只能查询180天之内的数据"
+    ],
+    "perm": [
+        "perm",
+        "String",
+        "否",
+        "子账户APIKey权限 read_only：只读 ；trade ：交易 多个权限用半角逗号隔开。如果填写该字段，则该字段会被重置"
+    ],
+    "pmtId": [
+        "pmtId",
+        "String",
+        "部分币种充值需要此字段（payment_id），若不需要则不返回此字段"
+    ],
+    "pnl": [
+        "pnl",
+        "String",
+        "收益",
+        " pnl"
+    ],
+    "pnlRatio": [
+        "pnlRatio",
+        "String",
+        "平仓收益率",
+        " pnlRatio"
+    ],
+    "pos": [
+        "pos",
+        "String",
+        "持仓数量，逐仓自主划转模式下，转入保证金后会产生pos为0的仓位",
+        " pos",
+        " pos"
+    ],
+    "posBal": [
+        "posBal",
+        "String",
+        "仓位层面的余额数量"
+    ],
+    "posBalChg": [
+        "posBalChg",
+        "String",
+        "仓位层面的余额变动数量"
+    ],
+    "posCcy": [
+        "posCcy",
+        "String",
+        "仓位资产币种，仅适用于币币杠杆仓位",
+        " posCcy",
+        " posCcy"
+    ],
+    "posData": [
+        "posData",
+        "Array",
+        "持仓详细信息",
+        " posData"
+    ],
+    "posId": [
+        "posId",
+        "String",
+        "否",
+        "持仓ID支持多个posId查询（不超过20个），半角逗号分割",
+        " posId",
+        " posId"
+    ],
+    "posLoan": [
+        "posLoan",
+        "String",
+        "当前账户负债占用（锁定额度内）",
+        " posLoan"
+    ],
+    "posMode": [
+        "posMode",
+        "String",
+        "持仓方式long_short_mode：双向持仓 net_mode：单向持仓仅适用交割/永续"
+    ],
+    "posSide": [
+        "posSide",
+        "String",
+        "可选",
+        "持仓方向 在双向持仓模式下必填，且仅可选择 long 或 short。 仅适用交割、永续。 ",
+        " posSide",
+        "posSide",
+        " posSide"
+    ],
+    "posType": [
+        "posType",
+        "String",
+        "限仓类型，仅适用于组合保证金模式下的期权全仓。 1：所有合约挂单 + 持仓张数，2：所有合约总挂单张数，3：所有合约总挂单单数，4：同方向合约挂单 + 持仓张数，5：单一合约总挂单单数，6：单一合约挂单 + 持仓张数，7：单笔挂单张数\""
+    ],
+    "preOpenBegin": [
+        "preOpenBegin",
+        "String",
+        "预开放开始的时间，开放撤单、Post Only 下单和资金转入功能的时间",
+        " preOpenBegin"
+    ],
+    "preRate": [
+        "preRate",
+        "String",
+        "上一次借贷年利率"
+    ],
+    "prices": [
+        "prices",
+        "String",
+        "价格"
+    ],
+    "productId": [
+        "productId",
+        "String",
+        "否",
+        "项目ID"
+    ],
+    "profit": [
+        "profit",
+        "String",
+        "当前可提取利润,单位是计价币仅适用于现货网格/天地网格",
+        " profit"
+    ],
+    "protocol": [
+        "protocol",
+        "String",
+        "项目名称"
+    ],
+    "protocolType": [
+        "protocolType",
+        "String",
+        "否",
+        "项目类型staking：锁仓挖矿 defi：DEFI"
+    ],
+    "purchasedTime": [
+        "purchasedTime",
+        "String",
+        "用户订单创建时间，值为时间戳，Unix时间戳为毫秒数格式，如 1597026383085"
+    ],
+    "putBlockVol": [
+        "putBlockVol",
+        "String",
+        "看跌大单"
+    ],
+    "putBuyVol": [
+        "putBuyVol",
+        "String",
+        "看跌买入量 以结算货币为单位"
+    ],
+    "putOI": [
+        "putOI",
+        "String",
+        "看跌持仓总量（以币为单位）"
+    ],
+    "putSellVol": [
+        "putSellVol",
+        "String",
+        "看跌卖出量 以结算货币为单位"
+    ],
+    "putVolume": [
+        "putVolume",
+        "String",
+        "看跌交易总量（以币为单位）"
+    ],
+    "px": [
+        "px",
+        "String",
+        "可选",
+        " 委托价格，仅适用于limit、post_only、fok、ioc类型的订单",
+        " px",
+        " px"
+    ],
+    "pxLimit": [
+        "pxLimit",
+        "String",
+        "是",
+        "挂单限制价",
+        " pxLimit"
+    ],
+    "pxSpread": [
+        "pxSpread",
+        "String",
+        "可选",
+        "挂单价距离盘口的价距",
+        " pxSpread"
+    ],
+    "pxVar": [
+        "pxVar",
+        "String",
+        "可选",
+        "挂单价距离盘口的比例 pxVar和pxSpread只能传入一个",
+        " pxVar"
+    ],
+    "quota": [
+        " quota",
+        "String",
+        "基础借币限额",
+        "quota"
+    ],
+    "quoteBal": [
+        "quoteBal",
+        "String",
+        "计价币余额 ，适用于 币币杠杆（逐仓自主划转模式）",
+        " quoteBal",
+        " quoteBal"
+    ],
+    "quoteCcy": [
+        "quoteCcy",
+        "String",
+        "计价货币币种，如 BTC-USDT中的USDT",
+        " quoteCcy"
+    ],
+    "quoteCcyMax": [
+        "quoteCcyMax",
+        "String",
+        "计价货币支持闪兑的最大值"
+    ],
+    "quoteCcyMin": [
+        "quoteCcyMin",
+        "String",
+        "计价货币支持闪兑的最小值"
+    ],
+    "quoteId": [
+        "quoteId",
+        "String",
+        "是",
+        "报价单ID",
+        " quoteId"
+    ],
+    "quoteIds": [
+        "quoteIds",
+        "Array of string",
+        "可选",
+        "报价单ID"
+    ],
+    "quoteMaxLoan": [
+        "quoteMaxLoan",
+        "String",
+        "计价货币 最大借币量（仅适用于杠杆，且instId参数生效时），例如 BTC-USDT 里的 USDT最大借币量 "
+    ],
+    "quoteSide": [
+        "quoteSide",
+        "String",
+        "是",
+        "询价单方向， buy 或者 sell",
+        " quoteSide"
+    ],
+    "quoteSz": [
+        "quoteSz",
+        "String",
+        "闪兑计价币数量",
+        " quoteSz"
+    ],
+    "quoteTime": [
+        "quoteTime",
+        "String",
+        "生成报价时间，Unix时间戳的毫秒数格式"
+    ],
+    "rate": [
+        "rate",
+        "String",
+        "最新出借利率",
+        " rate"
+    ],
+    "ratio": [
+        "ratio",
+        "String",
+        "多空比值"
+    ],
+    "realVol": [
+        "realVol",
+        "String",
+        "已实现波动率（目前该字段暂未启用）",
+        " realVol"
+    ],
+    "realizedEarnings": [
+        "realizedEarnings",
+        "String",
+        "已赎回订单累计收益该字段只在订单处于赎回状态时有效"
+    ],
+    "realizedRate": [
+        "realizedRate",
+        "String",
+        "实际资金费率"
+    ],
+    "reason": [
+        " reason",
+        "String",
+        "状态原因. 有效值包括 mmp_canceled."
+    ],
+    "rebate": [
+        "rebate",
+        "String",
+        " 返佣金额，平台向达到指定lv交易等级的用户支付的挂单奖励（返佣），如果没有返佣金，该字段为“”。手续费返佣为正数，如：0.01",
+        " rebate"
+    ],
+    "rebateCcy": [
+        "rebateCcy",
+        "String",
+        "返佣金币种",
+        " rebateCcy"
+    ],
+    "records": [
+        "records",
+        "Array",
+        "各币种详细信息"
+    ],
+    "redeemedTime": [
+        "redeemedTime",
+        "String",
+        "用户订单赎回时间，值为时间戳，Unix时间戳为毫秒数格式，如 1597026383085"
+    ],
+    "redemptAmt": [
+        "redemptAmt",
+        "String",
+        "赎回中的数量"
+    ],
+    "reduceOnly": [
+        "reduceOnly",
+        "Boolean",
+        "否",
+        "是否只减仓，true 或 false，默认false仅适用于币币杠杆，以及买卖模式下的交割/永续仅适用于单币种保证金模式和跨币种保证金模式 ",
+        " reduceOnly"
+    ],
+    "region": [
+        "抱歉，由于当地法律法规，欧易无法为{region}未认证用户提供服务，请先认证身分以继续使用欧易",
+        "200",
+        "58011",
+        "抱歉，由于当地法律法规，欧易无法为{region}未认证用户提供服务，所以您无法向该用户转账"
+    ],
+    "regular": [
+        "regular",
+        "Array",
+        "普通用户"
+    ],
+    "repayAmt": [
+        " repayAmt",
+        "String",
+        "可偿还负债的币种可用资产数量"
+    ],
+    "repayCcy": [
+        " repayCcy",
+        "String",
+        "可偿还负债的币种",
+        "repayCcy"
+    ],
+    "repayData": [
+        "repayData",
+        "Array",
+        "偿还币种信息"
+    ],
+    "repaySz": [
+        "repaySz",
+        "String",
+        "偿还币种实际支付数量"
+    ],
+    "reqId": [
+        "reqId",
+        "String",
+        "否",
+        "用户自定义修改事件ID字母（区分大小写）与数字的组合，可以是纯字母、纯数字且长度要在1-32位之间。",
+        " reqId"
+    ],
+    "result": [
+        " result",
+        "Boolean",
+        "请求结果，枚举值为true,false"
+    ],
+    "rfqId": [
+        " rfqId",
+        "String",
+        "询价单ID",
+        "rfqId"
+    ],
+    "rfqIds": [
+        "rfqIds",
+        "Array of string",
+        "可选",
+        "询价单IDs"
+    ],
+    "rfqSz": [
+        "rfqSz",
+        "String",
+        "是",
+        "询价数量"
+    ],
+    "rfqSzCcy": [
+        "rfqSzCcy",
+        "String",
+        "是",
+        "询价币种"
+    ],
+    "riskUnit": [
+        "riskUnit",
+        "String",
+        "账户内所有持仓的riskUnit"
+    ],
+    "runPx": [
+        "runPx",
+        "String",
+        "启动时价格",
+        " runPx"
+    ],
+    "runType": [
+        "runType",
+        "String",
+        "否",
+        " 网格类型1：等差，2：等比默认为等差天地网格只支持2",
+        " runType"
+    ],
+    "sCode": [
+        "sCode",
+        "String",
+        "事件执行结果的code，0代表成功",
+        " sCode"
+    ],
+    "sMsg": [
+        "sMsg",
+        "String",
+        "事件执行失败时的msg",
+        " sMsg"
+    ],
+    "scheDesc": [
+        "scheDesc",
+        "String",
+        "改期进度说明，如： 由 2021-01-26T16:30:00.000Z 改期到 2021-01-28T16:30:00.000Z",
+        " scheDesc"
+    ],
+    "selected": [
+        "selected",
+        "Boolean",
+        "该地址是否为页面选中的地址"
+    ],
+    "sellLmt": [
+        "sellLmt",
+        "String",
+        "最低卖价",
+        " sellLmt"
+    ],
+    "sellVol": [
+        "sellVol",
+        "String",
+        "卖出量"
+    ],
+    "serviceType": [
+        "serviceType",
+        "String",
+        "服务类型， 0：WebSocket ; 5：交易服务；99：其他（如：停止部分产品交易）",
+        " serviceType"
+    ],
+    "settleCcy": [
+        "settleCcy",
+        "String",
+        "盈亏结算和保证金币种，如 BTC 仅适用于交割/永续/期权",
+        " settleCcy"
+    ],
+    "settlePx": [
+        "settlePx",
+        "String",
+        "预估交割、行权价格",
+        " settlePx"
+    ],
+    "side": [
+        "side",
+        "String",
+        "是",
+        "订单方向 buy：买， sell：卖",
+        " side",
+        " side",
+        "side"
+    ],
+    "sign": [
+        " sign",
+        "String",
+        "是",
+        "签名字符串"
+    ],
+    "signatures": [
+        "signatures",
+        "String",
+        "每个消息的以太坊兼容ECDSA签名的数组"
+    ],
+    "simPos": [
+        "simPos",
+        "Array",
+        "否",
+        "调整持仓列表"
+    ],
+    "singleAmt": [
+        "singleAmt",
+        "String",
+        "单网格买卖量",
+        " singleAmt"
+    ],
+    "slOrdPx": [
+        "slOrdPx",
+        "String",
+        "止损委托价",
+        " slOrdPx"
+    ],
+    "slTriggerPx": [
+        "slTriggerPx",
+        "String",
+        "止损触发价",
+        " slTriggerPx"
+    ],
+    "slTriggerPxType": [
+        "slTriggerPxType",
+        "String",
+        " 止损触发价类型last：最新价格index：指数价格mark：标记价格",
+        " slTriggerPxType"
+    ],
+    "sodUtc0": [
+        "sodUtc0",
+        "String",
+        "UTC 0 时开盘价",
+        "sodUtc0"
+    ],
+    "sodUtc8": [
+        "sodUtc8",
+        "String",
+        "UTC+8 时开盘价",
+        "sodUtc8"
+    ],
+    "source": [
+        "source",
+        "String",
+        "订单来源 13:策略委托单触发后的生成的限价单",
+        " source"
+    ],
+    "spot": [
+        "spot",
+        "Array",
+        "现货交易大数据接口功能支持的币种"
+    ],
+    "spotInUseAmt": [
+        " spotInUseAmt",
+        "String",
+        "现货对冲占用数量适用于组合保证金模式",
+        "spotInUseAmt"
+    ],
+    "spotInUseCcy": [
+        "spotInUseCcy",
+        "String",
+        "现货对冲占用币种，如 BTC适用于组合保证金模式",
+        " spotInUseCcy"
+    ],
+    "spotOffsetMaxWd": [
+        "spotOffsetMaxWd",
+        "String",
+        "现货对冲不支持借币最大可转数量仅适用于组合保证金模式"
+    ],
+    "spotOffsetMaxWdEx": [
+        "spotOffsetMaxWdEx",
+        "String",
+        "现货对冲支持借币的最大可转数量仅适用于组合保证金模式"
+    ],
+    "spotOffsetType": [
+        "spotOffsetType",
+        "String",
+        "现货对冲类型1：现货对冲模式U模式 2：现货对冲模式币模式 3：非现货对冲模式适用于组合保证金模式"
+    ],
+    "state": [
+        "state",
+        "String",
+        "订单状态 canceled：撤单成功live：等待成交 partially_filled：部分成交filled：完全成交",
+        " state"
+    ],
+    "status": [
+        "status",
+        "String",
+        "当前兑换进度/状态 running: 进行中 filled: 已完成 failed: 失败"
+    ],
+    "stgyEq": [
+        " stgyEq",
+        "String",
+        "策略权益"
+    ],
+    "stk": [
+        "stk",
+        "String",
+        "行权价格，仅适用于期权",
+        " stk"
+    ],
+    "stopResult": [
+        "stopResult",
+        "String",
+        "网格策略停止结果0：默认，1：市价卖币成功 -1：市价卖币失败仅适用于现货网格/天地网格",
+        " stopResult"
+    ],
+    "stopType": [
+        "stopType",
+        "String",
+        "是",
+        "网格策略停止类型现货网格/天地网格 1：卖出交易币，2：不卖出交易币合约网格 1：市价全平",
+        " stopType"
+    ],
+    "strike": [
+        "strike",
+        "String",
+        "执行价格"
+    ],
+    "subAcct": [
+        "subAcct",
+        "String",
+        "可选",
+        "子账户名称，type 为1，2 或 4：subAcct 为必填项 "
+    ],
+    "subType": [
+        "subType",
+        "String",
+        "否",
+        "账单子类型1：买入 2：卖出 3：开多 4：开空 5：平多 6：平空 9：市场借币扣息 11：转入 12：转出 14：尊享借币扣息 160：手动追加保证金 161：手动减少保证金 162：自动追加保证金 114：自动换币买入 115：自动换币卖出 118：系统换币转入 119：系统换币转出 100：强减平多 101：强减平空 102：强减买入 103：强减卖出 104：强平平多 105：强平平空 106：强平买入 107：强平卖出 110：强平换币转入 111：强平换币转出 125：自动减仓平多 126：自动减仓平空 127：自动减仓买入 128：自动减仓卖出 131：对冲买入 132：对冲卖出 170：到期行权 171：到期被行权 172：到期作废 112：交割平多 113：交割平空 117：交割/期权穿仓补偿 173：资金费支出 174：资金费收入 200:系统转入 201:手动转入 202:系统转出 203:手动转出 204: 大宗交易买 205: 大宗交易卖 206: 大宗交易开多 207: 大宗交易开空 208: 大宗交易平多 209: 大宗交易平空 224: 还债转入 225: 还债转出"
+    ],
+    "surplusLmt": [
+        " surplusLmt",
+        "String",
+        "剩余可借"
+    ],
+    "symPx": [
+        " symPx",
+        "String",
+        "采集的币对价格"
+    ],
+    "symbol": [
+        " symbol",
+        "String",
+        "采集的币对名称"
+    ],
+    "system": [
+        "system",
+        "String",
+        "系统，unified：交易账户",
+        " system"
+    ],
+    "sz": [
+        "sz",
+        "String",
+        "是",
+        "委托数量",
+        " sz",
+        " sz",
+        "sz"
+    ],
+    "szCcy": [
+        "szCcy",
+        "String",
+        "是",
+        "用户报价币种"
+    ],
+    "szLimit": [
+        "szLimit",
+        "String",
+        "是",
+        "单笔数量",
+        " szLimit"
+    ],
+    "tTraderCode": [
+        " tTraderCode",
+        "String",
+        "询价价方唯一标识代码。询价时 anonymous 设置为 true 时不可见。"
+    ],
+    "tag": [
+        "tag",
+        "String",
+        "否",
+        "订单标签 字母（区分大小写）与数字的组合，可以是纯字母、纯数字，且长度在1-16位之间。",
+        " tag"
+    ],
+    "taker": [
+        "taker",
+        "String",
+        "USDT\u0026USDⓈ\u0026Crypto 交易区的吃单手续费率，永续和交割合约时，为币本位合约费率"
+    ],
+    "takerU": [
+        "takerU",
+        "String",
+        "USDT 合约吃单手续费率，仅适用于交割/永续"
+    ],
+    "takerUSDC": [
+        "takerUSDC",
+        "String",
+        "USDC 交易区的吃单手续费率"
+    ],
+    "tdMode": [
+        "tdMode",
+        "String",
+        "是",
+        "交易模式保证金模式：isolated：逐仓 ；cross：全仓 非保证金模式：cash：非保证金",
+        " tdMode"
+    ],
+    "term": [
+        "term",
+        "String",
+        "项目期限活期为0，其他则显示定期天数"
+    ],
+    "tgtCcy": [
+        "tgtCcy",
+        "String",
+        "否",
+        "市价单委托数量的类型，仅适用于币币市价订单base_ccy: 交易货币 ；quote_ccy：计价货币买单默认quote_ccy， 卖单默认base_ccy",
+        " tgtCcy",
+        " tgtCcy",
+        "计划委托不支持使用tgtCcy参数"
+    ],
+    "theta": [
+        " theta",
+        "String",
+        "期权价格对剩余期限的敏感度",
+        "theta"
+    ],
+    "thetaBS": [
+        "thetaBS",
+        "String",
+        "美金本位持仓仓位theta，仅适用于期权",
+        " thetaBS"
+    ],
+    "thetaPA": [
+        "thetaPA",
+        "String",
+        "币本位持仓仓位theta，仅适用于期权",
+        " thetaPA"
+    ],
+    "tickSz": [
+        "tickSz",
+        "String",
+        "下单价格精度，如 0.0001",
+        " tickSz"
+    ],
+    "tier": [
+        "tier",
+        "String",
+        "否",
+        "查指定档位"
+    ],
+    "timeInterval": [
+        "timeInterval",
+        "String",
+        "是",
+        "下单间隔",
+        " timeInterval"
+    ],
+    "timestamp": [
+        "timestamp",
+        "String",
+        "获取最新数据点的时间,Unix时间戳,如 1597026387",
+        " timestamp"
+    ],
+    "title": [
+        "title",
+        "String",
+        "系统维护说明的标题",
+        " title"
+    ],
+    "to": [
+        "to",
+        "String",
+        "是",
+        "转入账户6：资金账户 18：交易账户"
+    ],
+    "toAddr": [
+        "toAddr",
+        "String",
+        "是",
+        "如果选择链上提币，toAddr必须是认证过的数字货币地址。某些数字货币地址格式为地址:标签，如 ARDOR-7JF3-8F2E-QUWZ-CAN7F:123456如果选择内部转账，toAddr必须是接收方地址，可以是邮箱、手机或者账户名。 "
+    ],
+    "toCcy": [
+        "toCcy",
+        "Array",
+        "可转换成的主流币币种列表"
+    ],
+    "toInstId": [
+        "toInstId",
+        "String",
+        "已废弃"
+    ],
+    "toSubAccount": [
+        "toSubAccount",
+        "String",
+        "是",
+        "转入子账户的子账户名称"
+    ],
+    "toSz": [
+        "toSz",
+        "String",
+        "兑换到的主流币数量"
+    ],
+    "token": [
+        "超出最大允许订阅的token数量{0}",
+        "60025"
+    ],
+    "total": [
+        "total",
+        "String",
+        "平台风险准备金总计，单位为USD"
+    ],
+    "totalAnnualizedRate": [
+        "totalAnnualizedRate",
+        "String",
+        "总年化",
+        " totalAnnualizedRate"
+    ],
+    "totalBal": [
+        "totalBal",
+        "String",
+        "账户总资产估值"
+    ],
+    "totalCnvAmt": [
+        "totalCnvAmt",
+        "String",
+        "兑换后总OKB数量"
+    ],
+    "totalEq": [
+        "totalEq",
+        "String",
+        "美金层面权益"
+    ],
+    "totalLoss": [
+        "totalLoss",
+        "String",
+        " 当前underlying下，当期内的总穿仓亏损以USDT为单位，每天16:00（UTC+8）清零"
+    ],
+    "totalPnl": [
+        "totalPnl",
+        "String",
+        "总收益",
+        " totalPnl"
+    ],
+    "tpOrdPx": [
+        "tpOrdPx",
+        "String",
+        "止盈委托价",
+        " tpOrdPx"
+    ],
+    "tpTriggerPx": [
+        "tpTriggerPx",
+        "String",
+        "止盈触发价",
+        " tpTriggerPx"
+    ],
+    "tpTriggerPxType": [
+        "tpTriggerPxType",
+        "String",
+        " 止盈触发价类型last：最新价格index：指数价格mark：标记价格",
+        " tpTriggerPxType"
+    ],
+    "tradeId": [
+        "tradeId",
+        "String",
+        "最新成交ID",
+        " tradeId",
+        " tradeId"
+    ],
+    "tradeNum": [
+        "tradeNum",
+        "String",
+        "挂单成交次数",
+        " tradeNum"
+    ],
+    "tradedLoan": [
+        "tradedLoan",
+        "String",
+        "借/还币数量"
+    ],
+    "traderCode": [
+        "traderCode",
+        "String",
+        "报价方唯一标识代码，公开可见；报价和询价的相关接口都使用该代码代表报价方。",
+        " traderCode"
+    ],
+    "traderName": [
+        "traderName",
+        "String",
+        "报价方名称"
+    ],
+    "trading": [
+        " trading",
+        "String",
+        "交易账户"
+    ],
+    "transId": [
+        "transId",
+        "String",
+        "划转 ID"
+    ],
+    "triggerPx": [
+        "triggerPx",
+        "String",
+        "是",
+        "计划委托触发价格",
+        " triggerPx"
+    ],
+    "triggerPxType": [
+        "triggerPxType",
+        "String",
+        "否",
+        " 计划委托触发价格类型last：最新价格index：指数价格mark：标记价格默认为last ",
+        " triggerPxType"
+    ],
+    "triggerTime": [
+        "triggerTime",
+        "String",
+        "策略委托触发时间，Unix时间戳的毫秒数格式，如 1597026383085",
+        " triggerTime"
+    ],
+    "ts": [
+        "ts",
+        "String",
+        "成交明细产生时间，Unix时间戳的毫秒数格式，如1597026383085",
+        " ts",
+        "ts"
+    ],
+    "ttlMs": [
+        "ttlMs",
+        "String",
+        "报价有效期，单位为毫秒"
+    ],
+    "twap": [
+        " twap",
+        "String",
+        " 当前负债币种触发系统自动换币的风险0、1、2、3、4、5其中之一，数字越大代表您的负债币种触发自动换币概率越高适用于跨币种保证金模式和组合保证金模式 "
+    ],
+    "txId": [
+        "txId",
+        "String",
+        "否",
+        "区块转账哈希记录"
+    ],
+    "type": [
+        "type",
+        "String",
+        "报价方类型（当前未生效，将返回 \"\" ）",
+        " type"
+    ],
+    "uTime": [
+        "uTime",
+        "String",
+        "订单状态更新时间，Unix时间戳的毫秒数格式，如：1597026383085",
+        " uTime",
+        " uTime"
+    ],
+    "uid": [
+        "uid",
+        "String",
+        "账户ID，账户uid和app上的一致",
+        " uid"
+    ],
+    "uly": [
+        "uly",
+        "String",
+        "否",
+        "标的指数",
+        " uly"
+    ],
+    "unSpotOffset": [
+        "unSpotOffset",
+        "Boolean",
+        "否",
+        " true：禁止现货对冲，false：允许现货对冲默认为false仅适用于组合保证金模式开启现货对冲模式下有效，否则忽略此参数。 "
+    ],
+    "unit": [
+        "unit",
+        "String",
+        "否",
+        "币的单位，coin: 币，usdt: usdt 仅适用于交割和永续合约的U本位合约"
+    ],
+    "upl": [
+        " upl",
+        "String",
+        "未实现盈亏适用于单币种保证金模式和跨币种保证金模式和组合保证金模式",
+        "upl"
+    ],
+    "uplLiab": [
+        " uplLiab",
+        "String",
+        "由于仓位未实现亏损导致的负债适用于跨币种保证金模式和组合保证金模式"
+    ],
+    "uplRatio": [
+        "uplRatio",
+        "String",
+        "未实现收益率",
+        " uplRatio"
+    ],
+    "url": [
+        "无效的url path",
+        "60017"
+    ],
+    "usdCny": [
+        "usdCny",
+        "String",
+        "人民币兑美元汇率"
+    ],
+    "usdPx": [
+        "usdPx",
+        "String",
+        "美金价格",
+        " usdPx"
+    ],
+    "usedDepQuotaFixed": [
+        "usedDepQuotaFixed",
+        "String",
+        "已用充币固定额度，单位为BTC没有充币限制则返回\"\""
+    ],
+    "usedLmt": [
+        " usedLmt",
+        "String",
+        "已借额度"
+    ],
+    "usedLoan": [
+        "usedLoan",
+        "String",
+        "当前账户已借额度",
+        " usedLoan"
+    ],
+    "usedWdQuota": [
+        "usedWdQuota",
+        "String",
+        "过去24小时内已用提币额度，单位为BTC"
+    ],
+    "validUntil": [
+        " validUntil",
+        "String",
+        "询价单的过期时间，Unix时间戳的毫秒数格式。"
+    ],
+    "vega": [
+        " vega",
+        "String",
+        "权价格对隐含波动率的敏感度",
+        "vega"
+    ],
+    "vegaBS": [
+        "vegaBS",
+        "String",
+        "美金本位持仓仓位vega，仅适用于期权",
+        " vegaBS"
+    ],
+    "vegaPA": [
+        "vegaPA",
+        "String",
+        "币本位持仓仓位vega，仅适用于期权",
+        " vegaPA"
+    ],
+    "vip": [
+        "vip",
+        "Array",
+        "专业用户"
+    ],
+    "vol": [
+        "vol",
+        "String",
+        " 交易量，以张为单位如果是衍生品合约，数值为合约的张数。如果是币币/币币杠杆，数值为交易货币的数量。 ",
+        " vol"
+    ],
+    "vol24h": [
+        "vol24h",
+        "String",
+        " 24小时成交量，以张为单位如果是衍生品合约，数值为合约的张数。如果是币币/币币杠杆，数值为交易货币的数量。 "
+    ],
+    "volCcy": [
+        "volCcy",
+        "String",
+        " 交易量，以币为单位如果是衍生品合约，数值为交易货币的数量。如果是币币/币币杠杆，数值为计价货币的数量。 ",
+        " volCcy"
+    ],
+    "volCcy24h": [
+        "volCcy24h",
+        "String",
+        " 24小时成交量，以币为单位如果是衍生品合约，数值为交易货币的数量。如果是币币/币币杠杆，数值为计价货币的数量。 "
+    ],
+    "volCny": [
+        "volCny",
+        "String",
+        "24小时平台总成交量，以人民币为单位"
+    ],
+    "volRatio": [
+        "volRatio",
+        "String",
+        "看涨/看跌 交易总量比"
+    ],
+    "volUsd": [
+        "volUsd",
+        "String",
+        "24小时平台总成交量，以美元为单位"
+    ],
+    "wdId": [
+        "wdId",
+        "String",
+        "提币申请ID"
+    ],
+    "wdQuota": [
+        "wdQuota",
+        "String",
+        "过去24小时内提币额度，单位为BTC"
+    ],
+    "wdTickSz": [
+        "wdTickSz",
+        "String",
+        "提币精度,表示小数点后的位数"
+    ],
+    "wgt": [
+        " wgt",
+        "String",
+        "权重"
+    ]
+}
