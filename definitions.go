@@ -1,6 +1,6 @@
 // Package okex is generally a golang Api wrapper of Okex V5 API
 //
-// https://www.okex.com/docs-v5/en
+// https://www.okx.com/docs-v5/en
 package okex
 
 import (
@@ -58,17 +58,17 @@ type (
 )
 
 const (
-	RestURL      = BaseURL("https://www.okex.com")
-	PublicWsURL  = BaseURL("wss://ws.okex.com:8443/ws/v5/public")
-	PrivateWsURL = BaseURL("wss://ws.okex.com:8443/ws/v5/private")
+	RestURL      = BaseURL("https://www.okx.com")
+	PublicWsURL  = BaseURL("wss://ws.okx.com:8443/ws/v5/public")
+	PrivateWsURL = BaseURL("wss://ws.okx.com:8443/ws/v5/private")
 
-	AwsRestURL      = BaseURL("https://aws.okex.com")
-	AwsPublicWsURL  = BaseURL("wss://wsaws.okex.com:8443/ws/v5/public")
-	AwsPrivateWsURL = BaseURL("wss://wsaws.okex.com:8443/ws/v5/private")
+	AwsRestURL      = BaseURL("https://aws.okx.com")
+	AwsPublicWsURL  = BaseURL("wss://wsaws.okx.com:8443/ws/v5/public")
+	AwsPrivateWsURL = BaseURL("wss://wsaws.okx.com:8443/ws/v5/private")
 
-	DemoRestURL      = BaseURL("https://www.okex.com")
-	DemoPublicWsURL  = BaseURL("wss://wspap.okex.com:8443/ws/v5/public?brokerId=9999")
-	DemoPrivateWsURL = BaseURL("wss://wspap.okex.com:8443/ws/v5/private?brokerId=9999")
+	DemoRestURL      = BaseURL("https://www.okx.com")
+	DemoPublicWsURL  = BaseURL("wss://wspap.okx.com:8443/ws/v5/public?brokerId=9999")
+	DemoPrivateWsURL = BaseURL("wss://wspap.okx.com:8443/ws/v5/private?brokerId=9999")
 
 	NormalServer = Destination(iota + 1)
 	AwsServer    = NormalServer + 1
