@@ -3,9 +3,10 @@ package market
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/amir-the-h/okex"
 	"strconv"
 	"time"
+
+	"github.com/amir-the-h/okex"
 )
 
 type (
@@ -55,13 +56,15 @@ type (
 		OrderNumbers    int
 	}
 	Candle struct {
-		O      float64
-		H      float64
-		L      float64
-		C      float64
-		Vol    float64
-		VolCcy float64
-		TS     okex.JSONTime
+		O           okex.JSONFloat64 `json:"o"`
+		H           okex.JSONFloat64 `json:"h"`
+		L           okex.JSONFloat64 `json:"l"`
+		C           okex.JSONFloat64 `json:"c"`
+		Vol         okex.JSONFloat64 `json:"vol"`
+		VolCcy      okex.JSONFloat64 `json:"volCcy"`
+		VolCcyQuote okex.JSONFloat64 `json:"volCcyQuote"`
+		Confirm     okex.JSONBool    `json:"confirm"`
+		TS          okex.JSONTime    `json:"ts"`
 	}
 	IndexCandle struct {
 		O  float64
@@ -133,11 +136,9 @@ func (o *OrderBookEntity) UnmarshalJSON(buf []byte) error {
 }
 
 func (c *Candle) UnmarshalJSON(buf []byte) error {
-	var (
-		o, h, l, cl, vol, volCcy, ts string
-		err                          error
-	)
-	tmp := []interface{}{&ts, &o, &h, &l, &cl, &vol, &volCcy}
+	var o, h, l, cl, vol, volCcy, ts, volCcyQuote, confirm string
+
+	tmp := []interface{}{&ts, &o, &h, &l, &cl, &vol, &volCcy, volCcyQuote, confirm}
 	wantLen := len(tmp)
 	if err := json.Unmarshal(buf, &tmp); err != nil {
 		return err
@@ -145,42 +146,6 @@ func (c *Candle) UnmarshalJSON(buf []byte) error {
 
 	if g, e := len(tmp), wantLen; g != e {
 		return fmt.Errorf("wrong number of fields in Candle: %d != %d", g, e)
-	}
-
-	timestamp, err := strconv.ParseInt(ts, 10, 64)
-	if err != nil {
-		return err
-	}
-	*(*time.Time)(&c.TS) = time.UnixMilli(timestamp)
-
-	c.O, err = strconv.ParseFloat(o, 64)
-	if err != nil {
-		return err
-	}
-
-	c.H, err = strconv.ParseFloat(h, 64)
-	if err != nil {
-		return err
-	}
-
-	c.L, err = strconv.ParseFloat(l, 64)
-	if err != nil {
-		return err
-	}
-
-	c.C, err = strconv.ParseFloat(cl, 64)
-	if err != nil {
-		return err
-	}
-
-	c.Vol, err = strconv.ParseFloat(vol, 64)
-	if err != nil {
-		return err
-	}
-
-	c.VolCcy, err = strconv.ParseFloat(volCcy, 64)
-	if err != nil {
-		return err
 	}
 
 	return nil

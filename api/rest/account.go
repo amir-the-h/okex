@@ -2,11 +2,13 @@ package rest
 
 import (
 	"encoding/json"
+	"fmt"
+	"net/http"
+	"strings"
+
 	"github.com/amir-the-h/okex"
 	requests "github.com/amir-the-h/okex/requests/rest/account"
 	responses "github.com/amir-the-h/okex/responses/account"
-	"net/http"
-	"strings"
 )
 
 // Account
@@ -62,6 +64,8 @@ func (c *Account) GetPositions(req requests.GetPositions) (response responses.Ge
 	defer res.Body.Close()
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
+	fmt.Printf("1: %+v\n", response.Positions[0])
+	fmt.Printf("2: %+v\n", response.Positions[1])
 
 	return
 }
@@ -71,7 +75,7 @@ func (c *Account) GetPositions(req requests.GetPositions) (response responses.Ge
 //
 // https://www.okex.com/docs-v5/en/#rest-api-account-get-account-and-position-risk
 func (c *Account) GetAccountAndPositionRisk(req requests.GetAccountAndPositionRisk) (response responses.GetAccountAndPositionRisk, err error) {
-	p := "/api/v5/account/positions"
+	p := "/api/v5/account/account-position-risk"
 	m := okex.S2M(req)
 	res, err := c.client.Do(http.MethodGet, p, true, m)
 	if err != nil {

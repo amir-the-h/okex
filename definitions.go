@@ -5,6 +5,8 @@ package okex
 
 import (
 	"encoding/json"
+	"errors"
+	"fmt"
 	"strconv"
 	"strings"
 	"time"
@@ -51,6 +53,7 @@ type (
 	WithdrawalState       int8
 
 	JSONFloat64 float64
+	JSONBool    bool
 	JSONInt64   int64
 	JSONTime    time.Time
 
@@ -314,6 +317,7 @@ func (t *JSONTime) UnmarshalJSON(s []byte) (err error) {
 	*(*time.Time)(t) = time.UnixMilli(q)
 	return
 }
+
 func (t *JSONFloat64) UnmarshalJSON(s []byte) (err error) {
 	r := strings.Replace(string(s), `"`, ``, -1)
 	if r == "" {
@@ -327,6 +331,19 @@ func (t *JSONFloat64) UnmarshalJSON(s []byte) (err error) {
 	*(*float64)(t) = q
 	return
 }
+
+func (t *JSONBool) UnmarshalJSON(data []byte) (err error) {
+	r := string(data)
+	if r == "1" {
+		*(*bool)(t) = true
+	} else if r == "0" {
+		*(*bool)(t) = false
+	} else {
+		err = errors.New(fmt.Sprintf("boolean unmarshal error: invalid input %s", r))
+	}
+	return
+}
+
 func (t *JSONInt64) UnmarshalJSON(s []byte) (err error) {
 	r := strings.Replace(string(s), `"`, ``, -1)
 	if r == "" {
@@ -340,6 +357,7 @@ func (t *JSONInt64) UnmarshalJSON(s []byte) (err error) {
 	*(*int64)(t) = q
 	return
 }
+
 func (t *WithdrawalState) UnmarshalJSON(s []byte) (err error) {
 	r := strings.Replace(string(s), `"`, ``, -1)
 	if r == "" {
@@ -353,6 +371,7 @@ func (t *WithdrawalState) UnmarshalJSON(s []byte) (err error) {
 	*(*int8)(t) = int8(q)
 	return
 }
+
 func (t *BillType) UnmarshalJSON(s []byte) (err error) {
 	r := strings.Replace(string(s), `"`, ``, -1)
 	if r == "" {
@@ -366,6 +385,7 @@ func (t *BillType) UnmarshalJSON(s []byte) (err error) {
 	*(*uint8)(t) = uint8(q)
 	return
 }
+
 func (t *BillSubType) UnmarshalJSON(s []byte) (err error) {
 	r := strings.Replace(string(s), `"`, ``, -1)
 	if r == "" {
@@ -379,6 +399,7 @@ func (t *BillSubType) UnmarshalJSON(s []byte) (err error) {
 	*(*uint8)(t) = uint8(q)
 	return
 }
+
 func (t *FeeCategory) UnmarshalJSON(s []byte) (err error) {
 	r := strings.Replace(string(s), `"`, ``, -1)
 	if r == "" {
@@ -392,6 +413,7 @@ func (t *FeeCategory) UnmarshalJSON(s []byte) (err error) {
 	*(*uint8)(t) = uint8(q)
 	return
 }
+
 func (t *AccountType) UnmarshalJSON(s []byte) (err error) {
 	r := strings.Replace(string(s), `"`, ``, -1)
 	if r == "" {
@@ -405,6 +427,7 @@ func (t *AccountType) UnmarshalJSON(s []byte) (err error) {
 	*(*uint8)(t) = uint8(q)
 	return
 }
+
 func (t *DepositState) UnmarshalJSON(s []byte) (err error) {
 	r := strings.Replace(string(s), `"`, ``, -1)
 	if r == "" {
