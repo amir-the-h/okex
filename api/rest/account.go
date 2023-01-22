@@ -2,7 +2,6 @@ package rest
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -64,8 +63,6 @@ func (c *Account) GetPositions(req requests.GetPositions) (response responses.Ge
 	defer res.Body.Close()
 	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
-	fmt.Printf("1: %+v\n", response.Positions[0])
-	fmt.Printf("2: %+v\n", response.Positions[1])
 
 	return
 }
