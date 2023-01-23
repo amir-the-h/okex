@@ -25,7 +25,7 @@ type (
 		Vol24h    okex.JSONFloat64    `json:"vol24h"`
 		SodUtc0   okex.JSONFloat64    `json:"sodUtc0"`
 		SodUtc8   okex.JSONFloat64    `json:"sodUtc8"`
-		InstType  okex.InstrumentType `json:"instType,string"`
+		InstType  okex.InstrumentType `json:"instType,omitempty"`
 		TS        okex.JSONTime       `json:"ts"`
 	}
 	IndexTicker struct {
@@ -56,15 +56,15 @@ type (
 		OrderNumbers    int
 	}
 	Candle struct {
-		O           okex.JSONFloat64 `json:"o"`
-		H           okex.JSONFloat64 `json:"h"`
-		L           okex.JSONFloat64 `json:"l"`
-		C           okex.JSONFloat64 `json:"c"`
-		Vol         okex.JSONFloat64 `json:"vol"`
-		VolCcy      okex.JSONFloat64 `json:"volCcy"`
-		VolCcyQuote okex.JSONFloat64 `json:"volCcyQuote"`
-		Confirm     okex.JSONBool    `json:"confirm"`
-		TS          okex.JSONTime    `json:"ts"`
+		O           float64
+		H           float64
+		L           float64
+		C           float64
+		Vol         float64
+		VolCcy      float64
+		VolCcyQuote float64
+		Confirm     bool
+		TS          okex.JSONTime
 	}
 	IndexCandle struct {
 		O  float64
@@ -136,9 +136,12 @@ func (o *OrderBookEntity) UnmarshalJSON(buf []byte) error {
 }
 
 func (c *Candle) UnmarshalJSON(buf []byte) error {
-	var o, h, l, cl, vol, volCcy, ts, volCcyQuote, confirm string
+	var (
+		o, h, l, cl, vol, volCcy, ts, volCcyQuote, confirm string
+		err                                                error
+	)
 
-	tmp := []interface{}{&ts, &o, &h, &l, &cl, &vol, &volCcy, volCcyQuote, confirm}
+	tmp := []interface{}{&ts, &o, &h, &l, &cl, &vol, &volCcy, &volCcyQuote, &confirm}
 	wantLen := len(tmp)
 	if err := json.Unmarshal(buf, &tmp); err != nil {
 		return err
@@ -146,6 +149,51 @@ func (c *Candle) UnmarshalJSON(buf []byte) error {
 
 	if g, e := len(tmp), wantLen; g != e {
 		return fmt.Errorf("wrong number of fields in Candle: %d != %d", g, e)
+	}
+	timestamp, err := strconv.ParseInt(ts, 10, 64)
+	if err != nil {
+		return err
+	}
+	*(*time.Time)(&c.TS) = time.UnixMilli(timestamp)
+
+	c.O, err = strconv.ParseFloat(o, 64)
+	if err != nil {
+		return err
+	}
+
+	c.H, err = strconv.ParseFloat(h, 64)
+	if err != nil {
+		return err
+	}
+
+	c.L, err = strconv.ParseFloat(l, 64)
+	if err != nil {
+		return err
+	}
+
+	c.C, err = strconv.ParseFloat(cl, 64)
+	if err != nil {
+		return err
+	}
+
+	c.Vol, err = strconv.ParseFloat(vol, 64)
+	if err != nil {
+		return err
+	}
+
+	c.VolCcy, err = strconv.ParseFloat(volCcy, 64)
+	if err != nil {
+		return err
+	}
+
+	c.VolCcyQuote, err = strconv.ParseFloat(volCcyQuote, 64)
+	if err != nil {
+		return err
+	}
+
+	c.Confirm, err = strconv.ParseBool(confirm)
+	if err != nil {
+		return err
 	}
 
 	return nil

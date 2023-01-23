@@ -7,12 +7,13 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	"github.com/amir-the-h/okex"
-	"github.com/amir-the-h/okex/events"
-	"github.com/gorilla/websocket"
 	"net/http"
 	"sync"
 	"time"
+
+	"github.com/amir-the-h/okex"
+	"github.com/amir-the-h/okex/events"
+	"github.com/gorilla/websocket"
 )
 
 // ClientWs is the websocket api client
@@ -258,6 +259,7 @@ func (c *ClientWs) dial(p bool) error {
 	c.conn[p] = conn
 	return nil
 }
+
 func (c *ClientWs) sender(p bool) error {
 	ticker := time.NewTicker(time.Millisecond * 300)
 	defer ticker.Stop()
@@ -298,6 +300,7 @@ func (c *ClientWs) sender(p bool) error {
 		}
 	}
 }
+
 func (c *ClientWs) receiver(p bool) error {
 	for {
 		select {
@@ -335,6 +338,7 @@ func (c *ClientWs) receiver(p bool) error {
 		}
 	}
 }
+
 func (c *ClientWs) sign(method, path string) (string, string) {
 	t := time.Now().UTC().Unix()
 	ts := fmt.Sprint(t)
@@ -344,6 +348,7 @@ func (c *ClientWs) sign(method, path string) (string, string) {
 	h.Write(p)
 	return ts, base64.StdEncoding.EncodeToString(h.Sum(nil))
 }
+
 func (c *ClientWs) handleCancel(msg string) error {
 	go func() {
 		c.DoneChan <- msg
@@ -420,6 +425,6 @@ func (c *ClientWs) process(data []byte, e *events.Basic) bool {
 		}()
 		return true
 	}
-	go func() { c.RawEventChan <- e }()
+	// go func() { c.RawEventChan <- e }()
 	return false
 }
