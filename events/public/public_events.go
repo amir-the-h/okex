@@ -45,6 +45,7 @@ type (
 	}
 	OrderBook struct {
 		Arg    *events.Argument      `json:"arg"`
+		InstID string                `json:"instId"`
 		Books  []*market.OrderBookWs `json:"data"`
 		Action string                `json:"action"`
 	}
