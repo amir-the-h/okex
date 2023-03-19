@@ -255,7 +255,7 @@ func (c *Trade) CancelAlgoOrder(req requests.CancelAlgoOrder) (response response
 // CancelAdvanceAlgoOrder
 // Cancel unfilled algo orders(iceberg order and twap order). A maximum of 10 orders can be canceled at a time. Request parameters should be passed in the form of an array.
 //
-// Only released on demo trading
+// # Only released on demo trading
 //
 // https://www.okex.com/docs-v5/en/#rest-api-trade-cancel-advance-algo-order
 func (c *Trade) CancelAdvanceAlgoOrder(req requests.CancelAlgoOrder) (response responses.CancelAlgoOrder, err error) {
