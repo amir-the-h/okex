@@ -2,6 +2,13 @@ Changelog
 =========
 All notable changes to this project will be documented in this file.
 
+v1.1-alpha
+-------------
+
+### Changed
+
+- Because Golang checksum tool sometimes can not verify the version :)
+
 v1.0.35-alpha
 -------------
 
