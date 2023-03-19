@@ -7,7 +7,7 @@ type (
 		Ccy      string              `json:"ccy"`
 		Begin    int64               `json:"before,omitempty,string"`
 		End      int64               `json:"limit,omitempty,string"`
-		InstType okex.InstrumentType `json:"instType,string"`
+		InstType okex.InstrumentType `json:"instType"`
 		Period   okex.BarSize        `json:"period,string,omitempty"`
 	}
 	GetRatio struct {
