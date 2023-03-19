@@ -2,6 +2,13 @@ Changelog
 =========
 All notable changes to this project will be documented in this file.
 
+v1.0.33-alpha
+-------------
+
+### Changed
+
+- Added WS trade requests
+
 v1.0.32-alpha
 -------------
 
