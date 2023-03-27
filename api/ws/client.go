@@ -105,18 +105,14 @@ func (c *ClientWs) Connect(p bool) error {
 //
 // https://www.okex.com/docs-v5/en/#websocket-api-login
 func (c *ClientWs) Login() error {
-	c.mu[true].Lock()
 	if c.Authorized {
-		c.mu[true].Unlock()
 		return nil
 	}
 	if c.AuthRequested != nil && time.Since(*c.AuthRequested).Seconds() < 30 {
-		c.mu[true].Unlock()
 		return nil
 	}
 	now := time.Now()
 	c.AuthRequested = &now
-	c.mu[true].Unlock()
 	method := http.MethodGet
 	path := "/users/self/verify"
 	ts, sign := c.sign(method, path)
@@ -261,35 +257,33 @@ func (c *ClientWs) sender(p bool) error {
 	for {
 		select {
 		case data := <-c.sendChan[p]:
-			c.mu[p].Lock()
+			c.mu[p].RLock()
 			err := c.conn[p].SetWriteDeadline(time.Now().Add(writeWait))
 			if err != nil {
-				c.mu[p].Unlock()
+				c.mu[p].RUnlock()
 				return err
 			}
 			w, err := c.conn[p].NextWriter(websocket.TextMessage)
 			if err != nil {
-				c.mu[p].Unlock()
+				c.mu[p].RUnlock()
 				return err
 			}
 			if _, err = w.Write(data); err != nil {
-				c.mu[p].Unlock()
+				c.mu[p].RUnlock()
 				return err
 			}
 			now := time.Now()
 			c.lastTransmit[p] = &now
-			c.mu[p].Unlock()
+			c.mu[p].RUnlock()
 			if err := w.Close(); err != nil {
 				return err
 			}
 		case <-ticker.C:
-			c.mu[p].Lock()
 			if c.conn[p] != nil && (c.lastTransmit[p] == nil || (c.lastTransmit[p] != nil && time.Since(*c.lastTransmit[p]) > PingPeriod)) {
 				go func() {
 					c.sendChan[p] <- []byte("ping")
 				}()
 			}
-			c.mu[p].Unlock()
 		case <-c.ctx.Done():
 			return c.handleCancel("sender")
 		}

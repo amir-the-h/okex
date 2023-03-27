@@ -2,6 +2,13 @@ Changelog
 =========
 All notable changes to this project will be documented in this file.
 
+v1.1.3-alpha
+-------------
+
+### Changed
+
+- Fixed `Ws` lock issue
+
 v1.1.2-alpha
 -------------
 
