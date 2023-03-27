@@ -58,6 +58,10 @@ type (
 )
 
 const (
+	NormalServer Destination = iota
+	AwsServer
+	DemoServer
+
 	RestURL      = BaseURL("https://www.okx.com")
 	PublicWsURL  = BaseURL("wss://ws.okx.com:8443/ws/v5/public")
 	PrivateWsURL = BaseURL("wss://ws.okx.com:8443/ws/v5/private")
@@ -69,10 +73,6 @@ const (
 	DemoRestURL      = BaseURL("https://www.okx.com")
 	DemoPublicWsURL  = BaseURL("wss://wspap.okx.com:8443/ws/v5/public?brokerId=9999")
 	DemoPrivateWsURL = BaseURL("wss://wspap.okx.com:8443/ws/v5/private?brokerId=9999")
-
-	NormalServer = Destination(iota + 1)
-	AwsServer    = NormalServer + 1
-	DemoServer   = AwsServer + 1
 
 	SpotInstrument    = InstrumentType("SPOT")
 	MarginInstrument  = InstrumentType("MARGIN")
