@@ -61,7 +61,7 @@ func NewClient(ctx context.Context, apiKey, secretKey, passphrase string, url ma
 		ctx:                 ctx,
 		Cancel:              cancel,
 		url:                 url,
-		sendChan:            map[bool]chan []byte{true: make(chan []byte), false: make(chan []byte)},
+		sendChan:            map[bool]chan []byte{true: make(chan []byte, 3), false: make(chan []byte, 3)},
 		DoneChan:            make(chan interface{}),
 		StructuredEventChan: make(chan interface{}),
 		RawEventChan:        make(chan *events.Basic),
