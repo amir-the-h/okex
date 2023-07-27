@@ -2,6 +2,14 @@ Changelog
 =========
 All notable changes to this project will be documented in this file.
 
+v1.1.5-alpha
+-------------
+
+### Changed
+
+- Fixed Trade model unmarshal
+
+
 v1.1.4-alpha
 -------------
 
