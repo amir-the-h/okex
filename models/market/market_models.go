@@ -75,7 +75,7 @@ type (
 		TradeID okex.JSONFloat64 `json:"tradeId"`
 		Px      okex.JSONFloat64 `json:"px"`
 		Sz      okex.JSONFloat64 `json:"sz"`
-		Side    okex.TradeSide   `json:"side,string"`
+		Side    okex.TradeSide   `json:"side"`
 		TS      okex.JSONTime    `json:"ts"`
 	}
 	TotalVolume24H struct {
