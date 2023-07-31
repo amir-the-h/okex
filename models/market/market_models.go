@@ -55,13 +55,15 @@ type (
 		OrderNumbers    int
 	}
 	Candle struct {
+		TS     okex.JSONTime
 		O      float64
 		H      float64
 		L      float64
 		C      float64
 		Vol    float64
 		VolCcy float64
-		TS     okex.JSONTime
+		VolCcyQuote float64
+		Confirm string
 	}
 	IndexCandle struct {
 		O  float64
