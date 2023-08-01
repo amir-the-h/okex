@@ -71,6 +71,10 @@ type (
 		L  float64
 		C  float64
 		TS okex.JSONTime
+		Vol    float64
+		VolCcy float64
+		VolCcyQuote float64
+		Confirm string
 	}
 	Trade struct {
 		InstID  string           `json:"instId"`
@@ -136,10 +140,10 @@ func (o *OrderBookEntity) UnmarshalJSON(buf []byte) error {
 
 func (c *Candle) UnmarshalJSON(buf []byte) error {
 	var (
-		o, h, l, cl, vol, volCcy, ts string
+		o, h, l, cl, vol, volCcy, ts,volCcyQuote,confirm string
 		err                          error
 	)
-	tmp := []interface{}{&ts, &o, &h, &l, &cl, &vol, &volCcy}
+	tmp := []interface{}{&ts, &o, &h, &l, &cl, &vol, &volCcy,&volCcyQuote,&confirm}
 	wantLen := len(tmp)
 	if err := json.Unmarshal(buf, &tmp); err != nil {
 		return err
@@ -184,16 +188,20 @@ func (c *Candle) UnmarshalJSON(buf []byte) error {
 	if err != nil {
 		return err
 	}
-
+        c.VolCcyQuote, err = strconv.ParseFloat(volCcyQuote, 64)
+	if err != nil {
+		return err
+	}
+	c.Confirm = confirm
 	return nil
 }
 
 func (c *IndexCandle) UnmarshalJSON(buf []byte) error {
 	var (
-		o, h, l, cl, ts string
+		o, h, l, cl, ts, vol, volCcy,volCcyQuote,confirm string
 		err             error
 	)
-	tmp := []interface{}{&ts, &o, &h, &l, &cl}
+	tmp := []interface{}{&ts, &o, &h, &l, &cl,&vol, &volCcy,&volCcyQuote,&confirm}
 	wantLen := len(tmp)
 	if err := json.Unmarshal(buf, &tmp); err != nil {
 		return err
@@ -228,6 +236,19 @@ func (c *IndexCandle) UnmarshalJSON(buf []byte) error {
 	if err != nil {
 		return err
 	}
+        c.Vol, err = strconv.ParseFloat(vol, 64)
+	if err != nil {
+		return err
+	}
 
+	c.VolCcy, err = strconv.ParseFloat(volCcy, 64)
+	if err != nil {
+		return err
+	}
+	c.VolCcyQuote, err = strconv.ParseFloat(volCcyQuote, 64)
+	if err != nil {
+		return err
+	}
+	c.Confirm = confirm
 	return nil
 }
