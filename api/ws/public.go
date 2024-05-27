@@ -248,17 +248,21 @@ func (c *Public) UPriceLimit(req requests.PriceLimit, rCh ...bool) error {
 }
 
 // OrderBook
-// Retrieve order book data.
+// Retrieve order book data for multiple instruments.
 //
 // Use books for 400 depth levels, book5 for 5 depth levels, books50-l2-tbt tick-by-tick 50 depth levels, and books-l2-tbt for tick-by-tick 400 depth levels.
 //
 // https://www.okex.com/docs-v5/en/#websocket-api-public-channels-order-book-channel
-func (c *Public) OrderBook(req requests.OrderBook, ch ...chan *public.OrderBook) error {
-	m := okex.S2M(req)
+func (c *Public) OrderBook(reqs []requests.OrderBook, ch ...chan *public.OrderBook) error {
 	if len(ch) > 0 {
 		c.obCh = ch[0]
 	}
-	return c.Subscribe(false, []okex.ChannelName{}, m)
+	var subscriptions []map[string]string
+	for _, req := range reqs {
+		m := okex.S2M(req)
+		subscriptions = append(subscriptions, m)
+	}
+	return c.Subscribe(false, []okex.ChannelName{}, subscriptions...)
 }
 
 // UOrderBook

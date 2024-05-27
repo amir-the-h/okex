@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/hmac"
 	"crypto/sha256"
+	"crypto/tls"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
@@ -131,17 +132,17 @@ func (c *ClientWs) Login() error {
 // Users can choose to subscribe to one or more channels, and the total length of multiple channels cannot exceed 4096 bytes.
 //
 // https://www.okex.com/docs-v5/en/#websocket-api-subscribe
-func (c *ClientWs) Subscribe(p bool, ch []okex.ChannelName, args map[string]string) error {
-	count := 1
+func (c *ClientWs) Subscribe(p bool, ch []okex.ChannelName, args ...map[string]string) error {
+	count := len(args)
 	if len(ch) != 0 {
 		count = len(ch)
 	}
 	tmpArgs := make([]map[string]string, count)
-	tmpArgs[0] = args
+	tmpArgs[0] = args[0]
 	for i, name := range ch {
 		tmpArgs[i] = map[string]string{}
 		tmpArgs[i]["channel"] = string(name)
-		for k, v := range args {
+		for k, v := range args[0] {
 			tmpArgs[i][k] = v
 		}
 	}
@@ -225,16 +226,24 @@ func (c *ClientWs) WaitForAuthorization() error {
 
 func (c *ClientWs) dial(p bool) error {
 	c.mu[p].Lock()
-	conn, res, err := websocket.DefaultDialer.Dial(string(c.url[p]), nil)
+	defer c.mu[p].Unlock()
+
+	dialer := websocket.Dialer{
+		Proxy:            http.ProxyFromEnvironment,
+		HandshakeTimeout: 45 * time.Second,
+		TLSClientConfig:  &tls.Config{InsecureSkipVerify: true},
+	}
+
+	conn, res, err := dialer.Dial(string(c.url[p]), nil)
 	if err != nil {
 		var statusCode int
 		if res != nil {
 			statusCode = res.StatusCode
 		}
-		c.mu[p].Unlock()
 		return fmt.Errorf("error %d: %w", statusCode, err)
 	}
 	defer res.Body.Close()
+
 	go func() {
 		err := c.receiver(p)
 		if err != nil {
@@ -247,8 +256,8 @@ func (c *ClientWs) dial(p bool) error {
 			fmt.Printf("sender error: %v\n", err)
 		}
 	}()
+
 	c.conn[p] = conn
-	c.mu[p].Unlock()
 	return nil
 }
 func (c *ClientWs) sender(p bool) error {
