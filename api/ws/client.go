@@ -70,7 +70,7 @@ func NewClient(ctx context.Context, apiKey, secretKey, passphrase string, url ma
 		conn:                make(map[bool]*websocket.Conn),
 		dialer:              websocket.DefaultDialer,
 		lastTransmit:        make(map[bool]*time.Time),
-		mu:                  map[bool]*sync.RWMutex{true: new(sync.RWMutex), false: new(sync.RWMutex)},
+		mu:                  map[bool]*sync.RWMutex{true: {}, false: {}},
 	}
 	c.Private = NewPrivate(c)
 	c.Public = NewPublic(c)
