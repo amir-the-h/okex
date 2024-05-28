@@ -70,7 +70,7 @@ func NewClient(ctx context.Context, apiKey, secretKey, passphrase string, url ma
 		conn:                make(map[bool]*websocket.Conn),
 		dialer:              websocket.DefaultDialer,
 		lastTransmit:        make(map[bool]*time.Time),
-		mu:                  map[bool]*sync.RWMutex{true: {}, false: {}},
+		mu:                  map[bool]*sync.RWMutex{true: new(sync.RWMutex), false: new(sync.RWMutex)},
 	}
 	c.Private = NewPrivate(c)
 	c.Public = NewPublic(c)
@@ -237,8 +237,6 @@ func (c *ClientWs) WaitForAuthorization() error {
 
 func (c *ClientWs) dial(p bool) error {
 	c.mu[p].Lock()
-	defer c.mu[p].Unlock()
-
 	conn, res, err := c.dialer.Dial(string(c.url[p]), nil)
 	if err != nil {
 		var statusCode int
@@ -247,10 +245,13 @@ func (c *ClientWs) dial(p bool) error {
 		}
 		return fmt.Errorf("error %d: %w", statusCode, err)
 	}
+	c.conn[p] = conn
+	c.mu[p].Unlock()
+
 	defer func(Body io.ReadCloser) {
 		err := Body.Close()
 		if err != nil {
-
+			fmt.Printf("error closing body: %v\n", err)
 		}
 	}(res.Body)
 	go func() {
@@ -266,9 +267,9 @@ func (c *ClientWs) dial(p bool) error {
 		}
 	}()
 
-	c.conn[p] = conn
 	return nil
 }
+
 func (c *ClientWs) sender(p bool) error {
 	ticker := time.NewTicker(time.Millisecond * 300)
 	defer ticker.Stop()
@@ -297,7 +298,11 @@ func (c *ClientWs) sender(p bool) error {
 				return err
 			}
 		case <-ticker.C:
-			if c.conn[p] != nil && (c.lastTransmit[p] == nil || (c.lastTransmit[p] != nil && time.Since(*c.lastTransmit[p]) > PingPeriod)) {
+			c.mu[p].RLock()
+			conn := c.conn[p]
+			lastTransmit := c.lastTransmit[p]
+			c.mu[p].RUnlock()
+			if conn != nil && (lastTransmit == nil || (lastTransmit != nil && time.Since(*lastTransmit) > PingPeriod)) {
 				go func() {
 					c.sendChan[p] <- []byte("ping")
 				}()
@@ -307,6 +312,7 @@ func (c *ClientWs) sender(p bool) error {
 		}
 	}
 }
+
 func (c *ClientWs) receiver(p bool) error {
 	for {
 		select {
@@ -344,6 +350,7 @@ func (c *ClientWs) receiver(p bool) error {
 		}
 	}
 }
+
 func (c *ClientWs) sign(method, path string) (string, string) {
 	t := time.Now().UTC().Unix()
 	ts := fmt.Sprint(t)
