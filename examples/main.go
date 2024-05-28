@@ -2,11 +2,15 @@ package main
 
 import (
 	"context"
+	"crypto/tls"
 	"github.com/amir-the-h/okex"
 	"github.com/amir-the-h/okex/api"
 	"github.com/amir-the-h/okex/events/public"
 	requests "github.com/amir-the-h/okex/requests/ws/public"
+	"github.com/gorilla/websocket"
 	"log"
+	"net/http"
+	"time"
 )
 
 func main() {
@@ -35,6 +39,11 @@ func main() {
 		{InstID: "UNI-USDT", Channel: "books"},
 	}
 
+	client.Ws.Public.SetDialer(&websocket.Dialer{
+		Proxy:            http.ProxyFromEnvironment,
+		HandshakeTimeout: 45 * time.Second,
+		TLSClientConfig:  &tls.Config{InsecureSkipVerify: true},
+	})
 	obCh := make(chan *public.OrderBook)
 	err = client.Ws.Public.OrderBook(orderBookRequests, obCh)
 	if err != nil {

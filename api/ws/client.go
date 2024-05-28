@@ -4,13 +4,13 @@ import (
 	"context"
 	"crypto/hmac"
 	"crypto/sha256"
-	"crypto/tls"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"github.com/amir-the-h/okex"
 	"github.com/amir-the-h/okex/events"
 	"github.com/gorilla/websocket"
+	"io"
 	"net/http"
 	"sync"
 	"time"
@@ -32,6 +32,7 @@ type ClientWs struct {
 	sendChan            map[bool]chan []byte
 	url                 map[bool]okex.BaseURL
 	conn                map[bool]*websocket.Conn
+	dialer              *websocket.Dialer
 	apiKey              string
 	secretKey           []byte
 	passphrase          string
@@ -67,6 +68,7 @@ func NewClient(ctx context.Context, apiKey, secretKey, passphrase string, url ma
 		StructuredEventChan: make(chan interface{}),
 		RawEventChan:        make(chan *events.Basic),
 		conn:                make(map[bool]*websocket.Conn),
+		dialer:              websocket.DefaultDialer,
 		lastTransmit:        make(map[bool]*time.Time),
 		mu:                  map[bool]*sync.RWMutex{true: {}, false: {}},
 	}
@@ -133,19 +135,23 @@ func (c *ClientWs) Login() error {
 //
 // https://www.okex.com/docs-v5/en/#websocket-api-subscribe
 func (c *ClientWs) Subscribe(p bool, ch []okex.ChannelName, args ...map[string]string) error {
-	count := len(args)
-	if len(ch) != 0 {
-		count = len(ch)
-	}
-	tmpArgs := make([]map[string]string, count)
-	tmpArgs[0] = args[0]
-	for i, name := range ch {
-		tmpArgs[i] = map[string]string{}
-		tmpArgs[i]["channel"] = string(name)
-		for k, v := range args[0] {
-			tmpArgs[i][k] = v
+	chCount := max(len(ch), 1)
+	tmpArgs := make([]map[string]string, chCount*len(args))
+
+	n := 0
+	for i := 0; i < chCount; i++ {
+		for _, arg := range args {
+			tmpArgs[n] = make(map[string]string)
+			for k, v := range arg {
+				tmpArgs[n][k] = v
+			}
+			if len(ch) > 0 {
+				tmpArgs[n]["channel"] = string(ch[i])
+			}
+			n++
 		}
 	}
+
 	return c.Send(p, okex.SubscribeOperation, tmpArgs)
 }
 
@@ -206,6 +212,11 @@ func (c *ClientWs) SetChannels(errCh chan *events.Error, subCh chan *events.Subs
 	c.SuccessChan = sCh
 }
 
+// SetDialer sets a custom dialer for the WebSocket connection.
+func (c *ClientWs) SetDialer(dialer *websocket.Dialer) {
+	c.dialer = dialer
+}
+
 // WaitForAuthorization waits for the auth response and try to log in if it was needed
 func (c *ClientWs) WaitForAuthorization() error {
 	if c.Authorized {
@@ -228,13 +239,7 @@ func (c *ClientWs) dial(p bool) error {
 	c.mu[p].Lock()
 	defer c.mu[p].Unlock()
 
-	dialer := websocket.Dialer{
-		Proxy:            http.ProxyFromEnvironment,
-		HandshakeTimeout: 45 * time.Second,
-		TLSClientConfig:  &tls.Config{InsecureSkipVerify: true},
-	}
-
-	conn, res, err := dialer.Dial(string(c.url[p]), nil)
+	conn, res, err := c.dialer.Dial(string(c.url[p]), nil)
 	if err != nil {
 		var statusCode int
 		if res != nil {
@@ -242,8 +247,12 @@ func (c *ClientWs) dial(p bool) error {
 		}
 		return fmt.Errorf("error %d: %w", statusCode, err)
 	}
-	defer res.Body.Close()
+	defer func(Body io.ReadCloser) {
+		err := Body.Close()
+		if err != nil {
 
+		}
+	}(res.Body)
 	go func() {
 		err := c.receiver(p)
 		if err != nil {
