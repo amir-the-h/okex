@@ -377,37 +377,27 @@ func (c *ClientWs) process(data []byte, e *events.Basic) bool {
 		e := events.Error{}
 		_ = json.Unmarshal(data, &e)
 		if c.ErrChan != nil {
-			go func() {
-				c.ErrChan <- &e
-			}()
+			c.ErrChan <- &e
 		}
 		return true
 	case "subscribe":
 		e := events.Subscribe{}
 		_ = json.Unmarshal(data, &e)
 		if c.SubscribeChan != nil {
-			go func() {
-				c.SubscribeChan <- &e
-			}()
+			c.SubscribeChan <- &e
 		}
 		if c.StructuredEventChan != nil {
-			go func() {
-				c.StructuredEventChan <- e
-			}()
+			c.StructuredEventChan <- e
 		}
 		return true
 	case "unsubscribe":
 		e := events.Unsubscribe{}
 		_ = json.Unmarshal(data, &e)
 		if c.UnsubscribeCh != nil {
-			go func() {
-				c.UnsubscribeCh <- &e
-			}()
+			c.UnsubscribeCh <- &e
 		}
 		if c.StructuredEventChan != nil {
-			go func() {
-				c.StructuredEventChan <- e
-			}()
+			c.StructuredEventChan <- e
 		}
 		return true
 	case "login":
@@ -420,14 +410,10 @@ func (c *ClientWs) process(data []byte, e *events.Basic) bool {
 		e := events.Login{}
 		_ = json.Unmarshal(data, &e)
 		if c.LoginChan != nil {
-			go func() {
-				c.LoginChan <- &e
-			}()
+			c.LoginChan <- &e
 		}
 		if c.StructuredEventChan != nil {
-			go func() {
-				c.StructuredEventChan <- e
-			}()
+			c.StructuredEventChan <- e
 		}
 		return true
 	}
@@ -446,17 +432,13 @@ func (c *ClientWs) process(data []byte, e *events.Basic) bool {
 		e := events.Success{}
 		_ = json.Unmarshal(data, &e)
 		if c.SuccessChan != nil {
-			go func() {
-				c.SuccessChan <- &e
-			}()
+			c.SuccessChan <- &e
 		}
 		if c.StructuredEventChan != nil {
-			go func() {
-				c.StructuredEventChan <- e
-			}()
+			c.StructuredEventChan <- e
 		}
 		return true
 	}
-	go func() { c.RawEventChan <- e }()
+	c.RawEventChan <- e
 	return false
 }
