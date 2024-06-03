@@ -10,10 +10,20 @@ import (
 	"github.com/gorilla/websocket"
 	"log"
 	"net/http"
+	_ "net/http/pprof"
 	"time"
 )
 
 func main() {
+
+	// Start the pprof server
+	go func() {
+		log.Println("Starting pprof server on localhost:6060")
+		if err := http.ListenAndServe("localhost:6060", nil); err != nil {
+			log.Fatalf("could not start pprof server: %v", err)
+		}
+	}()
+
 	apiKey := ""
 	secretKey := ""
 	passphrase := ""

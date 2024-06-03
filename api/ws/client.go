@@ -57,20 +57,18 @@ const (
 func NewClient(ctx context.Context, apiKey, secretKey, passphrase string, url map[bool]okex.BaseURL) *ClientWs {
 	ctx, cancel := context.WithCancel(ctx)
 	c := &ClientWs{
-		apiKey:              apiKey,
-		secretKey:           []byte(secretKey),
-		passphrase:          passphrase,
-		ctx:                 ctx,
-		Cancel:              cancel,
-		url:                 url,
-		sendChan:            map[bool]chan []byte{true: make(chan []byte, 3), false: make(chan []byte, 3)},
-		DoneChan:            make(chan interface{}),
-		StructuredEventChan: make(chan interface{}),
-		RawEventChan:        make(chan *events.Basic),
-		conn:                make(map[bool]*websocket.Conn),
-		dialer:              websocket.DefaultDialer,
-		lastTransmit:        make(map[bool]*time.Time),
-		mu:                  map[bool]*sync.RWMutex{true: {}, false: {}},
+		apiKey:       apiKey,
+		secretKey:    []byte(secretKey),
+		passphrase:   passphrase,
+		ctx:          ctx,
+		Cancel:       cancel,
+		url:          url,
+		sendChan:     map[bool]chan []byte{true: make(chan []byte, 3), false: make(chan []byte, 3)},
+		DoneChan:     make(chan interface{}),
+		conn:         make(map[bool]*websocket.Conn),
+		dialer:       websocket.DefaultDialer,
+		lastTransmit: make(map[bool]*time.Time),
+		mu:           map[bool]*sync.RWMutex{true: {}, false: {}},
 	}
 	c.Private = NewPrivate(c)
 	c.Public = NewPublic(c)
@@ -217,6 +215,11 @@ func (c *ClientWs) SetDialer(dialer *websocket.Dialer) {
 	c.dialer = dialer
 }
 
+func (c *ClientWs) SetEventChannels(structuredEventCh chan interface{}, rawEventCh chan *events.Basic) {
+	c.StructuredEventChan = structuredEventCh
+	c.RawEventChan = rawEventCh
+}
+
 // WaitForAuthorization waits for the auth response and try to log in if it was needed
 func (c *ClientWs) WaitForAuthorization() error {
 	if c.Authorized {
@@ -360,6 +363,7 @@ func (c *ClientWs) sign(method, path string) (string, string) {
 	h.Write(p)
 	return ts, base64.StdEncoding.EncodeToString(h.Sum(nil))
 }
+
 func (c *ClientWs) handleCancel(msg string) error {
 	go func() {
 		c.DoneChan <- msg
@@ -367,35 +371,44 @@ func (c *ClientWs) handleCancel(msg string) error {
 	return fmt.Errorf("operation cancelled: %s", msg)
 }
 
-// TODO: break each case into a separate function
 func (c *ClientWs) process(data []byte, e *events.Basic) bool {
 	switch e.Event {
 	case "error":
 		e := events.Error{}
 		_ = json.Unmarshal(data, &e)
-		go func() {
-			c.ErrChan <- &e
-		}()
+		if c.ErrChan != nil {
+			go func() {
+				c.ErrChan <- &e
+			}()
+		}
 		return true
 	case "subscribe":
 		e := events.Subscribe{}
 		_ = json.Unmarshal(data, &e)
-		go func() {
-			if c.SubscribeChan != nil {
+		if c.SubscribeChan != nil {
+			go func() {
 				c.SubscribeChan <- &e
-			}
-			c.StructuredEventChan <- e
-		}()
+			}()
+		}
+		if c.StructuredEventChan != nil {
+			go func() {
+				c.StructuredEventChan <- e
+			}()
+		}
 		return true
 	case "unsubscribe":
 		e := events.Unsubscribe{}
 		_ = json.Unmarshal(data, &e)
-		go func() {
-			if c.UnsubscribeCh != nil {
+		if c.UnsubscribeCh != nil {
+			go func() {
 				c.UnsubscribeCh <- &e
-			}
-			c.StructuredEventChan <- e
-		}()
+			}()
+		}
+		if c.StructuredEventChan != nil {
+			go func() {
+				c.StructuredEventChan <- e
+			}()
+		}
 		return true
 	case "login":
 		if time.Since(*c.AuthRequested).Seconds() > 30 {
@@ -406,12 +419,16 @@ func (c *ClientWs) process(data []byte, e *events.Basic) bool {
 		c.Authorized = true
 		e := events.Login{}
 		_ = json.Unmarshal(data, &e)
-		go func() {
-			if c.LoginChan != nil {
+		if c.LoginChan != nil {
+			go func() {
 				c.LoginChan <- &e
-			}
-			c.StructuredEventChan <- e
-		}()
+			}()
+		}
+		if c.StructuredEventChan != nil {
+			go func() {
+				c.StructuredEventChan <- e
+			}()
+		}
 		return true
 	}
 	if c.Private.Process(data, e) {
@@ -428,12 +445,16 @@ func (c *ClientWs) process(data []byte, e *events.Basic) bool {
 		}
 		e := events.Success{}
 		_ = json.Unmarshal(data, &e)
-		go func() {
-			if c.SuccessChan != nil {
+		if c.SuccessChan != nil {
+			go func() {
 				c.SuccessChan <- &e
-			}
-			c.StructuredEventChan <- e
-		}()
+			}()
+		}
+		if c.StructuredEventChan != nil {
+			go func() {
+				c.StructuredEventChan <- e
+			}()
+		}
 		return true
 	}
 	go func() { c.RawEventChan <- e }()
