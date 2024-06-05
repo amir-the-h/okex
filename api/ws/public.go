@@ -83,7 +83,7 @@ func (c *Public) UTickers(req requests.Tickers, rCh ...bool) error {
 }
 
 // OpenInterest
-// Retrieve the open interest. Data will by pushed every 3 seconds.
+// Retrieve the open interest. Data will be pushed every 3 seconds.
 //
 // https://www.okex.com/docs-v5/en/#websocket-api-public-channels-open-interest-channel
 func (c *Public) OpenInterest(req requests.OpenInterest, ch ...chan *public.OpenInterest) error {
@@ -106,7 +106,7 @@ func (c *Public) UOpenInterest(req requests.OpenInterest, rCh ...bool) error {
 }
 
 // Candlesticks
-// Retrieve the open interest. Data will by pushed every 3 seconds.
+// Retrieve the open interest. Data will be pushed every 3 seconds.
 //
 // https://www.okex.com/docs-v5/en/#websocket-api-public-channels-candlesticks-channel
 func (c *Public) Candlesticks(req requests.Candlesticks, ch ...chan *public.Candlesticks) error {
@@ -248,17 +248,21 @@ func (c *Public) UPriceLimit(req requests.PriceLimit, rCh ...bool) error {
 }
 
 // OrderBook
-// Retrieve order book data.
+// Retrieve order book data for multiple instruments.
 //
 // Use books for 400 depth levels, book5 for 5 depth levels, books50-l2-tbt tick-by-tick 50 depth levels, and books-l2-tbt for tick-by-tick 400 depth levels.
 //
 // https://www.okex.com/docs-v5/en/#websocket-api-public-channels-order-book-channel
-func (c *Public) OrderBook(req requests.OrderBook, ch ...chan *public.OrderBook) error {
-	m := okex.S2M(req)
+func (c *Public) OrderBook(reqs []requests.OrderBook, ch ...chan *public.OrderBook) error {
 	if len(ch) > 0 {
 		c.obCh = ch[0]
 	}
-	return c.Subscribe(false, []okex.ChannelName{}, m)
+	var subscriptions []map[string]string
+	for _, req := range reqs {
+		m := okex.S2M(req)
+		subscriptions = append(subscriptions, m)
+	}
+	return c.Subscribe(false, []okex.ChannelName{}, subscriptions...)
 }
 
 // UOrderBook
@@ -375,196 +379,176 @@ func (c *Public) Process(data []byte, e *events.Basic) bool {
 		switch ch {
 		case "instruments":
 			e := public.Instruments{}
-			err := json.Unmarshal(data, &e)
-			if err != nil {
+			if err := json.Unmarshal(data, &e); err != nil {
 				return false
 			}
-			go func() {
-				if c.iCh != nil {
-					c.iCh <- &e
-				}
+			if c.iCh != nil {
+				c.iCh <- &e
+			}
+			if c.StructuredEventChan != nil {
 				c.StructuredEventChan <- e
-			}()
+			}
 			return true
 		case "tickers":
 			e := public.Tickers{}
-			err := json.Unmarshal(data, &e)
-			if err != nil {
+			if err := json.Unmarshal(data, &e); err != nil {
 				return false
 			}
-			go func() {
-				if c.tCh != nil {
-					c.tCh <- &e
-				}
+			if c.tCh != nil {
+				c.tCh <- &e
+			}
+			if c.StructuredEventChan != nil {
 				c.StructuredEventChan <- e
-			}()
+			}
 			return true
 		case "open-interest":
 			e := public.OpenInterest{}
-			err := json.Unmarshal(data, &e)
-			if err != nil {
+			if err := json.Unmarshal(data, &e); err != nil {
 				return false
 			}
-			go func() {
-				if c.oiCh != nil {
-					c.oiCh <- &e
-				}
+			if c.oiCh != nil {
+				c.oiCh <- &e
+			}
+			if c.StructuredEventChan != nil {
 				c.StructuredEventChan <- e
-			}()
+			}
 			return true
 		case "trades":
 			e := public.Trades{}
-			err := json.Unmarshal(data, &e)
-			if err != nil {
+			if err := json.Unmarshal(data, &e); err != nil {
 				return false
 			}
-			go func() {
-				if c.trCh != nil {
-					c.trCh <- &e
-				}
+			if c.trCh != nil {
+				c.trCh <- &e
+			}
+			if c.StructuredEventChan != nil {
 				c.StructuredEventChan <- e
-			}()
+			}
 			return true
 		case "estimated-price":
 			e := public.EstimatedDeliveryExercisePrice{}
-			err := json.Unmarshal(data, &e)
-			if err != nil {
+			if err := json.Unmarshal(data, &e); err != nil {
 				return false
 			}
-			go func() {
-				if c.edepCh != nil {
-					c.edepCh <- &e
-				}
+			if c.edepCh != nil {
+				c.edepCh <- &e
+			}
+			if c.StructuredEventChan != nil {
 				c.StructuredEventChan <- e
-			}()
+			}
 			return true
 		case "mark-price":
 			e := public.MarkPrice{}
-			err := json.Unmarshal(data, &e)
-			if err != nil {
+			if err := json.Unmarshal(data, &e); err != nil {
 				return false
 			}
-			go func() {
-				if c.mpCh != nil {
-					c.mpCh <- &e
-				}
+			if c.mpCh != nil {
+				c.mpCh <- &e
+			}
+			if c.StructuredEventChan != nil {
 				c.StructuredEventChan <- e
-			}()
+			}
 			return true
 		case "price-limit":
 			e := public.PriceLimit{}
-			err := json.Unmarshal(data, &e)
-			if err != nil {
+			if err := json.Unmarshal(data, &e); err != nil {
 				return false
 			}
-			go func() {
-				if c.plCh != nil {
-					c.plCh <- &e
-				}
+			if c.plCh != nil {
+				c.plCh <- &e
+			}
+			if c.StructuredEventChan != nil {
 				c.StructuredEventChan <- e
-			}()
+			}
 			return true
 		case "opt-summary":
 			e := public.OPTIONSummary{}
-			err := json.Unmarshal(data, &e)
-			if err != nil {
+			if err := json.Unmarshal(data, &e); err != nil {
 				return false
 			}
-			go func() {
-				if c.osCh != nil {
-					c.osCh <- &e
-				}
+			if c.osCh != nil {
+				c.osCh <- &e
+			}
+			if c.StructuredEventChan != nil {
 				c.StructuredEventChan <- e
-			}()
+			}
 			return true
 		case "funding-rate":
-			e := public.OPTIONSummary{}
-			err := json.Unmarshal(data, &e)
-			if err != nil {
+			e := public.FundingRate{}
+			if err := json.Unmarshal(data, &e); err != nil {
 				return false
 			}
-			go func() {
-				if c.osCh != nil {
-					c.osCh <- &e
-				}
+			if c.frCh != nil {
+				c.frCh <- &e
+			}
+			if c.StructuredEventChan != nil {
 				c.StructuredEventChan <- e
-			}()
+			}
 			return true
 		case "index-tickers":
 			e := public.IndexTickers{}
-			err := json.Unmarshal(data, &e)
-			if err != nil {
+			if err := json.Unmarshal(data, &e); err != nil {
 				return false
 			}
-			go func() {
-				if c.itCh != nil {
-					c.itCh <- &e
-				}
+			if c.itCh != nil {
+				c.itCh <- &e
+			}
+			if c.StructuredEventChan != nil {
 				c.StructuredEventChan <- e
-			}()
+			}
 			return true
 		default:
-			// special cases
-			// market price candlestick channel
 			chName := fmt.Sprint(ch)
-			// market price channels
 			if strings.Contains(chName, "mark-price-candle") {
 				e := public.MarkPriceCandlesticks{}
-				err := json.Unmarshal(data, &e)
-				if err != nil {
+				if err := json.Unmarshal(data, &e); err != nil {
 					return false
 				}
-				go func() {
-					if c.mpcCh != nil {
-						c.mpcCh <- &e
-					}
+				if c.mpcCh != nil {
+					c.mpcCh <- &e
+				}
+				if c.StructuredEventChan != nil {
 					c.StructuredEventChan <- e
-				}()
+				}
 				return true
 			}
-			// index chandlestick channels
 			if strings.Contains(chName, "index-candle") {
 				e := public.IndexCandlesticks{}
-				err := json.Unmarshal(data, &e)
-				if err != nil {
+				if err := json.Unmarshal(data, &e); err != nil {
 					return false
 				}
-				go func() {
-					if c.icCh != nil {
-						c.icCh <- &e
-					}
+				if c.icCh != nil {
+					c.icCh <- &e
+				}
+				if c.StructuredEventChan != nil {
 					c.StructuredEventChan <- e
-				}()
+				}
 				return true
 			}
-			// candlestick channels
 			if strings.Contains(chName, "candle") {
 				e := public.Candlesticks{}
-				err := json.Unmarshal(data, &e)
-				if err != nil {
+				if err := json.Unmarshal(data, &e); err != nil {
 					return false
 				}
-				go func() {
-					if c.cCh != nil {
-						c.cCh <- &e
-					}
+				if c.cCh != nil {
+					c.cCh <- &e
+				}
+				if c.StructuredEventChan != nil {
 					c.StructuredEventChan <- e
-				}()
+				}
 				return true
 			}
-			// order book channels
 			if strings.Contains(chName, "books") {
 				e := public.OrderBook{}
-				err := json.Unmarshal(data, &e)
-				if err != nil {
+				if err := json.Unmarshal(data, &e); err != nil {
 					return false
 				}
-				go func() {
-					if c.obCh != nil {
-						c.obCh <- &e
-					}
+				if c.obCh != nil {
+					c.obCh <- &e
+				}
+				if c.StructuredEventChan != nil {
 					c.StructuredEventChan <- e
-				}()
+				}
 				return true
 			}
 		}
