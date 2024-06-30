@@ -28,10 +28,7 @@ func main() {
 	secretKey := ""
 	passphrase := ""
 	ctx := context.Background()
-	client, err := api.NewClient(ctx, apiKey, secretKey, passphrase, okex.NormalServer)
-	if err != nil {
-		log.Fatalln(err)
-	}
+	client := api.NewClient(ctx, apiKey, secretKey, passphrase, okex.NormalServer)
 
 	orderBookRequests := []requests.OrderBook{
 		{InstID: "BTC-USDT", Channel: "books"},
@@ -55,7 +52,7 @@ func main() {
 		TLSClientConfig:  &tls.Config{InsecureSkipVerify: true},
 	})
 	obCh := make(chan *public.OrderBook)
-	err = client.Ws.Public.OrderBook(orderBookRequests, obCh)
+	err := client.Ws.Public.OrderBook(orderBookRequests, obCh)
 	if err != nil {
 		log.Fatalln(err)
 	}

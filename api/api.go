@@ -15,7 +15,7 @@ type Client struct {
 }
 
 // NewClient returns a pointer to a fresh Client
-func NewClient(ctx context.Context, apiKey, secretKey, passphrase string, destination okex.Destination) (*Client, error) {
+func NewClient(ctx context.Context, apiKey, secretKey, passphrase string, destination okex.Destination) *Client {
 	restURL := okex.RestURL
 	wsPubURL := okex.PublicWsURL
 	wsPriURL := okex.PrivateWsURL
@@ -33,5 +33,5 @@ func NewClient(ctx context.Context, apiKey, secretKey, passphrase string, destin
 	r := rest.NewClient(apiKey, secretKey, passphrase, restURL, destination)
 	c := ws.NewClient(ctx, apiKey, secretKey, passphrase, map[bool]okex.BaseURL{true: wsPriURL, false: wsPubURL})
 
-	return &Client{r, c, ctx}, nil
+	return &Client{r, c, ctx}
 }
